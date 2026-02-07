@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "크기 조절";
+"menu.settings" = "설정...";
+"menu.quit" = "Window Resize 종료";
+"menu.loading" = "로드 중...";
+"menu.no-windows" = "(윈도우를 찾을 수 없음)";
+"menu.untitled" = "(제목 없음)";
+
+/* Alerts */
+"alert.resize-failed.title" = "크기 조절 실패";
+"alert.resize-failed.body" = "윈도우 크기를 조절할 수 없습니다. 해당 앱이 손쉬운 사용 기반 크기 조절을 지원하지 않거나, 윈도우가 전체 화면 모드일 수 있습니다.";
+"alert.stale-permission.title" = "손쉬운 사용 권한 갱신 필요";
+"alert.stale-permission.body" = "앱이 다시 빌드되어 이전 손쉬운 사용 권한이 더 이상 유효하지 않습니다.\n\n다음으로 이동하세요:\n시스템 설정 > 개인정보 보호 및 보안 > 손쉬운 사용\n\n\"Window Resize\"를 끄고 다시 켜거나,\n제거한 후 다시 추가하세요.";
+"alert.button.open-settings" = "설정 열기";
+"alert.button.ok" = "확인";
+
+/* Settings window */
+"settings.title" = "Window Resize 설정";
+"settings.preset-sizes" = "프리셋 크기";
+"settings.built-in" = "기본 제공";
+"settings.custom" = "사용자 지정";
+"settings.no-custom-sizes" = "추가된 사용자 지정 크기 없음";
+"settings.width" = "너비";
+"settings.height" = "높이";
+"settings.dimension-separator" = "x";
+"settings.add" = "추가";
+"settings.remove" = "제거";
+"settings.launch-at-login" = "로그인 시 실행";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "손쉬운 사용: 활성화됨";
+"settings.accessibility.needs-refresh" = "손쉬운 사용: 갱신 필요 (설정에서 끄기→켜기)";
+"settings.accessibility.not-enabled" = "손쉬운 사용: 비활성화됨";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

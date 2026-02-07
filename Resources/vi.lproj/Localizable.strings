@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "Đổi kích thước";
+"menu.settings" = "Cài đặt...";
+"menu.quit" = "Thoát Window Resize";
+"menu.loading" = "Đang tải...";
+"menu.no-windows" = "(Không tìm thấy cửa sổ nào)";
+"menu.untitled" = "(Chưa đặt tên)";
+
+/* Alerts */
+"alert.resize-failed.title" = "Đổi kích thước thất bại";
+"alert.resize-failed.body" = "Không thể đổi kích thước cửa sổ. Ứng dụng có thể không hỗ trợ đổi kích thước qua trợ năng, hoặc cửa sổ đang ở chế độ toàn màn hình.";
+"alert.stale-permission.title" = "Quyền trợ năng cần được làm mới";
+"alert.stale-permission.body" = "Ứng dụng đã được build lại và quyền trợ năng trước đó không còn hiệu lực.\n\nVui lòng đi tới:\nCài đặt hệ thống > Quyền riêng tư & Bảo mật > Trợ năng\n\nTắt \"Window Resize\" rồi bật lại,\nhoặc xóa và thêm lại.";
+"alert.button.open-settings" = "Mở Cài đặt";
+"alert.button.ok" = "OK";
+
+/* Settings window */
+"settings.title" = "Cài đặt Window Resize";
+"settings.preset-sizes" = "Kích thước đặt sẵn";
+"settings.built-in" = "Có sẵn";
+"settings.custom" = "Tùy chỉnh";
+"settings.no-custom-sizes" = "Chưa thêm kích thước tùy chỉnh nào";
+"settings.width" = "Rộng";
+"settings.height" = "Cao";
+"settings.dimension-separator" = "x";
+"settings.add" = "Thêm";
+"settings.remove" = "Xóa";
+"settings.launch-at-login" = "Khởi chạy khi đăng nhập";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "Trợ năng: Đã bật";
+"settings.accessibility.needs-refresh" = "Trợ năng: Cần làm mới (tắt→bật trong Cài đặt)";
+"settings.accessibility.not-enabled" = "Trợ năng: Chưa bật";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

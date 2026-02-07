@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "ปรับขนาด";
+"menu.settings" = "การตั้งค่า...";
+"menu.quit" = "ออกจาก Window Resize";
+"menu.loading" = "กำลังโหลด...";
+"menu.no-windows" = "(ไม่พบหน้าต่าง)";
+"menu.untitled" = "(ไม่มีชื่อ)";
+
+/* Alerts */
+"alert.resize-failed.title" = "ปรับขนาดไม่สำเร็จ";
+"alert.resize-failed.body" = "ไม่สามารถปรับขนาดหน้าต่างได้ แอปพลิเคชันอาจไม่รองรับการปรับขนาดผ่านการช่วยการเข้าถึง หรือหน้าต่างอาจอยู่ในโหมดเต็มหน้าจอ";
+"alert.stale-permission.title" = "สิทธิ์การช่วยการเข้าถึงต้องรีเฟรช";
+"alert.stale-permission.body" = "แอปถูกบิลด์ใหม่และสิทธิ์การช่วยการเข้าถึงเดิมไม่สามารถใช้งานได้อีกต่อไป\n\nกรุณาไปที่:\nการตั้งค่าระบบ > ความเป็นส่วนตัวและความปลอดภัย > การช่วยการเข้าถึง\n\nปิด \"Window Resize\" แล้วเปิดใหม่\nหรือลบออกแล้วเพิ่มอีกครั้ง";
+"alert.button.open-settings" = "เปิดการตั้งค่า";
+"alert.button.ok" = "ตกลง";
+
+/* Settings window */
+"settings.title" = "การตั้งค่า Window Resize";
+"settings.preset-sizes" = "ขนาดที่ตั้งไว้";
+"settings.built-in" = "ในตัว";
+"settings.custom" = "กำหนดเอง";
+"settings.no-custom-sizes" = "ยังไม่มีขนาดที่กำหนดเอง";
+"settings.width" = "ความกว้าง";
+"settings.height" = "ความสูง";
+"settings.dimension-separator" = "x";
+"settings.add" = "เพิ่ม";
+"settings.remove" = "ลบ";
+"settings.launch-at-login" = "เปิดเมื่อเข้าสู่ระบบ";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "การช่วยการเข้าถึง: เปิดใช้งานแล้ว";
+"settings.accessibility.needs-refresh" = "การช่วยการเข้าถึง: ต้องรีเฟรช (ปิด→เปิดในการตั้งค่า)";
+"settings.accessibility.not-enabled" = "การช่วยการเข้าถึง: ไม่ได้เปิดใช้งาน";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

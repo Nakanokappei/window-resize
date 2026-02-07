@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "調整大小";
+"menu.settings" = "設定⋯";
+"menu.quit" = "結束 Window Resize";
+"menu.loading" = "載入中⋯";
+"menu.no-windows" = "（找不到視窗）";
+"menu.untitled" = "（未命名）";
+
+/* Alerts */
+"alert.resize-failed.title" = "調整大小失敗";
+"alert.resize-failed.body" = "無法調整視窗大小。該應用程式可能不支援透過輔助使用來調整大小，或者視窗正處於全螢幕模式。";
+"alert.stale-permission.title" = "輔助使用權限需要重新整理";
+"alert.stale-permission.body" = "應用程式已重新建置，先前的輔助使用權限已失效。\n\n請前往：\n系統設定 > 隱私權與安全性 > 輔助使用\n\n將「Window Resize」關閉後重新開啟，\n或將其移除後重新加入。";
+"alert.button.open-settings" = "打開設定";
+"alert.button.ok" = "好";
+
+/* Settings window */
+"settings.title" = "Window Resize 設定";
+"settings.preset-sizes" = "預設大小";
+"settings.built-in" = "內建";
+"settings.custom" = "自訂";
+"settings.no-custom-sizes" = "尚未加入自訂大小";
+"settings.width" = "寬度";
+"settings.height" = "高度";
+"settings.dimension-separator" = "x";
+"settings.add" = "加入";
+"settings.remove" = "移除";
+"settings.launch-at-login" = "登入時啟動";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "輔助使用：已啟用";
+"settings.accessibility.needs-refresh" = "輔助使用：需要重新整理（在設定中關閉→開啟）";
+"settings.accessibility.not-enabled" = "輔助使用：未啟用";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

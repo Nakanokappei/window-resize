@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "تغيير الحجم";
+"menu.settings" = "الإعدادات...";
+"menu.quit" = "إنهاء Window Resize";
+"menu.loading" = "جارٍ التحميل...";
+"menu.no-windows" = "(لم يتم العثور على نوافذ)";
+"menu.untitled" = "(بدون عنوان)";
+
+/* Alerts */
+"alert.resize-failed.title" = "فشل تغيير الحجم";
+"alert.resize-failed.body" = "تعذّر تغيير حجم النافذة. قد لا يدعم التطبيق تغيير الحجم عبر تسهيلات الاستخدام، أو قد تكون النافذة في وضع ملء الشاشة.";
+"alert.stale-permission.title" = "إذن تسهيلات الاستخدام يحتاج إلى تحديث";
+"alert.stale-permission.body" = "تمت إعادة بناء التطبيق ولم يعد إذن تسهيلات الاستخدام السابق صالحًا.\n\nيرجى الانتقال إلى:\nإعدادات النظام > الخصوصية والأمان > تسهيلات الاستخدام\n\nثم قم بإيقاف \"Window Resize\" وإعادة تشغيله،\nأو احذفه وأعد إضافته.";
+"alert.button.open-settings" = "فتح الإعدادات";
+"alert.button.ok" = "موافق";
+
+/* Settings window */
+"settings.title" = "إعدادات Window Resize";
+"settings.preset-sizes" = "الأحجام المحددة مسبقًا";
+"settings.built-in" = "مدمجة";
+"settings.custom" = "مخصصة";
+"settings.no-custom-sizes" = "لم تتم إضافة أحجام مخصصة";
+"settings.width" = "العرض";
+"settings.height" = "الارتفاع";
+"settings.dimension-separator" = "x";
+"settings.add" = "إضافة";
+"settings.remove" = "إزالة";
+"settings.launch-at-login" = "التشغيل عند تسجيل الدخول";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "تسهيلات الاستخدام: مُفعّلة";
+"settings.accessibility.needs-refresh" = "تسهيلات الاستخدام: تحتاج إلى تحديث (إيقاف←تشغيل في الإعدادات)";
+"settings.accessibility.not-enabled" = "تسهيلات الاستخدام: غير مُفعّلة";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

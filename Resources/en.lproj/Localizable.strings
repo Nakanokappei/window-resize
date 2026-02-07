@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "Resize";
+"menu.settings" = "Settings...";
+"menu.quit" = "Quit Window Resize";
+"menu.loading" = "Loading...";
+"menu.no-windows" = "(No windows found)";
+"menu.untitled" = "(Untitled)";
+
+/* Alerts */
+"alert.resize-failed.title" = "Resize Failed";
+"alert.resize-failed.body" = "Could not resize the window. The application may not support accessibility-based resizing, or the window may be in full-screen mode.";
+"alert.stale-permission.title" = "Accessibility Permission Needs Refresh";
+"alert.stale-permission.body" = "The app was rebuilt and the previous accessibility permission is no longer valid.\n\nPlease go to:\nSystem Settings > Privacy & Security > Accessibility\n\nThen toggle \"Window Resize\" OFF and ON again,\nor remove it and re-add it.";
+"alert.button.open-settings" = "Open Settings";
+"alert.button.ok" = "OK";
+
+/* Settings window */
+"settings.title" = "Window Resize Settings";
+"settings.preset-sizes" = "Preset Sizes";
+"settings.built-in" = "Built-in";
+"settings.custom" = "Custom";
+"settings.no-custom-sizes" = "No custom sizes added";
+"settings.width" = "Width";
+"settings.height" = "Height";
+"settings.dimension-separator" = "x";
+"settings.add" = "Add";
+"settings.remove" = "Remove";
+"settings.launch-at-login" = "Launch at Login";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "Accessibility: Enabled";
+"settings.accessibility.needs-refresh" = "Accessibility: Needs Refresh (toggle OFF→ON in Settings)";
+"settings.accessibility.not-enabled" = "Accessibility: Not Enabled";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

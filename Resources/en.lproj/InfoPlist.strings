@@ -1,0 +1,2 @@
+"CFBundleName" = "Window Resize";
+"NSAccessibilityUsageDescription" = "Window Resize needs accessibility access to resize application windows.";

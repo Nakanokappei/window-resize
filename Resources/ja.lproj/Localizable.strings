@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "リサイズ";
+"menu.settings" = "設定...";
+"menu.quit" = "Window Resize を終了";
+"menu.loading" = "読み込み中...";
+"menu.no-windows" = "（ウインドウが見つかりません）";
+"menu.untitled" = "（無題）";
+
+/* Alerts */
+"alert.resize-failed.title" = "リサイズに失敗しました";
+"alert.resize-failed.body" = "ウインドウのサイズを変更できませんでした。アプリケーションがアクセシビリティによるリサイズに対応していないか、フルスクリーンモードの可能性があります。";
+"alert.stale-permission.title" = "アクセシビリティ権限の更新が必要です";
+"alert.stale-permission.body" = "アプリが再ビルドされたため、以前のアクセシビリティ権限が無効になりました。\n\n以下の手順で操作してください：\nシステム設定 > プライバシーとセキュリティ > アクセシビリティ\n\n「Window Resize」をオフにしてからオンに戻すか、\n一度削除して再追加してください。";
+"alert.button.open-settings" = "設定を開く";
+"alert.button.ok" = "OK";
+
+/* Settings window */
+"settings.title" = "Window Resize 設定";
+"settings.preset-sizes" = "プリセットサイズ";
+"settings.built-in" = "内蔵";
+"settings.custom" = "カスタム";
+"settings.no-custom-sizes" = "カスタムサイズはまだありません";
+"settings.width" = "幅";
+"settings.height" = "高さ";
+"settings.dimension-separator" = "x";
+"settings.add" = "追加";
+"settings.remove" = "削除";
+"settings.launch-at-login" = "ログイン時に起動";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "アクセシビリティ：有効";
+"settings.accessibility.needs-refresh" = "アクセシビリティ：更新が必要（設定でオフ→オンに切替）";
+"settings.accessibility.not-enabled" = "アクセシビリティ：無効";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";
