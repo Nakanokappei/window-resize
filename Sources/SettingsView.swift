@@ -30,6 +30,7 @@ struct SettingsView: View {
                     }
                     .padding(.vertical, 4)
                 }
+                .frame(maxHeight: 200)
             }
 
             // Custom sizes
