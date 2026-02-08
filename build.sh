@@ -58,6 +58,21 @@ if [ -d "${LOCALIZATIONS_DIR}" ]; then
     echo "=== Copied localizations: $(ls -d "${RESOURCES_DIR}"/*.lproj 2>/dev/null | xargs -n1 basename | tr '\n' ' ') ==="
 fi
 
+# Copy app icon (.icns) into bundle Resources
+# アプリアイコンをバンドルにコピー
+if [ -f "${LOCALIZATIONS_DIR}/AppIcon.icns" ]; then
+    cp "${LOCALIZATIONS_DIR}/AppIcon.icns" "${RESOURCES_DIR}/AppIcon.icns"
+    echo "=== Copied AppIcon.icns ==="
+fi
+
+# Copy menu bar icon (template image) into bundle Resources
+# メニューバーアイコンをバンドルにコピー
+if [ -f "MenuBarIcon.png" ]; then
+    cp "MenuBarIcon.png" "${RESOURCES_DIR}/MenuBarIcon.png"
+    cp "MenuBarIcon@2x.png" "${RESOURCES_DIR}/MenuBarIcon@2x.png"
+    echo "=== Copied MenuBarIcon ==="
+fi
+
 # Ad-hoc code sign the bundle (seals resources and Info.plist so Gatekeeper accepts downloaded app)
 # ダウンロードしたアプリが「壊れている」と表示されないよう、リソースを含めてアドホック署名する
 echo "=== Signing ${APP_NAME}.app ==="

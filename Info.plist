@@ -14,6 +14,8 @@
     <string>APPL</string>
     <key>CFBundleExecutable</key>
     <string>WindowResize</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>LSMinimumSystemVersion</key>
     <string>13.0</string>
     <key>LSUIElement</key>

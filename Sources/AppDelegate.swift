@@ -29,8 +29,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem.button {
-            if let image = NSImage(systemSymbolName: "rectangle.expand.vertical",
-                                   accessibilityDescription: L("accessibility.icon-description")) {
+            // メニューバーアイコン: Resources/MenuBarIcon.png を使用（テンプレート画像）
+            // Menu bar icon: use Resources/MenuBarIcon.png (template image)
+            if let image = NSImage(named: "MenuBarIcon") {
+                image.isTemplate = true
+                button.image = image
+            } else if let image = NSImage(systemSymbolName: "rectangle.expand.vertical",
+                                          accessibilityDescription: L("accessibility.icon-description")) {
                 image.isTemplate = true
                 button.image = image
             } else {
