@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "आकार बदलें";
+"menu.settings" = "सेटिंग्स...";
+"menu.quit" = "Window Resize बंद करें";
+"menu.loading" = "लोड हो रहा है...";
+"menu.no-windows" = "(कोई विंडो नहीं मिली)";
+"menu.untitled" = "(बिना शीर्षक)";
+
+/* Alerts */
+"alert.resize-failed.title" = "आकार बदलना विफल";
+"alert.resize-failed.body" = "विंडो का आकार नहीं बदला जा सका। ऐप्लिकेशन एक्सेसिबिलिटी-आधारित रीसाइज़ को सपोर्ट नहीं कर सकता, या विंडो फ़ुल-स्क्रीन मोड में हो सकती है।";
+"alert.stale-permission.title" = "एक्सेसिबिलिटी अनुमति को रीफ़्रेश करना ज़रूरी है";
+"alert.stale-permission.body" = "ऐप को फिर से बिल्ड किया गया है और पिछली एक्सेसिबिलिटी अनुमति अब मान्य नहीं है।\n\nकृपया यहाँ जाएँ:\nसिस्टम सेटिंग्स > प्राइवेसी और सिक्योरिटी > एक्सेसिबिलिटी\n\n\"Window Resize\" को ऑफ़ करके फिर ऑन करें,\nया उसे हटाकर दोबारा जोड़ें।";
+"alert.button.open-settings" = "सेटिंग्स खोलें";
+"alert.button.ok" = "ठीक है";
+
+/* Settings window */
+"settings.title" = "Window Resize सेटिंग्स";
+"settings.preset-sizes" = "प्रीसेट आकार";
+"settings.built-in" = "अंतर्निहित";
+"settings.custom" = "कस्टम";
+"settings.no-custom-sizes" = "कोई कस्टम आकार नहीं जोड़ा गया";
+"settings.width" = "चौड़ाई";
+"settings.height" = "ऊँचाई";
+"settings.dimension-separator" = "x";
+"settings.add" = "जोड़ें";
+"settings.remove" = "हटाएँ";
+"settings.launch-at-login" = "लॉगिन पर शुरू करें";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "एक्सेसिबिलिटी: सक्षम";
+"settings.accessibility.needs-refresh" = "एक्सेसिबिलिटी: रीफ़्रेश ज़रूरी (सेटिंग्स में ऑफ़→ऑन करें)";
+"settings.accessibility.not-enabled" = "एक्सेसिबिलिटी: अक्षम";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

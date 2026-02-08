@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "Изменить размер";
+"menu.settings" = "Настройки...";
+"menu.quit" = "Завершить Window Resize";
+"menu.loading" = "Загрузка...";
+"menu.no-windows" = "(Окна не найдены)";
+"menu.untitled" = "(Без названия)";
+
+/* Alerts */
+"alert.resize-failed.title" = "Не удалось изменить размер";
+"alert.resize-failed.body" = "Не удалось изменить размер окна. Приложение может не поддерживать изменение размера через Универсальный доступ, или окно находится в полноэкранном режиме.";
+"alert.stale-permission.title" = "Необходимо обновить разрешение Универсального доступа";
+"alert.stale-permission.body" = "Приложение было пересобрано, и предыдущее разрешение Универсального доступа больше недействительно.\n\nПерейдите в:\nСистемные настройки > Конфиденциальность и безопасность > Универсальный доступ\n\nВыключите «Window Resize» и включите снова,\nили удалите и добавьте заново.";
+"alert.button.open-settings" = "Открыть настройки";
+"alert.button.ok" = "OK";
+
+/* Settings window */
+"settings.title" = "Настройки Window Resize";
+"settings.preset-sizes" = "Предустановленные размеры";
+"settings.built-in" = "Встроенные";
+"settings.custom" = "Пользовательские";
+"settings.no-custom-sizes" = "Пользовательские размеры не добавлены";
+"settings.width" = "Ширина";
+"settings.height" = "Высота";
+"settings.dimension-separator" = "x";
+"settings.add" = "Добавить";
+"settings.remove" = "Удалить";
+"settings.launch-at-login" = "Запускать при входе";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "Универсальный доступ: Включён";
+"settings.accessibility.needs-refresh" = "Универсальный доступ: Требуется обновление (выкл.→вкл. в Настройках)";
+"settings.accessibility.not-enabled" = "Универсальный доступ: Отключён";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

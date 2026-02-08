@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "调整大小";
+"menu.settings" = "设置…";
+"menu.quit" = "退出 Window Resize";
+"menu.loading" = "加载中…";
+"menu.no-windows" = "（未找到窗口）";
+"menu.untitled" = "（未命名）";
+
+/* Alerts */
+"alert.resize-failed.title" = "调整大小失败";
+"alert.resize-failed.body" = "无法调整窗口大小。该应用程序可能不支持通过辅助功能调整大小，或窗口正处于全屏模式。";
+"alert.stale-permission.title" = "辅助功能权限需要刷新";
+"alert.stale-permission.body" = "应用程序已重新构建，之前的辅助功能权限已失效。\n\n请前往：\n系统设置 > 隐私与安全性 > 辅助功能\n\n将「Window Resize」关闭后重新打开，\n或将其移除后重新添加。";
+"alert.button.open-settings" = "打开设置";
+"alert.button.ok" = "好";
+
+/* Settings window */
+"settings.title" = "Window Resize 设置";
+"settings.preset-sizes" = "预设大小";
+"settings.built-in" = "内置";
+"settings.custom" = "自定义";
+"settings.no-custom-sizes" = "尚未添加自定义大小";
+"settings.width" = "宽度";
+"settings.height" = "高度";
+"settings.dimension-separator" = "x";
+"settings.add" = "添加";
+"settings.remove" = "移除";
+"settings.launch-at-login" = "登录时启动";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "辅助功能：已启用";
+"settings.accessibility.needs-refresh" = "辅助功能：需要刷新（在设置中关闭→打开）";
+"settings.accessibility.not-enabled" = "辅助功能：未启用";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

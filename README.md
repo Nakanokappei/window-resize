@@ -11,7 +11,7 @@ Also available for Windows: [Window Resize for Windows](https://github.com/Nakan
 - **Custom sizes** — add your own width x height presets
 - **Launch at login** — optional auto-start via SMAppService
 - **Accessibility permission detection** — detects stale permissions after rebuild
-- **10 languages** — English, Japanese, French, Spanish, Italian, Traditional Chinese, Korean, Arabic, Vietnamese, Thai
+- **16 languages** — English, Simplified Chinese, Spanish, Hindi, Arabic, Indonesian, Portuguese, French, Japanese, Russian, German, Vietnamese, Thai, Korean, Italian, Traditional Chinese
 
 ## Download
 

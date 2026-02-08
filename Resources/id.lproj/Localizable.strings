@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "Ubah Ukuran";
+"menu.settings" = "Pengaturan...";
+"menu.quit" = "Keluar Window Resize";
+"menu.loading" = "Memuat...";
+"menu.no-windows" = "(Tidak ada jendela ditemukan)";
+"menu.untitled" = "(Tanpa Judul)";
+
+/* Alerts */
+"alert.resize-failed.title" = "Gagal Mengubah Ukuran";
+"alert.resize-failed.body" = "Tidak dapat mengubah ukuran jendela. Aplikasi mungkin tidak mendukung pengubahan ukuran berbasis aksesibilitas, atau jendela sedang dalam mode layar penuh.";
+"alert.stale-permission.title" = "Izin Aksesibilitas Perlu Diperbarui";
+"alert.stale-permission.body" = "Aplikasi telah dibangun ulang dan izin aksesibilitas sebelumnya tidak lagi berlaku.\n\nSilakan buka:\nPengaturan Sistem > Privasi & Keamanan > Aksesibilitas\n\nMatikan \"Window Resize\" lalu nyalakan kembali,\natau hapus dan tambahkan kembali.";
+"alert.button.open-settings" = "Buka Pengaturan";
+"alert.button.ok" = "OK";
+
+/* Settings window */
+"settings.title" = "Pengaturan Window Resize";
+"settings.preset-sizes" = "Ukuran Preset";
+"settings.built-in" = "Bawaan";
+"settings.custom" = "Kustom";
+"settings.no-custom-sizes" = "Belum ada ukuran kustom";
+"settings.width" = "Lebar";
+"settings.height" = "Tinggi";
+"settings.dimension-separator" = "x";
+"settings.add" = "Tambah";
+"settings.remove" = "Hapus";
+"settings.launch-at-login" = "Jalankan Saat Login";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "Aksesibilitas: Aktif";
+"settings.accessibility.needs-refresh" = "Aksesibilitas: Perlu Diperbarui (matikan→nyalakan di Pengaturan)";
+"settings.accessibility.not-enabled" = "Aksesibilitas: Tidak Aktif";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

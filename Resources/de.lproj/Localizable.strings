@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "Größe ändern";
+"menu.settings" = "Einstellungen …";
+"menu.quit" = "Window Resize beenden";
+"menu.loading" = "Laden …";
+"menu.no-windows" = "(Keine Fenster gefunden)";
+"menu.untitled" = "(Ohne Titel)";
+
+/* Alerts */
+"alert.resize-failed.title" = "Größenänderung fehlgeschlagen";
+"alert.resize-failed.body" = "Das Fenster konnte nicht in der Größe verändert werden. Die Anwendung unterstützt möglicherweise keine Größenänderung über Bedienungshilfen, oder das Fenster befindet sich im Vollbildmodus.";
+"alert.stale-permission.title" = "Berechtigung für Bedienungshilfen muss aktualisiert werden";
+"alert.stale-permission.body" = "Die App wurde neu erstellt und die vorherige Berechtigung für Bedienungshilfen ist nicht mehr gültig.\n\nBitte gehen Sie zu:\nSystemeinstellungen > Datenschutz & Sicherheit > Bedienungshilfen\n\nSchalten Sie „Window Resize" aus und wieder ein,\noder entfernen Sie es und fügen Sie es erneut hinzu.";
+"alert.button.open-settings" = "Einstellungen öffnen";
+"alert.button.ok" = "OK";
+
+/* Settings window */
+"settings.title" = "Window Resize Einstellungen";
+"settings.preset-sizes" = "Voreingestellte Größen";
+"settings.built-in" = "Integriert";
+"settings.custom" = "Benutzerdefiniert";
+"settings.no-custom-sizes" = "Keine benutzerdefinierten Größen hinzugefügt";
+"settings.width" = "Breite";
+"settings.height" = "Höhe";
+"settings.dimension-separator" = "x";
+"settings.add" = "Hinzufügen";
+"settings.remove" = "Entfernen";
+"settings.launch-at-login" = "Beim Anmelden starten";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "Bedienungshilfen: Aktiviert";
+"settings.accessibility.needs-refresh" = "Bedienungshilfen: Aktualisierung nötig (in Einstellungen aus→ein)";
+"settings.accessibility.not-enabled" = "Bedienungshilfen: Deaktiviert";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

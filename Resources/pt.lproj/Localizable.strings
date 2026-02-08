@@ -1,0 +1,36 @@
+/* Menu items */
+"menu.resize" = "Redimensionar";
+"menu.settings" = "Configurações...";
+"menu.quit" = "Encerrar Window Resize";
+"menu.loading" = "Carregando...";
+"menu.no-windows" = "(Nenhuma janela encontrada)";
+"menu.untitled" = "(Sem Título)";
+
+/* Alerts */
+"alert.resize-failed.title" = "Falha ao Redimensionar";
+"alert.resize-failed.body" = "Não foi possível redimensionar a janela. O aplicativo pode não suportar redimensionamento via acessibilidade, ou a janela pode estar em modo tela cheia.";
+"alert.stale-permission.title" = "Permissão de Acessibilidade Precisa ser Atualizada";
+"alert.stale-permission.body" = "O app foi reconstruído e a permissão de acessibilidade anterior não é mais válida.\n\nPor favor, vá para:\nConfigurar Sistema > Privacidade e Segurança > Acessibilidade\n\nDesative \"Window Resize\" e ative novamente,\nou remova e adicione novamente.";
+"alert.button.open-settings" = "Abrir Configurações";
+"alert.button.ok" = "OK";
+
+/* Settings window */
+"settings.title" = "Configurações do Window Resize";
+"settings.preset-sizes" = "Tamanhos Predefinidos";
+"settings.built-in" = "Integrados";
+"settings.custom" = "Personalizados";
+"settings.no-custom-sizes" = "Nenhum tamanho personalizado adicionado";
+"settings.width" = "Largura";
+"settings.height" = "Altura";
+"settings.dimension-separator" = "x";
+"settings.add" = "Adicionar";
+"settings.remove" = "Remover";
+"settings.launch-at-login" = "Iniciar ao Fazer Login";
+
+/* Accessibility status */
+"settings.accessibility.enabled" = "Acessibilidade: Ativada";
+"settings.accessibility.needs-refresh" = "Acessibilidade: Precisa Atualizar (desative→ative nas Configurações)";
+"settings.accessibility.not-enabled" = "Acessibilidade: Desativada";
+
+/* Accessibility icon */
+"accessibility.icon-description" = "Window Resize";

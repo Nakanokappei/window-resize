@@ -35,15 +35,21 @@ Window Resize/
 │   └── Localization.swift   # L() ヘルパー関数
 └── Resources/
     ├── en.lproj/            # 英語 (ベース)
-    ├── ja.lproj/            # 日本語
-    ├── fr.lproj/            # フランス語
+    ├── zh-Hans.lproj/       # 簡体中文
     ├── es.lproj/            # スペイン語
-    ├── it.lproj/            # イタリア語
-    ├── zh-Hant.lproj/       # 繁体中文
-    ├── ko.lproj/            # 韓国語
+    ├── hi.lproj/            # ヒンディー語
     ├── ar.lproj/            # アラビア語
+    ├── id.lproj/            # インドネシア語
+    ├── pt.lproj/            # ポルトガル語
+    ├── fr.lproj/            # フランス語
+    ├── ja.lproj/            # 日本語
+    ├── ru.lproj/            # ロシア語
+    ├── de.lproj/            # ドイツ語
     ├── vi.lproj/            # ベトナム語
-    └── th.lproj/            # タイ語
+    ├── th.lproj/            # タイ語
+    ├── ko.lproj/            # 韓国語
+    ├── it.lproj/            # イタリア語
+    └── zh-Hant.lproj/       # 繁体中文
 ```
 
 ## Key Architecture Decisions
