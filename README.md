@@ -57,7 +57,7 @@ bash build.sh
 open "build/Window Resize.app"
 ```
 
-The build script automatically resets Accessibility permissions (`tccutil reset`) for unsigned app development.
+The build script ad-hoc signs the app bundle and resets Accessibility permissions (`tccutil reset`) for development.
 
 ### Test with a specific language
 

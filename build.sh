@@ -6,7 +6,11 @@ set -euo pipefail
 APP_NAME="Window Resize"
 EXECUTABLE_NAME="WindowResize"
 BUILD_DIR="./build"
-APP_BUNDLE="${BUILD_DIR}/${APP_NAME}.app"
+# iCloud Drive上ではxattr (com.apple.provenance等) が自動付与されcodesignが失敗するため、
+# /tmp でビルドしてから成果物をコピーする
+# Build in /tmp to avoid iCloud Drive xattrs that prevent codesign
+STAGING_DIR=$(mktemp -d)/build
+APP_BUNDLE="${STAGING_DIR}/${APP_NAME}.app"
 CONTENTS_DIR="${APP_BUNDLE}/Contents"
 MACOS_DIR="${CONTENTS_DIR}/MacOS"
 SOURCES_DIR="./Sources"
@@ -16,7 +20,7 @@ echo "=== Building ${APP_NAME} ==="
 # Clean previous build
 rm -rf "${BUILD_DIR}"
 
-# Create .app bundle directory structure
+# Create .app bundle directory structure in staging area
 mkdir -p "${MACOS_DIR}"
 
 # Detect architecture
@@ -54,10 +58,21 @@ if [ -d "${LOCALIZATIONS_DIR}" ]; then
     echo "=== Copied localizations: $(ls -d "${RESOURCES_DIR}"/*.lproj 2>/dev/null | xargs -n1 basename | tr '\n' ' ') ==="
 fi
 
+# Ad-hoc code sign the bundle (seals resources and Info.plist so Gatekeeper accepts downloaded app)
+# ダウンロードしたアプリが「壊れている」と表示されないよう、リソースを含めてアドホック署名する
+echo "=== Signing ${APP_NAME}.app ==="
+codesign --force --deep --sign - "${APP_BUNDLE}"
+
+# Copy signed bundle from staging to project build directory
+# 署名済みバンドルをプロジェクトのbuildディレクトリにコピー
+mkdir -p "${BUILD_DIR}"
+cp -R "${APP_BUNDLE}" "${BUILD_DIR}/"
+rm -rf "${STAGING_DIR}"
+
 # Reset stale Accessibility permission (unsigned app の場合、リビルドでハッシュが変わり古い権限が無効化される)
 BUNDLE_ID="com.windowresize.app"
 echo "=== Resetting Accessibility permission for ${BUNDLE_ID} ==="
 tccutil reset Accessibility "${BUNDLE_ID}" 2>/dev/null || true
 
-echo "=== Build complete: ${APP_BUNDLE} ==="
-echo "Run with: open \"${APP_BUNDLE}\""
+echo "=== Build complete: ${BUILD_DIR}/${APP_NAME}.app ==="
+echo "Run with: open \"${BUILD_DIR}/${APP_NAME}.app\""
