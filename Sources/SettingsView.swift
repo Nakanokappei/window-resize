@@ -10,24 +10,26 @@ struct SettingsView: View {
             Text(L("settings.preset-sizes"))
                 .font(.headline)
 
-            // Built-in sizes
+            // 内蔵サイズ一覧（スクロール可能） / Built-in size list (scrollable)
             GroupBox(label: Text(L("settings.built-in")).font(.subheadline)) {
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(SettingsStore.builtInSizes) { size in
-                        HStack {
-                            Text(size.displayName)
-                            Spacer()
-                            if let label = size.label {
-                                Text(label)
-                                    .foregroundColor(.secondary)
-                                    .font(.caption)
-                                    .frame(width: 150, alignment: .trailing)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(SettingsStore.builtInSizes) { size in
+                            HStack {
+                                Text(size.displayName)
+                                Spacer()
+                                if let label = size.label {
+                                    Text(label)
+                                        .foregroundColor(.secondary)
+                                        .font(.caption)
+                                        .frame(width: 150, alignment: .trailing)
+                                }
                             }
+                            .padding(.vertical, 2)
                         }
-                        .padding(.vertical, 2)
                     }
+                    .padding(.vertical, 4)
                 }
-                .padding(.vertical, 4)
             }
 
             // Custom sizes
@@ -117,8 +119,6 @@ struct SettingsView: View {
                     .font(.caption)
                 }
             }
-
-            Spacer()
         }
         .padding()
         .frame(minWidth: 350, minHeight: 400)

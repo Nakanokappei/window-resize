@@ -11,6 +11,7 @@ struct PresetSize: Codable, Equatable, Identifiable {
     }
 
     /// サイズ名ラベル付きの表示名（例: "1024 x 768  XGA"）
+    /// Display name with label (e.g. "1024 x 768  XGA")
     var displayNameWithLabel: String {
         if let label = label, !label.isEmpty {
             return "\(width) x \(height)\t\(label)"

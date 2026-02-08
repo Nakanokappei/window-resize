@@ -17,10 +17,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 権限チェック: AXIsProcessTrusted が true でもリビルド後は stale の場合がある
+        // Permission check: AXIsProcessTrusted may return true even when stale after rebuild
         if !AccessibilityHelper.isAccessibilityEnabled() {
             AccessibilityHelper.requestAccessibilityPermission()
         } else if !AccessibilityHelper.isAccessibilityActuallyWorking() {
             // AXIsProcessTrusted() は true だが実際は動かない → stale
+            // AXIsProcessTrusted() returns true but actually not working → stale
             AccessibilityHelper.showStalePermissionAlert()
         }
 
@@ -49,41 +51,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func rebuildMenu() {
         let menu = NSMenu()
 
-        // Resize submenu
+        // Resize submenu: ウィンドウ一覧 → サイズ選択 / Window list → Size selection
         let resizeItem = NSMenuItem(title: L("menu.resize"), action: nil, keyEquivalent: "")
-        let resizeSubmenu = NSMenu()
-
-        for size in store.allSizes {
-            let sizeItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
-
-            // サイズ名とラベルを右揃えで表示する AttributedString を作成
-            let paragraphStyle = NSMutableParagraphStyle()
-            let tabStop = NSTextTab(textAlignment: .right, location: 230)
-            paragraphStyle.tabStops = [tabStop]
-
-            let baseAttrs: [NSAttributedString.Key: Any] = [
-                .font: NSFont.menuFont(ofSize: 14),
-                .paragraphStyle: paragraphStyle
-            ]
-
-            let sizeText = NSMutableAttributedString(string: size.displayName, attributes: baseAttrs)
-
-            if let label = size.label, !label.isEmpty {
-                let labelAttrs: [NSAttributedString.Key: Any] = [
-                    .font: NSFont.menuFont(ofSize: 11),
-                    .foregroundColor: NSColor.secondaryLabelColor,
-                    .paragraphStyle: paragraphStyle
-                ]
-                sizeText.append(NSAttributedString(string: "\t\(label)", attributes: labelAttrs))
-            }
-
-            sizeItem.attributedTitle = sizeText
-
-            let windowSubmenu = WindowListMenu(size: size, target: self)
-            sizeItem.submenu = windowSubmenu
-            resizeSubmenu.addItem(sizeItem)
-        }
-
+        let resizeSubmenu = WindowListMenu(target: self)
         resizeItem.submenu = resizeSubmenu
         menu.addItem(resizeItem)
 
@@ -144,13 +114,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 // A submenu that lazily populates window list when opened
 class WindowListMenu: NSMenu, NSMenuDelegate {
-    let presetSize: PresetSize
     weak var resizeTarget: AppDelegate?
 
-    init(size: PresetSize, target: AppDelegate) {
-        self.presetSize = size
+    init(target: AppDelegate) {
         self.resizeTarget = target
-        super.init(title: size.displayName)
+        super.init(title: L("menu.resize"))
         self.delegate = self
         // Add placeholder so the submenu arrow shows
         self.addItem(NSMenuItem(title: L("menu.loading"), action: nil, keyEquivalent: ""))
@@ -175,14 +143,87 @@ class WindowListMenu: NSMenu, NSMenuDelegate {
         for windowInfo in windows {
             let displayName = windowInfo.windowName.isEmpty ? L("menu.untitled") : windowInfo.windowName
             let title = "[\(windowInfo.ownerName)] \(displayName)"
-            let item = NSMenuItem(
-                title: title,
-                action: #selector(AppDelegate.resizeSelectedWindow(_:)),
-                keyEquivalent: ""
-            )
-            item.target = resizeTarget
-            item.representedObject = ResizeAction(windowInfo: windowInfo, size: presetSize)
+            let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
+
+            // サイズ一覧をサブメニューとして追加 / Add size list as submenu
+            let sizeSubmenu = SizeListMenu(windowInfo: windowInfo, target: resizeTarget!)
+            item.submenu = sizeSubmenu
             menu.addItem(item)
         }
+    }
+}
+
+// A submenu that shows preset sizes for a given window
+class SizeListMenu: NSMenu {
+    init(windowInfo: WindowInfo, target: AppDelegate) {
+        super.init(title: "")
+
+        // ウィンドウが属するスクリーンの解像度を取得 / Get the screen resolution for the window's display
+        let screenSize = screenSizeForWindow(windowInfo)
+
+        let store = SettingsStore.shared
+        for size in store.allSizes {
+            let exceedsScreen = CGFloat(size.width) > screenSize.width || CGFloat(size.height) > screenSize.height
+
+            let item = NSMenuItem(title: "", action: exceedsScreen ? nil : #selector(AppDelegate.resizeSelectedWindow(_:)), keyEquivalent: "")
+            item.target = exceedsScreen ? nil : target
+            item.isEnabled = !exceedsScreen
+
+            // サイズ名とラベルを右揃えで表示する AttributedString を作成
+            // Build AttributedString with right-aligned label for size name
+            let paragraphStyle = NSMutableParagraphStyle()
+            let tabStop = NSTextTab(textAlignment: .right, location: 230)
+            paragraphStyle.tabStops = [tabStop]
+
+            let baseAttrs: [NSAttributedString.Key: Any] = [
+                .font: NSFont.menuFont(ofSize: 14),
+                .paragraphStyle: paragraphStyle
+            ]
+
+            let sizeText = NSMutableAttributedString(string: size.displayName, attributes: baseAttrs)
+
+            if let label = size.label, !label.isEmpty {
+                let labelAttrs: [NSAttributedString.Key: Any] = [
+                    .font: NSFont.menuFont(ofSize: 11),
+                    .foregroundColor: NSColor.secondaryLabelColor,
+                    .paragraphStyle: paragraphStyle
+                ]
+                sizeText.append(NSAttributedString(string: "\t\(label)", attributes: labelAttrs))
+            }
+
+            item.attributedTitle = sizeText
+            item.representedObject = ResizeAction(windowInfo: windowInfo, size: size)
+            addItem(item)
+        }
+    }
+
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    /// ウィンドウの中心座標が属するスクリーンのサイズを返す
+    /// Returns the screen size of the display containing the window's center point
+    private func screenSizeForWindow(_ windowInfo: WindowInfo) -> CGSize {
+        let windowCenter = CGPoint(
+            x: windowInfo.bounds.midX,
+            y: windowInfo.bounds.midY
+        )
+        // CGWindowList の座標系は左上原点、NSScreen は左下原点なので変換して比較
+        // CGWindowList uses top-left origin, NSScreen uses bottom-left; convert for comparison
+        for screen in NSScreen.screens {
+            let frame = screen.frame
+            // NSScreen座標 → 左上原点に変換 / Convert NSScreen coords to top-left origin
+            let screenTopLeft = CGRect(
+                x: frame.origin.x,
+                y: NSScreen.screens[0].frame.height - frame.origin.y - frame.height,
+                width: frame.width,
+                height: frame.height
+            )
+            if screenTopLeft.contains(windowCenter) {
+                return frame.size
+            }
+        }
+        // フォールバック: メインスクリーン / Fallback: main screen
+        return NSScreen.main?.frame.size ?? CGSize(width: 1920, height: 1080)
     }
 }
