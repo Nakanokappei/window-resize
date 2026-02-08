@@ -17,7 +17,7 @@ Also available for Windows: [Window Resize for Windows](https://github.com/Nakan
 
 Download the latest release from [Releases](https://github.com/Nakanokappei/window-resize/releases).
 
-> If blocked by Gatekeeper: `xattr -cr "Window Resize.app"`
+> If blocked by Gatekeeper: `find "Window Resize.app" -exec xattr -c {} \;`
 
 ## Usage
 
