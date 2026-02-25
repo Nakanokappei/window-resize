@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "リサイズ後にスクリーンショットを撮影";
+"settings.screenshot.save-to-file" = "ファイルに保存";
+"settings.screenshot.save-to" = "保存先";
+"settings.screenshot.desktop" = "デスクトップ";
+"settings.screenshot.pictures" = "ピクチャ";
+"settings.screenshot.copy-to-clipboard" = "クリップボードにコピー";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "画面収録の権限が必要です";
+"alert.screen-recording.body" = "ウインドウのスクリーンショットを撮影するには、画面収録の権限が必要です。\n\n以下の手順で操作してください：\nシステム設定 > プライバシーとセキュリティ > 画面収録\n\n「Window Resize」を有効にしてください。";

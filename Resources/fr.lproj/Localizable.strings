@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "Capturer après le redimensionnement";
+"settings.screenshot.save-to-file" = "Enregistrer dans un fichier";
+"settings.screenshot.save-to" = "Enregistrer dans";
+"settings.screenshot.desktop" = "Bureau";
+"settings.screenshot.pictures" = "Images";
+"settings.screenshot.copy-to-clipboard" = "Copier dans le presse-papiers";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "Autorisation d'enregistrement d'écran requise";
+"alert.screen-recording.body" = "Pour capturer des fenêtres, l'autorisation d'enregistrement d'écran est requise.\n\nAccédez à :\nRéglages du système > Confidentialité et sécurité > Enregistrement d'écran\n\nPuis activez « Window Resize ».";

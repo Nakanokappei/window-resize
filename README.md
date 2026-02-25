@@ -57,7 +57,7 @@ bash build.sh
 open "build/Window Resize.app"
 ```
 
-The build script ad-hoc signs the app bundle and resets Accessibility permissions (`tccutil reset`) for development.
+The build script signs the app with Developer ID, submits it for Apple notarization, and staples the ticket automatically.
 
 ### Test with a specific language
 
@@ -67,4 +67,4 @@ open "build/Window Resize.app" --args -AppleLanguages "(ja)"
 
 ## License
 
-MIT
+[MIT License](LICENSE)

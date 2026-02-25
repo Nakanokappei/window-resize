@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "Chụp ảnh sau khi thay đổi kích thước";
+"settings.screenshot.save-to-file" = "Lưu vào tệp";
+"settings.screenshot.save-to" = "Lưu vào";
+"settings.screenshot.desktop" = "Màn hình chính";
+"settings.screenshot.pictures" = "Hình ảnh";
+"settings.screenshot.copy-to-clipboard" = "Sao chép vào bảng nhớ tạm";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "Cần quyền ghi màn hình";
+"alert.screen-recording.body" = "Để chụp ảnh cửa sổ, cần có quyền ghi màn hình.\n\nVui lòng đi tới:\nCài đặt hệ thống > Quyền riêng tư & Bảo mật > Ghi màn hình\n\nSau đó bật \"Window Resize\".";

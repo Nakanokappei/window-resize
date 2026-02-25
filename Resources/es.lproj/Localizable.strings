@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "Tomar captura después de redimensionar";
+"settings.screenshot.save-to-file" = "Guardar en archivo";
+"settings.screenshot.save-to" = "Guardar en";
+"settings.screenshot.desktop" = "Escritorio";
+"settings.screenshot.pictures" = "Imágenes";
+"settings.screenshot.copy-to-clipboard" = "Copiar al portapapeles";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "Se requiere permiso de grabación de pantalla";
+"alert.screen-recording.body" = "Para tomar capturas de ventanas, se requiere el permiso de grabación de pantalla.\n\nVe a:\nAjustes del Sistema > Privacidad y Seguridad > Grabación de pantalla\n\nLuego activa \"Window Resize\".";

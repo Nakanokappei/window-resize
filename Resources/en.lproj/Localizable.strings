@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "Take screenshot after resize";
+"settings.screenshot.save-to-file" = "Save to file";
+"settings.screenshot.save-to" = "Save to";
+"settings.screenshot.desktop" = "Desktop";
+"settings.screenshot.pictures" = "Pictures";
+"settings.screenshot.copy-to-clipboard" = "Copy to clipboard";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "Screen Recording Permission Required";
+"alert.screen-recording.body" = "To take screenshots of windows, Screen Recording permission is required.\n\nPlease go to:\nSystem Settings > Privacy & Security > Screen Recording\n\nThen enable \"Window Resize\".";

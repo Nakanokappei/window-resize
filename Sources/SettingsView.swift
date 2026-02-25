@@ -90,6 +90,37 @@ struct SettingsView: View {
 
             Divider()
 
+            // Screenshot settings / スクリーンショット設定
+            Toggle(L("settings.screenshot.enabled"), isOn: $store.screenshotEnabled)
+                .toggleStyle(.switch)
+
+            if store.screenshotEnabled {
+                Toggle(L("settings.screenshot.save-to-file"), isOn: $store.screenshotSaveToFile)
+                    .toggleStyle(.switch)
+                    .font(.caption)
+
+                if store.screenshotSaveToFile {
+                    HStack {
+                        Text(L("settings.screenshot.save-to"))
+                            .font(.caption)
+                        Picker("", selection: $store.screenshotSaveLocation) {
+                            Text(L("settings.screenshot.desktop")).tag(ScreenshotSaveLocation.desktop)
+                            Text(L("settings.screenshot.pictures")).tag(ScreenshotSaveLocation.pictures)
+                        }
+                        .labelsHidden()
+                        .pickerStyle(.segmented)
+                        .frame(maxWidth: 200)
+                    }
+                    .padding(.leading, 20)
+                }
+
+                Toggle(L("settings.screenshot.copy-to-clipboard"), isOn: $store.screenshotCopyToClipboard)
+                    .toggleStyle(.switch)
+                    .font(.caption)
+            }
+
+            Divider()
+
             // Accessibility status
             HStack {
                 let apiEnabled = AccessibilityHelper.isAccessibilityEnabled()

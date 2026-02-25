@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "ถ่ายภาพหน้าจอหลังปรับขนาด";
+"settings.screenshot.save-to-file" = "บันทึกเป็นไฟล์";
+"settings.screenshot.save-to" = "บันทึกที่";
+"settings.screenshot.desktop" = "เดสก์ท็อป";
+"settings.screenshot.pictures" = "รูปภาพ";
+"settings.screenshot.copy-to-clipboard" = "คัดลอกไปยังคลิปบอร์ด";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "ต้องการสิทธิ์บันทึกหน้าจอ";
+"alert.screen-recording.body" = "ในการถ่ายภาพหน้าจอของหน้าต่าง จำเป็นต้องมีสิทธิ์บันทึกหน้าจอ\n\nกรุณาไปที่:\nการตั้งค่าระบบ > ความเป็นส่วนตัวและความปลอดภัย > บันทึกหน้าจอ\n\nจากนั้นเปิดใช้งาน \"Window Resize\"";

@@ -6,11 +6,21 @@ extension Notification.Name {
     static let settingsChanged = Notification.Name("com.windowresize.settingsChanged")
 }
 
+/// スクリーンショットの保存先 / Screenshot save location
+enum ScreenshotSaveLocation: String, CaseIterable {
+    case desktop
+    case pictures
+}
+
 class SettingsStore: ObservableObject {
     static let shared = SettingsStore()
 
     private let defaultsKey = "customPresetSizes"
     private let launchAtLoginKey = "launchAtLogin"
+    private let screenshotEnabledKey = "screenshotEnabled"
+    private let screenshotSaveToFileKey = "screenshotSaveToFile"
+    private let screenshotSaveLocationKey = "screenshotSaveLocation"
+    private let screenshotCopyToClipboardKey = "screenshotCopyToClipboard"
 
     @Published var customSizes: [PresetSize] = []
     @Published var launchAtLogin: Bool = false {
@@ -18,6 +28,20 @@ class SettingsStore: ObservableObject {
             setLaunchAtLogin(launchAtLogin)
             UserDefaults.standard.set(launchAtLogin, forKey: launchAtLoginKey)
         }
+    }
+
+    // スクリーンショット設定 / Screenshot settings
+    @Published var screenshotEnabled: Bool = false {
+        didSet { UserDefaults.standard.set(screenshotEnabled, forKey: screenshotEnabledKey) }
+    }
+    @Published var screenshotSaveToFile: Bool = true {
+        didSet { UserDefaults.standard.set(screenshotSaveToFile, forKey: screenshotSaveToFileKey) }
+    }
+    @Published var screenshotSaveLocation: ScreenshotSaveLocation = .desktop {
+        didSet { UserDefaults.standard.set(screenshotSaveLocation.rawValue, forKey: screenshotSaveLocationKey) }
+    }
+    @Published var screenshotCopyToClipboard: Bool = false {
+        didSet { UserDefaults.standard.set(screenshotCopyToClipboard, forKey: screenshotCopyToClipboardKey) }
     }
 
     static let builtInSizes: [PresetSize] = [
@@ -44,6 +68,16 @@ class SettingsStore: ObservableObject {
     init() {
         loadFromDefaults()
         launchAtLogin = UserDefaults.standard.bool(forKey: launchAtLoginKey)
+        screenshotEnabled = UserDefaults.standard.bool(forKey: screenshotEnabledKey)
+        // screenshotSaveToFile のデフォルトは true（キーが未登録の場合）
+        if UserDefaults.standard.object(forKey: screenshotSaveToFileKey) != nil {
+            screenshotSaveToFile = UserDefaults.standard.bool(forKey: screenshotSaveToFileKey)
+        }
+        if let raw = UserDefaults.standard.string(forKey: screenshotSaveLocationKey),
+           let loc = ScreenshotSaveLocation(rawValue: raw) {
+            screenshotSaveLocation = loc
+        }
+        screenshotCopyToClipboard = UserDefaults.standard.bool(forKey: screenshotCopyToClipboardKey)
     }
 
     func addSize(_ size: PresetSize) {

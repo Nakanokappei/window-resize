@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "Сделать снимок после изменения размера";
+"settings.screenshot.save-to-file" = "Сохранить в файл";
+"settings.screenshot.save-to" = "Сохранить в";
+"settings.screenshot.desktop" = "Рабочий стол";
+"settings.screenshot.pictures" = "Изображения";
+"settings.screenshot.copy-to-clipboard" = "Скопировать в буфер обмена";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "Требуется разрешение на запись экрана";
+"alert.screen-recording.body" = "Для создания снимков окон требуется разрешение на запись экрана.\n\nПерейдите в:\nСистемные настройки > Конфиденциальность и безопасность > Запись экрана\n\nЗатем включите \"Window Resize\".";

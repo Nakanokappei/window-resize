@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "調整大小後截圖";
+"settings.screenshot.save-to-file" = "儲存到檔案";
+"settings.screenshot.save-to" = "儲存至";
+"settings.screenshot.desktop" = "桌面";
+"settings.screenshot.pictures" = "圖片";
+"settings.screenshot.copy-to-clipboard" = "拷貝到剪貼板";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "需要螢幕錄製權限";
+"alert.screen-recording.body" = "要擷取視窗圖片，需要螢幕錄製權限。\n\n請前往：\n系統設定 > 隱私權與安全性 > 螢幕錄製\n\n然後啟用「Window Resize」。";

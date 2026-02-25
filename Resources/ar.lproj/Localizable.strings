@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "التقاط صورة بعد تغيير الحجم";
+"settings.screenshot.save-to-file" = "حفظ في ملف";
+"settings.screenshot.save-to" = "حفظ في";
+"settings.screenshot.desktop" = "سطح المكتب";
+"settings.screenshot.pictures" = "الصور";
+"settings.screenshot.copy-to-clipboard" = "نسخ إلى الحافظة";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "مطلوب إذن تسجيل الشاشة";
+"alert.screen-recording.body" = "لالتقاط صور للنوافذ، يلزم إذن تسجيل الشاشة.\n\nيرجى الانتقال إلى:\nإعدادات النظام > الخصوصية والأمان > تسجيل الشاشة\n\nثم قم بتفعيل \"Window Resize\".";

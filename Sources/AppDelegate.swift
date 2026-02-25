@@ -32,6 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // メニューバーアイコン: Resources/MenuBarIcon.png を使用（テンプレート画像）
             // Menu bar icon: use Resources/MenuBarIcon.png (template image)
             if let image = NSImage(named: "MenuBarIcon") {
+                image.size = NSSize(width: 18, height: 18)
                 image.isTemplate = true
                 button.image = image
             } else if let image = NSImage(systemSymbolName: "rectangle.expand.vertical",
@@ -97,6 +98,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             alert.informativeText = L("alert.resize-failed.body")
             alert.alertStyle = .warning
             alert.runModal()
+            return
+        }
+
+        // リサイズ成功後、0.5秒待ってスクリーンショットを撮影
+        // After successful resize, wait 0.5s for the window to redraw, then capture
+        if store.screenshotEnabled {
+            let windowID = action.windowInfo.windowID
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                guard let image = ScreenshotHelper.captureWindow(windowID) else { return }
+
+                if self.store.screenshotSaveToFile {
+                    _ = ScreenshotHelper.saveToFile(image, location: self.store.screenshotSaveLocation)
+                }
+
+                if self.store.screenshotCopyToClipboard {
+                    ScreenshotHelper.copyToClipboard(image)
+                }
+            }
         }
     }
 

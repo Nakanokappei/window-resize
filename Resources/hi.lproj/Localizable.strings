@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "आकार बदलने के बाद स्क्रीनशॉट लें";
+"settings.screenshot.save-to-file" = "फ़ाइल में सहेजें";
+"settings.screenshot.save-to" = "सहेजें";
+"settings.screenshot.desktop" = "डेस्कटॉप";
+"settings.screenshot.pictures" = "चित्र";
+"settings.screenshot.copy-to-clipboard" = "क्लिपबोर्ड पर कॉपी करें";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "स्क्रीन रिकॉर्डिंग अनुमति आवश्यक";
+"alert.screen-recording.body" = "विंडो का स्क्रीनशॉट लेने के लिए स्क्रीन रिकॉर्डिंग अनुमति आवश्यक है।\n\nकृपया जाएँ:\nसिस्टम सेटिंग्स > गोपनीयता और सुरक्षा > स्क्रीन रिकॉर्डिंग\n\nफिर \"Window Resize\" को सक्षम करें।";

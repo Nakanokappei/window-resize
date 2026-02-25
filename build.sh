@@ -6,6 +6,8 @@ set -euo pipefail
 APP_NAME="Window Resize"
 EXECUTABLE_NAME="WindowResize"
 BUILD_DIR="./build"
+SIGNING_IDENTITY="Developer ID Application: Kappei Nakano (G466Q9TVYB)"
+NOTARYTOOL_PROFILE="notarytool-profile"
 # iCloud Drive上ではxattr (com.apple.provenance等) が自動付与されcodesignが失敗するため、
 # /tmp でビルドしてから成果物をコピーする
 # Build in /tmp to avoid iCloud Drive xattrs that prevent codesign
@@ -67,16 +69,16 @@ fi
 
 # Copy menu bar icon (template image) into bundle Resources
 # メニューバーアイコンをバンドルにコピー
-if [ -f "MenuBarIcon.png" ]; then
-    cp "MenuBarIcon.png" "${RESOURCES_DIR}/MenuBarIcon.png"
-    cp "MenuBarIcon@2x.png" "${RESOURCES_DIR}/MenuBarIcon@2x.png"
+if [ -f "${LOCALIZATIONS_DIR}/MenuBarIcon.png" ]; then
+    cp "${LOCALIZATIONS_DIR}/MenuBarIcon.png" "${RESOURCES_DIR}/MenuBarIcon.png"
+    cp "${LOCALIZATIONS_DIR}/MenuBarIcon@2x.png" "${RESOURCES_DIR}/MenuBarIcon@2x.png"
     echo "=== Copied MenuBarIcon ==="
 fi
 
-# Ad-hoc code sign the bundle (seals resources and Info.plist so Gatekeeper accepts downloaded app)
-# ダウンロードしたアプリが「壊れている」と表示されないよう、リソースを含めてアドホック署名する
-echo "=== Signing ${APP_NAME}.app ==="
-codesign --force --deep --sign - "${APP_BUNDLE}"
+# Developer ID code sign with hardened runtime (required for notarization)
+# Developer ID署名 + Hardened Runtime（公証に必須）
+echo "=== Signing ${APP_NAME}.app with Developer ID ==="
+codesign --force --sign "${SIGNING_IDENTITY}" --timestamp --options runtime "${APP_BUNDLE}"
 
 # Copy signed bundle from staging to project build directory
 # 署名済みバンドルをプロジェクトのbuildディレクトリにコピー
@@ -84,10 +86,16 @@ mkdir -p "${BUILD_DIR}"
 cp -R "${APP_BUNDLE}" "${BUILD_DIR}/"
 rm -rf "${STAGING_DIR}"
 
-# Reset stale Accessibility permission (unsigned app の場合、リビルドでハッシュが変わり古い権限が無効化される)
-BUNDLE_ID="com.windowresize.app"
-echo "=== Resetting Accessibility permission for ${BUNDLE_ID} ==="
-tccutil reset Accessibility "${BUNDLE_ID}" 2>/dev/null || true
+# Notarize the app / アプリを公証する
+echo "=== Notarizing ${APP_NAME}.app ==="
+ZIP_PATH="${BUILD_DIR}/WindowResize.zip"
+ditto -c -k --keepParent "${BUILD_DIR}/${APP_NAME}.app" "${ZIP_PATH}"
+xcrun notarytool submit "${ZIP_PATH}" --keychain-profile "${NOTARYTOOL_PROFILE}" --wait
+rm -f "${ZIP_PATH}"
+
+# Staple the notarization ticket / 公証チケットをステープル
+echo "=== Stapling notarization ticket ==="
+xcrun stapler staple "${BUILD_DIR}/${APP_NAME}.app"
 
 echo "=== Build complete: ${BUILD_DIR}/${APP_NAME}.app ==="
 echo "Run with: open \"${BUILD_DIR}/${APP_NAME}.app\""

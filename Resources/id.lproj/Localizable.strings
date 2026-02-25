@@ -34,3 +34,15 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
+
+/* Screenshot settings */
+"settings.screenshot.enabled" = "Ambil tangkapan layar setelah mengubah ukuran";
+"settings.screenshot.save-to-file" = "Simpan ke file";
+"settings.screenshot.save-to" = "Simpan ke";
+"settings.screenshot.desktop" = "Desktop";
+"settings.screenshot.pictures" = "Gambar";
+"settings.screenshot.copy-to-clipboard" = "Salin ke papan klip";
+
+/* Screen Recording permission */
+"alert.screen-recording.title" = "Izin Perekaman Layar Diperlukan";
+"alert.screen-recording.body" = "Untuk mengambil tangkapan layar jendela, izin perekaman layar diperlukan.\n\nSilakan buka:\nPengaturan Sistem > Privasi & Keamanan > Perekaman Layar\n\nKemudian aktifkan \"Window Resize\".";
