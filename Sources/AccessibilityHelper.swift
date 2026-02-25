@@ -1,59 +1,72 @@
+// AccessibilityHelper.swift — Manages the Accessibility permission lifecycle.
+// macOS requires explicit user consent for apps to inspect and manipulate
+// other applications' windows via the AXUIElement API.
+
 import AppKit
 import ApplicationServices
 
 class AccessibilityHelper {
 
-    /// AXIsProcessTrusted() の結果（stale の可能性あり）
-    /// Result of AXIsProcessTrusted() (may be stale)
-    static func isAccessibilityEnabled() -> Bool {
+    /// Checks whether the user has granted Accessibility permission to this app.
+    /// Wraps AXIsProcessTrusted(), which reads from the TCC (Transparency, Consent,
+    /// and Control) database. Note: this can return true even when the permission
+    /// is stale — see `isPermissionFunctional()` for a reliable check.
+    static func isPermissionGranted() -> Bool {
         AXIsProcessTrusted()
     }
 
-    /// 実際にAXUIElementを操作して権限が有効か検証する
-    /// AXIsProcessTrusted() が true でもリビルド後は stale になることがある
-    /// Verify permission by actually operating AXUIElement.
-    /// AXIsProcessTrusted() may return true even when stale after rebuild.
-    static func isAccessibilityActuallyWorking() -> Bool {
-        // まず API レベルのチェック / First, check at API level
+    /// Verifies that Accessibility permission actually works by probing a live app.
+    ///
+    /// After an app is rebuilt with a new code signature, macOS may still report
+    /// the *old* entry as trusted (AXIsProcessTrusted() == true), but actual
+    /// AXUIElement operations fail with .apiDisabled. This method detects that
+    /// "stale permission" state by attempting a real AXUIElement query against
+    /// any running regular application (Finder, Safari, etc.).
+    ///
+    /// Returns true if AXUIElement operations succeed, false if the permission
+    /// is missing or stale.
+    static func isPermissionFunctional() -> Bool {
         guard AXIsProcessTrusted() else { return false }
 
-        // 実際に AXUIElement 操作を試して確認
-        // Finder は常に起動しているので、テスト対象として使う
-        // Try an actual AXUIElement operation to verify.
-        // Use any regular app (Finder is always running) as test target.
-        let runningApps = NSWorkspace.shared.runningApplications.filter {
+        // Pick any regular app as a test target. There is almost always at least
+        // one (Finder), but if none exist, we trust the API result.
+        let regularApps = NSWorkspace.shared.runningApplications.filter {
             $0.activationPolicy == .regular
         }
+        guard let testApp = regularApps.first else { return true }
 
-        guard let testApp = runningApps.first else {
-            // 通常アプリが無い場合はAPI結果を信用する / Trust API result if no regular apps are running
-            return true
-        }
-
+        // Attempt to read the app's window list. If the permission is stale,
+        // this returns .apiDisabled instead of .success or .noValue.
         let appElement = AXUIElementCreateApplication(testApp.processIdentifier)
         var value: CFTypeRef?
         let result = AXUIElementCopyAttributeValue(appElement, kAXWindowsAttribute as CFString, &value)
 
-        // .apiDisabled = 権限が実際には無い (stale) / Permission not actually granted (stale)
-        // .success = 権限あり / Permission granted
-        // .noValue = 権限はあるがウィンドウが無い（これもOK） / Permission granted but no windows (still OK)
         return result != .apiDisabled
     }
 
-    static func requestAccessibilityPermission() {
+    /// Triggers the system Accessibility permission dialog.
+    /// The kAXTrustedCheckOptionPrompt option tells macOS to show the
+    /// "allow this app to control your computer" consent prompt.
+    static func promptForPermission() {
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
         AXIsProcessTrustedWithOptions(options)
     }
 
-    static func openAccessibilitySettings() {
+    /// Opens System Settings → Privacy & Security → Accessibility.
+    /// Uses the x-apple.systempreferences URL scheme, which deep-links
+    /// directly to the Accessibility pane in both System Preferences (pre-Ventura)
+    /// and System Settings (Ventura+).
+    static func openSystemSettings() {
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
             NSWorkspace.shared.open(url)
         }
     }
 
-    /// 権限が stale の場合にユーザーへガイドを表示
-    /// Show guidance alert when permission is stale
-    static func showStalePermissionAlert() {
+    /// Presents an alert explaining that Accessibility permission needs to be
+    /// re-granted. This happens when the app is rebuilt with a new code signature —
+    /// the old TCC entry becomes stale. The user must remove and re-add the app
+    /// in System Settings to fix it.
+    static func promptToReauthorize() {
         let alert = NSAlert()
         alert.messageText = L("alert.stale-permission.title")
         alert.informativeText = L("alert.stale-permission.body")
@@ -63,7 +76,7 @@ class AccessibilityHelper {
 
         let response = alert.runModal()
         if response == .alertFirstButtonReturn {
-            openAccessibilitySettings()
+            openSystemSettings()
         }
     }
 }

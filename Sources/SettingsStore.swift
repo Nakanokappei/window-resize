@@ -1,3 +1,8 @@
+// SettingsStore.swift — Single source of truth for all user preferences.
+// Publishes changes via Combine (@Published) for SwiftUI bindings, and
+// posts .settingsChanged notifications so AppDelegate can rebuild the menu
+// when presets change.
+
 import Foundation
 import Combine
 import ServiceManagement
@@ -6,7 +11,7 @@ extension Notification.Name {
     static let settingsChanged = Notification.Name("com.windowresize.settingsChanged")
 }
 
-/// スクリーンショットの保存先 / Screenshot save location
+/// Where to save screenshot files.
 enum ScreenshotSaveLocation: String, CaseIterable {
     case desktop
     case pictures
@@ -15,6 +20,8 @@ enum ScreenshotSaveLocation: String, CaseIterable {
 class SettingsStore: ObservableObject {
     static let shared = SettingsStore()
 
+    // MARK: - UserDefaults Keys
+
     private let defaultsKey = "customPresetSizes"
     private let launchAtLoginKey = "launchAtLogin"
     private let screenshotEnabledKey = "screenshotEnabled"
@@ -22,15 +29,18 @@ class SettingsStore: ObservableObject {
     private let screenshotSaveLocationKey = "screenshotSaveLocation"
     private let screenshotCopyToClipboardKey = "screenshotCopyToClipboard"
 
+    // MARK: - Published Properties
+
     @Published var customSizes: [PresetSize] = []
+
     @Published var launchAtLogin: Bool = false {
         didSet {
-            setLaunchAtLogin(launchAtLogin)
+            updateLoginItem(launchAtLogin)
             UserDefaults.standard.set(launchAtLogin, forKey: launchAtLoginKey)
         }
     }
 
-    // スクリーンショット設定 / Screenshot settings
+    // Screenshot settings — each persists immediately on change.
     @Published var screenshotEnabled: Bool = false {
         didSet { UserDefaults.standard.set(screenshotEnabled, forKey: screenshotEnabledKey) }
     }
@@ -44,15 +54,19 @@ class SettingsStore: ObservableObject {
         didSet { UserDefaults.standard.set(screenshotCopyToClipboard, forKey: screenshotCopyToClipboardKey) }
     }
 
+    // MARK: - Built-in Presets
+
+    /// The 12 built-in presets covering Mac Retina logical resolutions and
+    /// common standard display sizes. These are not editable by the user.
     static let builtInSizes: [PresetSize] = [
-        // Retina Mac 解像度（論理ピクセル） / Retina Mac resolutions (logical pixels)
+        // Retina Mac resolutions (logical pixels)
         PresetSize(width: 2560, height: 1600, label: "MacBook Pro 16\""),
         PresetSize(width: 2560, height: 1440, label: "QHD / iMac"),
         PresetSize(width: 1728, height: 1117, label: "MacBook Pro 14\""),
         PresetSize(width: 1512, height: 982,  label: "MacBook Air 15\""),
         PresetSize(width: 1470, height: 956,  label: "MacBook Air 13\" M3"),
         PresetSize(width: 1440, height: 900,  label: "MacBook Air 13\""),
-        // 標準解像度 / Standard resolutions
+        // Standard resolutions
         PresetSize(width: 1920, height: 1080, label: "Full HD"),
         PresetSize(width: 1680, height: 1050, label: "WSXGA+"),
         PresetSize(width: 1280, height: 800,  label: "WXGA"),
@@ -61,15 +75,21 @@ class SettingsStore: ObservableObject {
         PresetSize(width: 800,  height: 600,  label: "SVGA"),
     ]
 
-    var allSizes: [PresetSize] {
+    /// All available presets: built-in followed by user-defined custom sizes.
+    var allPresets: [PresetSize] {
         Self.builtInSizes + customSizes
     }
 
+    // MARK: - Initialization
+
+    /// Loads all saved preferences from UserDefaults.
+    /// screenshotSaveToFile defaults to true when no saved value exists.
     init() {
-        loadFromDefaults()
+        loadCustomPresets()
         launchAtLogin = UserDefaults.standard.bool(forKey: launchAtLoginKey)
         screenshotEnabled = UserDefaults.standard.bool(forKey: screenshotEnabledKey)
-        // screenshotSaveToFile のデフォルトは true（キーが未登録の場合）
+
+        // screenshotSaveToFile defaults to true if the key has never been set.
         if UserDefaults.standard.object(forKey: screenshotSaveToFileKey) != nil {
             screenshotSaveToFile = UserDefaults.standard.bool(forKey: screenshotSaveToFileKey)
         }
@@ -80,32 +100,41 @@ class SettingsStore: ObservableObject {
         screenshotCopyToClipboard = UserDefaults.standard.bool(forKey: screenshotCopyToClipboardKey)
     }
 
+    // MARK: - Custom Preset Management
+
     func addSize(_ size: PresetSize) {
         customSizes.append(size)
-        saveToDefaults()
+        persistCustomPresets()
         NotificationCenter.default.post(name: .settingsChanged, object: nil)
     }
 
     func removeSize(at offsets: IndexSet) {
         customSizes.remove(atOffsets: offsets)
-        saveToDefaults()
+        persistCustomPresets()
         NotificationCenter.default.post(name: .settingsChanged, object: nil)
     }
 
-    private func loadFromDefaults() {
+    /// Loads custom presets from UserDefaults (JSON-encoded [PresetSize] array).
+    private func loadCustomPresets() {
         guard let data = UserDefaults.standard.data(forKey: defaultsKey) else { return }
         if let decoded = try? JSONDecoder().decode([PresetSize].self, from: data) {
             customSizes = decoded
         }
     }
 
-    private func saveToDefaults() {
+    /// Persists custom presets to UserDefaults as JSON.
+    private func persistCustomPresets() {
         if let encoded = try? JSONEncoder().encode(customSizes) {
             UserDefaults.standard.set(encoded, forKey: defaultsKey)
         }
     }
 
-    private func setLaunchAtLogin(_ enabled: Bool) {
+    // MARK: - Login Item
+
+    /// Registers or unregisters this app as a login item via SMAppService.
+    /// SMAppService is the modern replacement for SMLoginItemSetEnabled,
+    /// available from macOS 13+.
+    private func updateLoginItem(_ enabled: Bool) {
         if #available(macOS 13.0, *) {
             do {
                 if enabled {

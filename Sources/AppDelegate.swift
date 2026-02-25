@@ -1,6 +1,14 @@
+// AppDelegate.swift — Coordinates the status bar item, menu construction,
+// window resize execution, and post-resize screenshot capture. This is the
+// central orchestrator that connects WindowManager, ScreenshotHelper,
+// AccessibilityHelper, and SettingsStore.
+
 import AppKit
 import SwiftUI
 
+/// Carrier object attached to each NSMenuItem via representedObject.
+/// Bundles the target window and desired dimensions so the resize action
+/// handler can access both without global state.
 class ResizeAction: NSObject {
     let windowInfo: WindowInfo
     let size: PresetSize
@@ -16,21 +24,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let store = SettingsStore.shared
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // 権限チェック: AXIsProcessTrusted が true でもリビルド後は stale の場合がある
-        // Permission check: AXIsProcessTrusted may return true even when stale after rebuild
-        if !AccessibilityHelper.isAccessibilityEnabled() {
-            AccessibilityHelper.requestAccessibilityPermission()
-        } else if !AccessibilityHelper.isAccessibilityActuallyWorking() {
-            // AXIsProcessTrusted() は true だが実際は動かない → stale
-            // AXIsProcessTrusted() returns true but actually not working → stale
-            AccessibilityHelper.showStalePermissionAlert()
+        // Check Accessibility permission on launch. Two failure modes:
+        // 1. Never granted → prompt the system consent dialog
+        // 2. Granted but stale (app was rebuilt) → guide user to re-authorize
+        if !AccessibilityHelper.isPermissionGranted() {
+            AccessibilityHelper.promptForPermission()
+        } else if !AccessibilityHelper.isPermissionFunctional() {
+            AccessibilityHelper.promptToReauthorize()
         }
 
+        // Configure the menu bar status item with a template icon.
+        // Template images adapt automatically to light/dark menu bar.
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem.button {
-            // メニューバーアイコン: Resources/MenuBarIcon.png を使用（テンプレート画像）
-            // Menu bar icon: use Resources/MenuBarIcon.png (template image)
             if let image = NSImage(named: "MenuBarIcon") {
                 image.size = NSSize(width: 18, height: 18)
                 image.isTemplate = true
@@ -44,8 +51,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
-        rebuildMenu()
+        buildStatusMenu()
 
+        // Rebuild the menu whenever settings change (e.g. custom presets added/removed).
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(settingsDidChange),
@@ -54,10 +62,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         )
     }
 
-    private func rebuildMenu() {
+    /// Constructs the status bar dropdown menu.
+    /// Structure: Resize (submenu) → separator → Settings → separator → Quit
+    private func buildStatusMenu() {
         let menu = NSMenu()
 
-        // Resize submenu: ウィンドウ一覧 → サイズ選択 / Window list → Size selection
+        // The Resize item opens a submenu that lazily lists running windows.
         let resizeItem = NSMenuItem(title: L("menu.resize"), action: nil, keyEquivalent: "")
         let resizeSubmenu = WindowListMenu(target: self)
         resizeItem.submenu = resizeSubmenu
@@ -78,16 +88,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.menu = menu
     }
 
+    /// Resize action handler, called when the user selects a preset size.
+    /// Re-checks Accessibility permission before each resize because the
+    /// permission could have been revoked since the menu was opened.
     @objc func resizeSelectedWindow(_ sender: NSMenuItem) {
         guard let action = sender.representedObject as? ResizeAction else { return }
 
-        if !AccessibilityHelper.isAccessibilityEnabled() {
-            AccessibilityHelper.requestAccessibilityPermission()
+        if !AccessibilityHelper.isPermissionGranted() {
+            AccessibilityHelper.promptForPermission()
             return
         }
 
-        if !AccessibilityHelper.isAccessibilityActuallyWorking() {
-            AccessibilityHelper.showStalePermissionAlert()
+        if !AccessibilityHelper.isPermissionFunctional() {
+            AccessibilityHelper.promptToReauthorize()
             return
         }
 
@@ -101,8 +114,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
-        // リサイズ成功後、0.5秒待ってスクリーンショットを撮影
-        // After successful resize, wait 0.5s for the window to redraw, then capture
+        // After a successful resize, wait 0.5 seconds for the window to finish
+        // its redraw/animation, then capture a screenshot if enabled.
         if store.screenshotEnabled {
             let windowID = action.windowInfo.windowID
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -110,7 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     guard let image = image else { return }
 
                     if self.store.screenshotSaveToFile {
-                        _ = ScreenshotHelper.saveToFile(image, location: self.store.screenshotSaveLocation)
+                        _ = ScreenshotHelper.exportAsPNG(image, to: self.store.screenshotSaveLocation)
                     }
 
                     if self.store.screenshotCopyToClipboard {
@@ -134,11 +147,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func settingsDidChange() {
-        rebuildMenu()
+        buildStatusMenu()
     }
 }
 
-// A submenu that lazily populates window list when opened
+// MARK: - WindowListMenu
+
+/// A submenu that lazily populates the list of running application windows.
+/// Uses NSMenuDelegate so the window list is refreshed each time the user
+/// opens the Resize submenu, rather than being stale from app launch.
 class WindowListMenu: NSMenu, NSMenuDelegate {
     weak var resizeTarget: AppDelegate?
 
@@ -146,7 +163,9 @@ class WindowListMenu: NSMenu, NSMenuDelegate {
         self.resizeTarget = target
         super.init(title: L("menu.resize"))
         self.delegate = self
-        // Add placeholder so the submenu arrow shows
+
+        // A placeholder item is required for the parent menu to show
+        // the submenu arrow indicator.
         self.addItem(NSMenuItem(title: L("menu.loading"), action: nil, keyEquivalent: ""))
     }
 
@@ -154,10 +173,12 @@ class WindowListMenu: NSMenu, NSMenuDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Called by AppKit each time the submenu is about to open.
+    /// Replaces all items with the current window list.
     func menuNeedsUpdate(_ menu: NSMenu) {
         menu.removeAllItems()
 
-        let windows = WindowManager.listWindows()
+        let windows = WindowManager.discoverWindows()
 
         if windows.isEmpty {
             let noWindowsItem = NSMenuItem(title: L("menu.no-windows"), action: nil, keyEquivalent: "")
@@ -166,37 +187,42 @@ class WindowListMenu: NSMenu, NSMenuDelegate {
             return
         }
 
+        // Each window gets a submenu of available preset sizes.
         for windowInfo in windows {
             let displayName = windowInfo.windowName.isEmpty ? L("menu.untitled") : windowInfo.windowName
             let title = "[\(windowInfo.ownerName)] \(displayName)"
             let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
 
-            // サイズ一覧をサブメニューとして追加 / Add size list as submenu
-            let sizeSubmenu = SizeListMenu(windowInfo: windowInfo, target: resizeTarget!)
+            let sizeSubmenu = PresetSizeMenu(windowInfo: windowInfo, target: resizeTarget!)
             item.submenu = sizeSubmenu
             menu.addItem(item)
         }
     }
 }
 
-// A submenu that shows preset sizes for a given window
-class SizeListMenu: NSMenu {
+// MARK: - PresetSizeMenu
+
+/// A submenu listing all available preset sizes for a specific window.
+/// Sizes that exceed the window's display resolution are shown but disabled,
+/// preventing the user from resizing a window larger than its screen.
+class PresetSizeMenu: NSMenu {
     init(windowInfo: WindowInfo, target: AppDelegate) {
         super.init(title: "")
 
-        // ウィンドウが属するスクリーンの解像度を取得 / Get the screen resolution for the window's display
-        let screenSize = screenSizeForWindow(windowInfo)
+        let screenSize = displayBounds(containing: windowInfo)
 
         let store = SettingsStore.shared
-        for size in store.allSizes {
+        for size in store.allPresets {
             let exceedsScreen = CGFloat(size.width) > screenSize.width || CGFloat(size.height) > screenSize.height
 
             let item = NSMenuItem(title: "", action: exceedsScreen ? nil : #selector(AppDelegate.resizeSelectedWindow(_:)), keyEquivalent: "")
             item.target = exceedsScreen ? nil : target
             item.isEnabled = !exceedsScreen
 
-            // サイズ名とラベルを右揃えで表示する AttributedString を作成
-            // Build AttributedString with right-aligned label for size name
+            // Build an attributed string with a right-aligned label using
+            // NSTextTab. This produces a layout like:
+            //   "1920 x 1080                    Full HD"
+            // where the label is right-aligned at the 230pt tab stop.
             let paragraphStyle = NSMutableParagraphStyle()
             let tabStop = NSTextTab(textAlignment: .right, location: 230)
             paragraphStyle.tabStops = [tabStop]
@@ -227,18 +253,21 @@ class SizeListMenu: NSMenu {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /// ウィンドウの中心座標が属するスクリーンのサイズを返す
-    /// Returns the screen size of the display containing the window's center point
-    private func screenSizeForWindow(_ windowInfo: WindowInfo) -> CGSize {
+    /// Returns the screen dimensions of the display containing the window.
+    ///
+    /// Handles the coordinate system mismatch between CGWindowList (top-left
+    /// origin) and NSScreen (bottom-left origin) by converting NSScreen frames
+    /// to top-left origin before hit-testing the window's center point.
+    /// Falls back to the main screen if no match is found.
+    private func displayBounds(containing windowInfo: WindowInfo) -> CGSize {
         let windowCenter = CGPoint(
             x: windowInfo.bounds.midX,
             y: windowInfo.bounds.midY
         )
-        // CGWindowList の座標系は左上原点、NSScreen は左下原点なので変換して比較
-        // CGWindowList uses top-left origin, NSScreen uses bottom-left; convert for comparison
+
         for screen in NSScreen.screens {
             let frame = screen.frame
-            // NSScreen座標 → 左上原点に変換 / Convert NSScreen coords to top-left origin
+            // Flip Y: NSScreen bottom-left origin → top-left origin.
             let screenTopLeft = CGRect(
                 x: frame.origin.x,
                 y: NSScreen.screens[0].frame.height - frame.origin.y - frame.height,
@@ -249,7 +278,7 @@ class SizeListMenu: NSMenu {
                 return frame.size
             }
         }
-        // フォールバック: メインスクリーン / Fallback: main screen
+
         return NSScreen.main?.frame.size ?? CGSize(width: 1920, height: 1080)
     }
 }

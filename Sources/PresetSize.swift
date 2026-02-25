@@ -1,3 +1,7 @@
+// PresetSize.swift — Value type representing a window dimension preset.
+// Used for both the 12 built-in sizes (Mac Retina + standard resolutions)
+// and user-defined custom sizes. Persisted via Codable/JSONEncoder.
+
 import Foundation
 
 struct PresetSize: Codable, Equatable, Identifiable {
@@ -10,8 +14,9 @@ struct PresetSize: Codable, Equatable, Identifiable {
         "\(width) x \(height)"
     }
 
-    /// サイズ名ラベル付きの表示名（例: "1024 x 768  XGA"）
-    /// Display name with label (e.g. "1024 x 768  XGA")
+    /// Formatted string with a tab-separated label for menu display.
+    /// The tab character is consumed by NSTextTab in the menu's
+    /// NSAttributedString to produce right-aligned labels (e.g. "1024 x 768\tXGA").
     var displayNameWithLabel: String {
         if let label = label, !label.isEmpty {
             return "\(width) x \(height)\t\(label)"

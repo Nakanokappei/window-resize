@@ -1,3 +1,8 @@
+// SettingsView.swift — SwiftUI settings panel displayed in a standalone
+// NSWindow (via SettingsWindowController). Provides UI for viewing built-in
+// presets, managing custom presets, configuring launch-at-login, screenshot
+// options, and Accessibility permission status.
+
 import SwiftUI
 
 struct SettingsView: View {
@@ -10,7 +15,7 @@ struct SettingsView: View {
             Text(L("settings.preset-sizes"))
                 .font(.headline)
 
-            // 内蔵サイズ一覧（スクロール可能） / Built-in size list (scrollable)
+            // Built-in presets: read-only list of the 12 default sizes.
             GroupBox(label: Text(L("settings.built-in")).font(.subheadline)) {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 4) {
@@ -33,7 +38,7 @@ struct SettingsView: View {
                 .frame(maxHeight: 200)
             }
 
-            // Custom sizes
+            // Custom presets: user-defined sizes with add/remove controls.
             GroupBox(label: Text(L("settings.custom")).font(.subheadline)) {
                 VStack(alignment: .leading, spacing: 4) {
                     if store.customSizes.isEmpty {
@@ -60,6 +65,8 @@ struct SettingsView: View {
 
                     Divider()
 
+                    // Input fields for adding a new custom size.
+                    // Validates that both width and height are positive integers.
                     HStack {
                         TextField(L("settings.width"), text: $newWidth)
                             .frame(width: 80)
@@ -84,13 +91,14 @@ struct SettingsView: View {
 
             Divider()
 
-            // Launch at Login
+            // Launch at Login toggle — uses SMAppService under the hood.
             Toggle(L("settings.launch-at-login"), isOn: $store.launchAtLogin)
                 .toggleStyle(.switch)
 
             Divider()
 
-            // Screenshot settings / スクリーンショット設定
+            // Screenshot settings — the master toggle gates visibility of sub-options.
+            // Save-to-file and copy-to-clipboard can be enabled independently.
             Toggle(L("settings.screenshot.enabled"), isOn: $store.screenshotEnabled)
                 .toggleStyle(.switch)
 
@@ -121,19 +129,20 @@ struct SettingsView: View {
 
             Divider()
 
-            // Accessibility status
+            // Accessibility permission status indicator.
+            // Green = working, Orange = granted but stale, Red = not granted.
             HStack {
-                let apiEnabled = AccessibilityHelper.isAccessibilityEnabled()
-                let actuallyWorking = AccessibilityHelper.isAccessibilityActuallyWorking()
+                let granted = AccessibilityHelper.isPermissionGranted()
+                let functional = AccessibilityHelper.isPermissionFunctional()
 
                 Circle()
-                    .fill(actuallyWorking ? Color.green : (apiEnabled ? Color.orange : Color.red))
+                    .fill(functional ? Color.green : (granted ? Color.orange : Color.red))
                     .frame(width: 10, height: 10)
 
-                if actuallyWorking {
+                if functional {
                     Text(L("settings.accessibility.enabled"))
                         .font(.caption)
-                } else if apiEnabled {
+                } else if granted {
                     Text(L("settings.accessibility.needs-refresh"))
                         .font(.caption)
                         .foregroundColor(.orange)
@@ -144,9 +153,9 @@ struct SettingsView: View {
 
                 Spacer()
 
-                if !actuallyWorking {
+                if !functional {
                     Button(L("alert.button.open-settings")) {
-                        AccessibilityHelper.openAccessibilitySettings()
+                        AccessibilityHelper.openSystemSettings()
                     }
                     .font(.caption)
                 }

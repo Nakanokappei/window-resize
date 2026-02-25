@@ -1,12 +1,16 @@
+// main.swift — Application entry point.
+// Configures the app as a menu-bar-only accessory (no Dock icon, no main window)
+// and prevents multiple instances from running simultaneously.
+
 import AppKit
 
-// 二重起動防止: 同じバンドルIDのプロセスが既に動いていたら終了する
-// Prevent duplicate launch: quit if another instance with the same bundle ID is already running
+// Prevent duplicate instances: if another process with the same bundle ID
+// is already running (even from a different path), exit immediately.
+// This handles the case where the user opens a new build while the old one
+// is still in the menu bar.
 if let bundleID = Bundle.main.bundleIdentifier {
     let running = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
     if running.count > 1 {
-        // 既存インスタンスがあれば終了（パスが異なっても検出される）
-        // Exit if another instance exists (detected regardless of file path)
         exit(0)
     }
 }
@@ -14,5 +18,8 @@ if let bundleID = Bundle.main.bundleIdentifier {
 let app = NSApplication.shared
 let delegate = AppDelegate()
 app.delegate = delegate
+
+// .accessory policy: no Dock icon, no main menu bar, no app switcher entry.
+// The app is only visible via its NSStatusItem in the system menu bar.
 app.setActivationPolicy(.accessory)
 app.run()
