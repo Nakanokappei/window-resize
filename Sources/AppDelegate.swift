@@ -106,14 +106,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if store.screenshotEnabled {
             let windowID = action.windowInfo.windowID
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                guard let image = ScreenshotHelper.captureWindow(windowID) else { return }
+                ScreenshotHelper.captureWindow(windowID) { image in
+                    guard let image = image else { return }
 
-                if self.store.screenshotSaveToFile {
-                    _ = ScreenshotHelper.saveToFile(image, location: self.store.screenshotSaveLocation)
-                }
+                    if self.store.screenshotSaveToFile {
+                        _ = ScreenshotHelper.saveToFile(image, location: self.store.screenshotSaveLocation)
+                    }
 
-                if self.store.screenshotCopyToClipboard {
-                    ScreenshotHelper.copyToClipboard(image)
+                    if self.store.screenshotCopyToClipboard {
+                        ScreenshotHelper.copyToClipboard(image)
+                    }
                 }
             }
         }

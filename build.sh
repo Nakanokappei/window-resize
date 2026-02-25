@@ -42,6 +42,7 @@ swiftc \
     -framework ApplicationServices \
     -framework SwiftUI \
     -framework ServiceManagement \
+    -framework ScreenCaptureKit \
     ${SOURCES_DIR}/*.swift
 
 # Copy Info.plist into bundle

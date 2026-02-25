@@ -40,7 +40,7 @@ Window Resize/
 │   ├── SettingsStore.swift  # UserDefaults永続化, SMAppService自動起動, スクリーンショット設定 [113行]
 │   ├── SettingsView.swift   # SwiftUI設定画面 [151行]
 │   ├── SettingsWindowController.swift  # NSHostingController ラッパー [18行]
-│   ├── ScreenshotHelper.swift          # ウィンドウスクリーンショット撮影・保存・クリップボード [61行]
+│   ├── ScreenshotHelper.swift          # SCScreenshotManager (macOS14+) / CGWindowList fallback + Retina対応 [107行]
 │   ├── AccessibilityHelper.swift       # 権限チェック・stale検出・ガイド表示 [69行]
 │   └── Localization.swift   # L() ヘルパー関数 [5行]
 └── Resources/
@@ -84,8 +84,10 @@ Window Resize/
 - 変更時に `.settingsChanged` 通知を post → AppDelegate がメニュー再構築
 
 ### ScreenshotHelper.swift
-- **ScreenshotHelper** — `captureWindow(_:)` / `saveToFile(_:location:)` / `copyToClipboard(_:)` の static メソッド
-- `CGWindowListCreateImage` でウィンドウ単体をキャプチャ（Screen Recording権限必須）
+- **ScreenshotHelper** — `captureWindow(_:completion:)` / `saveToFile(_:location:)` / `copyToClipboard(_:)` の static メソッド
+- macOS 14+: `SCScreenshotManager` (ScreenCaptureKit) でキャプチャ
+- macOS 13: `CGWindowListCreateImage` にフォールバック
+- Retina対応: NSImage の size を論理サイズ (point) に設定、ピクセルデータはフル解像度を保持
 
 ## Key Architecture Decisions
 
@@ -113,7 +115,9 @@ Window Resize/
 
 ### スクリーンショット機能
 - リサイズ完了後 0.5秒待機してからウィンドウをキャプチャ
-- `CGWindowListCreateImage` で特定ウィンドウIDを撮影（Screen Recording権限必須）
+- macOS 14+: `SCScreenshotManager` (ScreenCaptureKit) — コード署名済みアプリ向けの安全なAPI
+- macOS 13: `CGWindowListCreateImage` フォールバック（非推奨API）
+- Retina対応: フル解像度ピクセルを保持しつつ NSImage.size を論理サイズに設定（144 DPI PNG出力）
 - 保存先: デスクトップ or ピクチャ（設定で選択）
 - クリップボードへのコピーも同時実行可能（設定で ON/OFF）
 - 権限不足時はサイレントに失敗（OS が権限ダイアログを表示する）
