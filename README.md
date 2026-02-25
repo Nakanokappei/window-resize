@@ -24,7 +24,7 @@ Download the latest release from [Releases](https://github.com/Nakanokappei/wind
 1. Open `Window Resize.app`
 2. Grant Accessibility permission when prompted (System Settings > Privacy & Security > Accessibility)
 3. Click the menu bar icon
-4. Select **Resize** > choose a preset size > select a window to resize
+4. Select **Resize** > choose a window > select a preset size
 5. Open **Settings** to add custom sizes or enable launch at login
 
 ## System Requirements
