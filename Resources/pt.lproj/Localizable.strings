@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "Capturar após redimensionar";
 "settings.screenshot.save-to-file" = "Salvar em arquivo";
-"settings.screenshot.save-to" = "Salvar em";
-"settings.screenshot.desktop" = "Mesa";
-"settings.screenshot.pictures" = "Imagens";
+"settings.screenshot.choose-folder" = "Selecione uma pasta para capturas de tela";
+"settings.screenshot.choose-folder.button" = "Escolher…";
+"settings.screenshot.no-folder-selected" = "Nenhuma pasta selecionada";
 "settings.screenshot.copy-to-clipboard" = "Copiar para a área de transferência";
 
 /* Screen Recording permission */

@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "ถ่ายภาพหน้าจอหลังปรับขนาด";
 "settings.screenshot.save-to-file" = "บันทึกเป็นไฟล์";
-"settings.screenshot.save-to" = "บันทึกที่";
-"settings.screenshot.desktop" = "เดสก์ท็อป";
-"settings.screenshot.pictures" = "รูปภาพ";
+"settings.screenshot.choose-folder" = "เลือกโฟลเดอร์สำหรับบันทึกภาพหน้าจอ";
+"settings.screenshot.choose-folder.button" = "เลือก…";
+"settings.screenshot.no-folder-selected" = "ยังไม่ได้เลือกโฟลเดอร์";
 "settings.screenshot.copy-to-clipboard" = "คัดลอกไปยังคลิปบอร์ด";
 
 /* Screen Recording permission */

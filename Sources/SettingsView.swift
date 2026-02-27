@@ -109,17 +109,29 @@ struct SettingsView: View {
 
                 if store.screenshotSaveToFile {
                     HStack {
-                        Text(L("settings.screenshot.save-to"))
+                        Image(systemName: "folder")
                             .font(.caption)
-                        Picker("", selection: $store.screenshotSaveLocation) {
-                            Text(L("settings.screenshot.desktop")).tag(ScreenshotSaveLocation.desktop)
-                            Text(L("settings.screenshot.pictures")).tag(ScreenshotSaveLocation.pictures)
+                        Text(store.screenshotSaveFolderPath ?? L("settings.screenshot.no-folder-selected"))
+                            .font(.caption)
+                            .foregroundColor(store.screenshotSaveFolderPath != nil ? .primary : .secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                        Spacer()
+                        Button(L("settings.screenshot.choose-folder.button")) {
+                            store.selectScreenshotFolder()
                         }
-                        .labelsHidden()
-                        .pickerStyle(.segmented)
-                        .frame(maxWidth: 200)
+                        .font(.caption)
                     }
                     .padding(.leading, 20)
+                    .onChange(of: store.screenshotSaveToFile) { newValue in
+                        // Auto-show folder picker when save-to-file is enabled
+                        // but no folder is selected yet.
+                        if newValue && store.screenshotSaveFolderPath == nil {
+                            if !store.selectScreenshotFolder() {
+                                store.screenshotSaveToFile = false
+                            }
+                        }
+                    }
                 }
 
                 Toggle(L("settings.screenshot.copy-to-clipboard"), isOn: $store.screenshotCopyToClipboard)

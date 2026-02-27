@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "التقاط صورة بعد تغيير الحجم";
 "settings.screenshot.save-to-file" = "حفظ في ملف";
-"settings.screenshot.save-to" = "حفظ في";
-"settings.screenshot.desktop" = "سطح المكتب";
-"settings.screenshot.pictures" = "الصور";
+"settings.screenshot.choose-folder" = "اختر مجلداً لحفظ لقطات الشاشة";
+"settings.screenshot.choose-folder.button" = "اختيار…";
+"settings.screenshot.no-folder-selected" = "لم يتم اختيار مجلد";
 "settings.screenshot.copy-to-clipboard" = "نسخ إلى الحافظة";
 
 /* Screen Recording permission */

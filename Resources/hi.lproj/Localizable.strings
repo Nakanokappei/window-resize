@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "आकार बदलने के बाद स्क्रीनशॉट लें";
 "settings.screenshot.save-to-file" = "फ़ाइल में सहेजें";
-"settings.screenshot.save-to" = "सहेजें";
-"settings.screenshot.desktop" = "डेस्कटॉप";
-"settings.screenshot.pictures" = "चित्र";
+"settings.screenshot.choose-folder" = "स्क्रीनशॉट सहेजने के लिए फ़ोल्डर चुनें";
+"settings.screenshot.choose-folder.button" = "चुनें…";
+"settings.screenshot.no-folder-selected" = "कोई फ़ोल्डर नहीं चुना गया";
 "settings.screenshot.copy-to-clipboard" = "क्लिपबोर्ड पर कॉपी करें";
 
 /* Screen Recording permission */

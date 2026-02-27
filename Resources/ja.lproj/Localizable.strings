@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "リサイズ後にスクリーンショットを撮影";
 "settings.screenshot.save-to-file" = "ファイルに保存";
-"settings.screenshot.save-to" = "保存先";
-"settings.screenshot.desktop" = "デスクトップ";
-"settings.screenshot.pictures" = "ピクチャ";
+"settings.screenshot.choose-folder" = "スクリーンショットの保存先フォルダを選択";
+"settings.screenshot.choose-folder.button" = "選択…";
+"settings.screenshot.no-folder-selected" = "フォルダ未選択";
 "settings.screenshot.copy-to-clipboard" = "クリップボードにコピー";
 
 /* Screen Recording permission */

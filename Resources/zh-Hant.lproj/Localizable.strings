@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "調整大小後截圖";
 "settings.screenshot.save-to-file" = "儲存到檔案";
-"settings.screenshot.save-to" = "儲存至";
-"settings.screenshot.desktop" = "桌面";
-"settings.screenshot.pictures" = "圖片";
+"settings.screenshot.choose-folder" = "選擇截圖儲存資料夾";
+"settings.screenshot.choose-folder.button" = "選擇…";
+"settings.screenshot.no-folder-selected" = "未選擇資料夾";
 "settings.screenshot.copy-to-clipboard" = "拷貝到剪貼板";
 
 /* Screen Recording permission */

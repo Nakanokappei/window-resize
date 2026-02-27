@@ -11,6 +11,8 @@ A menu bar app that resizes running application windows to preset sizes on macOS
 - **Architecture:** Apple Silicon (arm64) / Intel (x86_64) auto-detected
 
 ## Build & Run
+
+### Developer ID (direct distribution)
 ```bash
 bash build.sh
 open "build/Window Resize.app"
@@ -19,14 +21,27 @@ open "build/Window Resize.app"
 - Developer ID signing + Hardened Runtime (`--options runtime`)
 - Apple Notarization + Staple automated in build.sh
 - Keychain profile `notarytool-profile` stores notarization credentials
+
+### App Store
+```bash
+bash build-appstore.sh
+```
+- Signs with Apple Distribution certificate + App Sandbox entitlements
+- Creates installer .pkg with `productbuild`
+- Upload via `xcrun altool` or Transporter
+- Requires: provisioning profile at `./WindowResize_AppStore.provisionprofile`
+
+### Testing
 - Language test: `open "build/Window Resize.app" --args -AppleLanguages "(ja)"`
 
 ## Project Structure
 ```
 Window Resize/
 ├── CLAUDE.md
-├── Info.plist               # App metadata (LSUIElement, BundleID, CFBundleIconName)
-├── build.sh                 # Build script (swiftc → /tmp staging → sign → notarize → .app bundle)
+├── Info.plist               # App metadata (LSUIElement, BundleID, LSApplicationCategoryType)
+├── WindowResize.entitlements # App Sandbox entitlements (App Store build only)
+├── build.sh                 # Developer ID build (swiftc → sign → notarize → staple)
+├── build-appstore.sh        # App Store build (swiftc → sign w/ entitlements → .pkg)
 ├── README.md
 ├── LICENSE                  # MIT License
 ├── appicon.af               # App icon source (Pixelmator Pro, not bundled)
@@ -39,7 +54,7 @@ Window Resize/
 │   ├── AppDelegate.swift    # NSStatusItem, menu construction, resize orchestration
 │   ├── WindowManager.swift  # CGWindowList enumeration + AXUIElement resize
 │   ├── PresetSize.swift     # Dimension model (Codable, Identifiable, labeled)
-│   ├── SettingsStore.swift  # UserDefaults persistence, SMAppService login item, screenshot config
+│   ├── SettingsStore.swift  # UserDefaults persistence, SMAppService, screenshot folder bookmark
 │   ├── SettingsView.swift   # SwiftUI settings panel (fixed width, auto-height)
 │   ├── SettingsWindowController.swift  # NSHostingController wrapper (400pt wide, auto-height via KVO)
 │   ├── ScreenshotHelper.swift          # SCScreenshotManager (macOS 14+) / CGWindowList fallback + Retina
@@ -81,9 +96,10 @@ Window Resize/
 - **WindowManager** — `discoverWindows()` / `resizeWindow(_:to:)` static methods
 
 ### SettingsStore.swift
-- **ScreenshotSaveLocation** (enum) — `.desktop` / `.pictures`
 - **SettingsStore** (ObservableObject, singleton) — `builtInSizes` (12) + `customSizes`, `launchAtLogin`, screenshot settings
-- UserDefaults keys: `"customPresetSizes"`, `"launchAtLogin"`, `"screenshotEnabled"`, `"screenshotSaveToFile"`, `"screenshotSaveLocation"`, `"screenshotCopyToClipboard"`
+- UserDefaults keys: `"customPresetSizes"`, `"launchAtLogin"`, `"screenshotEnabled"`, `"screenshotSaveToFile"`, `"screenshotSaveFolderBookmark"`, `"screenshotCopyToClipboard"`
+- Screenshot folder: security-scoped bookmark via NSOpenPanel + `URL.bookmarkData(options: .withSecurityScope)`
+- Migrates legacy `"screenshotSaveLocation"` (Desktop/Pictures enum) to bookmark on first run
 - Posts `.settingsChanged` notification on change → AppDelegate rebuilds menu
 
 ### ScreenshotHelper.swift
@@ -92,7 +108,7 @@ Window Resize/
 - macOS 13: `CGWindowListCreateImage` fallback (deprecated API)
 - Retina: NSImage size set to logical (point) dimensions, pixel data at full resolution
 - Filename: `MMddHHmmss_AppName_WindowTitle.png` (all non-alphanumeric chars stripped)
-- `buildFilename(windowInfo:)` generates filename; `sanitizeForFilename(_:)` strips symbols
+- `exportAsPNG` accepts a `URL` directory, uses `startAccessingSecurityScopedResource()` for sandbox compatibility
 
 ### AccessibilityHelper.swift
 - **AccessibilityHelper** — `isPermissionGranted()` / `isPermissionFunctional()` / `promptForPermission()` / `promptToReauthorize()`
@@ -116,12 +132,17 @@ Window Resize/
 - **NSScreen**: bottom-left origin (Quartz coordinate system)
 - `PresetSizeMenu.displayBounds(containing:)` converts between them for multi-display support
 
-### Code Signing & Notarization
-- Developer ID Application certificate (Team ID: G466Q9TVYB)
-- Hardened Runtime enabled (`--options runtime`) — required for notarization
-- `xcrun notarytool` submits to Apple, `xcrun stapler` attaches the ticket
-- Keychain profile `notarytool-profile` stores Apple ID + app-specific password
-- build.sh automates: build → sign → notarize → staple
+### Code Signing & Distribution
+- **Developer ID** (build.sh): Developer ID Application certificate, Hardened Runtime, notarization + staple
+- **App Store** (build-appstore.sh): Apple Distribution certificate, App Sandbox entitlements, .pkg via productbuild
+- Team ID: G466Q9TVYB
+- Keychain profile `notarytool-profile` stores Apple ID + app-specific password (Developer ID only)
+
+### App Sandbox (App Store)
+- Entitlements: `com.apple.security.app-sandbox` + `com.apple.security.files.user-selected.read-write`
+- Accessibility (AXUIElement) and Screen Recording (ScreenCaptureKit) work under sandbox via TCC
+- Screenshot save folder: user selects via NSOpenPanel, persisted as security-scoped bookmark
+- NSPasteboard, SMAppService, UserDefaults work without additional entitlements
 
 ### App Icon Strategy
 - `.icns` generated from Icon Composer export (1024×1024 PNG → sips → iconutil)
@@ -140,7 +161,7 @@ Window Resize/
 - macOS 13: `CGWindowListCreateImage` fallback (deprecated)
 - Retina: full-resolution pixels preserved, NSImage.size set to logical dimensions (144 DPI PNG output)
 - Filename: `MMddHHmmss_AppName_WindowTitle.png` — all symbols stripped via `CharacterSet.alphanumerics`
-- Save location: Desktop or Pictures (user setting)
+- Save folder: user-selected via NSOpenPanel, persisted as security-scoped bookmark in UserDefaults
 - Clipboard copy: independent toggle
 - Fails silently on permission denial (OS shows its own permission dialog)
 
@@ -166,6 +187,7 @@ Window Resize/
 ### Settings Persistence
 - UserDefaults for custom presets (JSONEncoder/Decoder)
 - SMAppService for launch-at-login
+- Screenshot folder: security-scoped bookmark (Data) in UserDefaults
 
 ## Bundle ID
 `com.windowresize.app`
@@ -174,9 +196,9 @@ Window Resize/
 - Localization keys use dot notation: `menu.resize`, `settings.width`, `alert.resize-failed.title`
 - Avoid NSMenu property name collisions (e.g. `size` → `presetSize`)
 - `resizeSelectedWindow` is called from WindowListMenu, so it cannot be `private`
-- Source code total: ~1100 lines (10 files including Localization.swift)
+- Source code total: ~1200 lines (10 files including Localization.swift)
 - `.af` files (Pixelmator Pro) are source artwork — not bundled in the app
 - `.icon` file (Icon Composer) IS bundled for future macOS 26 support
 
 ## Pending / Future
-- App Store publishing discussed but not started (requires sandbox, receipt validation, etc.)
+- App Store: certificates, provisioning profile, and App Store Connect setup needed before first submission

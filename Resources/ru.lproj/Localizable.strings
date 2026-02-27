@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "Сделать снимок после изменения размера";
 "settings.screenshot.save-to-file" = "Сохранить в файл";
-"settings.screenshot.save-to" = "Сохранить в";
-"settings.screenshot.desktop" = "Рабочий стол";
-"settings.screenshot.pictures" = "Изображения";
+"settings.screenshot.choose-folder" = "Выберите папку для снимков экрана";
+"settings.screenshot.choose-folder.button" = "Выбрать…";
+"settings.screenshot.no-folder-selected" = "Папка не выбрана";
 "settings.screenshot.copy-to-clipboard" = "Скопировать в буфер обмена";
 
 /* Screen Recording permission */

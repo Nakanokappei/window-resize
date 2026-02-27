@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "Take screenshot after resize";
 "settings.screenshot.save-to-file" = "Save to file";
-"settings.screenshot.save-to" = "Save to";
-"settings.screenshot.desktop" = "Desktop";
-"settings.screenshot.pictures" = "Pictures";
+"settings.screenshot.choose-folder" = "Select a folder to save screenshots";
+"settings.screenshot.choose-folder.button" = "Choose…";
+"settings.screenshot.no-folder-selected" = "No folder selected";
 "settings.screenshot.copy-to-clipboard" = "Copy to clipboard";
 
 /* Screen Recording permission */

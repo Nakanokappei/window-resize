@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "Chụp ảnh sau khi thay đổi kích thước";
 "settings.screenshot.save-to-file" = "Lưu vào tệp";
-"settings.screenshot.save-to" = "Lưu vào";
-"settings.screenshot.desktop" = "Màn hình chính";
-"settings.screenshot.pictures" = "Hình ảnh";
+"settings.screenshot.choose-folder" = "Chọn thư mục lưu ảnh chụp màn hình";
+"settings.screenshot.choose-folder.button" = "Chọn…";
+"settings.screenshot.no-folder-selected" = "Chưa chọn thư mục";
 "settings.screenshot.copy-to-clipboard" = "Sao chép vào bảng nhớ tạm";
 
 /* Screen Recording permission */

@@ -129,9 +129,13 @@ class ScreenshotHelper {
     /// metadata (144 DPI for Retina captures), so the PNG displays at the correct
     /// logical size in image viewers.
     ///
+    /// The directory URL may be a security-scoped resource (when running in App
+    /// Sandbox). startAccessingSecurityScopedResource() is called before writing
+    /// and stopAccessingSecurityScopedResource() afterward.
+    ///
     /// Filename format: MMddHHmmss_AppName_WindowTitle.png
     /// All symbols are stripped; only letters, digits, and underscores remain.
-    static func exportAsPNG(_ image: NSImage, to location: ScreenshotSaveLocation,
+    static func exportAsPNG(_ image: NSImage, to directory: URL,
                             windowInfo: WindowInfo? = nil) -> Bool {
         guard let tiffData = image.tiffRepresentation,
               let bitmapRep = NSBitmapImageRep(data: tiffData),
@@ -139,12 +143,9 @@ class ScreenshotHelper {
             return false
         }
 
-        let directory: URL
-        switch location {
-        case .desktop:
-            directory = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
-        case .pictures:
-            directory = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first!
+        let didStartAccess = directory.startAccessingSecurityScopedResource()
+        defer {
+            if didStartAccess { directory.stopAccessingSecurityScopedResource() }
         }
 
         let filename = buildFilename(windowInfo: windowInfo)

@@ -45,5 +45,7 @@
     </array>
     <key>NSAccessibilityUsageDescription</key>
     <string>Window Resize needs accessibility access to resize application windows.</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.utilities</string>
 </dict>
 </plist>

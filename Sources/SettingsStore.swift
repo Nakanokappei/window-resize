@@ -3,18 +3,12 @@
 // posts .settingsChanged notifications so AppDelegate can rebuild the menu
 // when presets change.
 
-import Foundation
+import AppKit
 import Combine
 import ServiceManagement
 
 extension Notification.Name {
     static let settingsChanged = Notification.Name("com.windowresize.settingsChanged")
-}
-
-/// Where to save screenshot files.
-enum ScreenshotSaveLocation: String, CaseIterable {
-    case desktop
-    case pictures
 }
 
 class SettingsStore: ObservableObject {
@@ -26,8 +20,11 @@ class SettingsStore: ObservableObject {
     private let launchAtLoginKey = "launchAtLogin"
     private let screenshotEnabledKey = "screenshotEnabled"
     private let screenshotSaveToFileKey = "screenshotSaveToFile"
-    private let screenshotSaveLocationKey = "screenshotSaveLocation"
+    private let screenshotSaveFolderBookmarkKey = "screenshotSaveFolderBookmark"
     private let screenshotCopyToClipboardKey = "screenshotCopyToClipboard"
+
+    // Legacy key for migration from Desktop/Pictures picker.
+    private let legacyScreenshotSaveLocationKey = "screenshotSaveLocation"
 
     // MARK: - Published Properties
 
@@ -47,12 +44,13 @@ class SettingsStore: ObservableObject {
     @Published var screenshotSaveToFile: Bool = true {
         didSet { UserDefaults.standard.set(screenshotSaveToFile, forKey: screenshotSaveToFileKey) }
     }
-    @Published var screenshotSaveLocation: ScreenshotSaveLocation = .desktop {
-        didSet { UserDefaults.standard.set(screenshotSaveLocation.rawValue, forKey: screenshotSaveLocationKey) }
-    }
     @Published var screenshotCopyToClipboard: Bool = false {
         didSet { UserDefaults.standard.set(screenshotCopyToClipboard, forKey: screenshotCopyToClipboardKey) }
     }
+
+    /// The display path of the currently selected screenshot save folder.
+    /// nil when no folder has been chosen yet.
+    @Published var screenshotSaveFolderPath: String? = nil
 
     // MARK: - Built-in Presets
 
@@ -93,11 +91,93 @@ class SettingsStore: ObservableObject {
         if UserDefaults.standard.object(forKey: screenshotSaveToFileKey) != nil {
             screenshotSaveToFile = UserDefaults.standard.bool(forKey: screenshotSaveToFileKey)
         }
-        if let raw = UserDefaults.standard.string(forKey: screenshotSaveLocationKey),
-           let loc = ScreenshotSaveLocation(rawValue: raw) {
-            screenshotSaveLocation = loc
-        }
         screenshotCopyToClipboard = UserDefaults.standard.bool(forKey: screenshotCopyToClipboardKey)
+
+        // Migrate legacy Desktop/Pictures setting to a folder bookmark.
+        migrateLegacySaveLocation()
+
+        // Resolve the saved bookmark to populate the display path.
+        if let url = resolveScreenshotFolder() {
+            screenshotSaveFolderPath = url.path
+        }
+    }
+
+    // MARK: - Screenshot Folder (Security-Scoped Bookmark)
+
+    /// Presents an NSOpenPanel for the user to choose a screenshot save folder.
+    /// Saves the selected folder as a security-scoped bookmark in UserDefaults.
+    /// Returns true if a folder was successfully selected.
+    @discardableResult
+    func selectScreenshotFolder() -> Bool {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.message = L("settings.screenshot.choose-folder")
+        panel.prompt = L("settings.screenshot.choose-folder.button")
+
+        // Pre-select the current folder if one is saved.
+        if let currentURL = resolveScreenshotFolder() {
+            panel.directoryURL = currentURL
+        }
+
+        guard panel.runModal() == .OK, let url = panel.url else {
+            return false
+        }
+
+        saveScreenshotFolderBookmark(for: url)
+        screenshotSaveFolderPath = url.path
+        return true
+    }
+
+    /// Resolves the saved security-scoped bookmark back into a URL.
+    /// Returns nil if no bookmark is saved or the bookmark is stale.
+    func resolveScreenshotFolder() -> URL? {
+        guard let data = UserDefaults.standard.data(forKey: screenshotSaveFolderBookmarkKey) else {
+            return nil
+        }
+        var isStale = false
+        guard let url = try? URL(
+            resolvingBookmarkData: data,
+            options: .withSecurityScope,
+            relativeTo: nil,
+            bookmarkDataIsStale: &isStale
+        ) else {
+            return nil
+        }
+        // Re-save the bookmark if it became stale (e.g. folder was moved).
+        if isStale {
+            saveScreenshotFolderBookmark(for: url)
+        }
+        return url
+    }
+
+    /// Creates a security-scoped bookmark for the given URL and saves it.
+    private func saveScreenshotFolderBookmark(for url: URL) {
+        guard let data = try? url.bookmarkData(
+            options: .withSecurityScope,
+            includingResourceValuesForKeys: nil,
+            relativeTo: nil
+        ) else { return }
+        UserDefaults.standard.set(data, forKey: screenshotSaveFolderBookmarkKey)
+    }
+
+    /// Migrates the legacy "screenshotSaveLocation" (Desktop/Pictures enum)
+    /// to a security-scoped folder bookmark. Runs once, then removes the
+    /// legacy key to prevent re-migration.
+    private func migrateLegacySaveLocation() {
+        guard let raw = UserDefaults.standard.string(forKey: legacyScreenshotSaveLocationKey) else {
+            return
+        }
+        // Only migrate if no bookmark is already saved.
+        if UserDefaults.standard.data(forKey: screenshotSaveFolderBookmarkKey) == nil {
+            let searchPath: FileManager.SearchPathDirectory = (raw == "pictures") ? .picturesDirectory : .desktopDirectory
+            if let url = FileManager.default.urls(for: searchPath, in: .userDomainMask).first {
+                saveScreenshotFolderBookmark(for: url)
+                screenshotSaveFolderPath = url.path
+            }
+        }
+        UserDefaults.standard.removeObject(forKey: legacyScreenshotSaveLocationKey)
     }
 
     // MARK: - Custom Preset Management

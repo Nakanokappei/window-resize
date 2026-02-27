@@ -123,8 +123,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 ScreenshotHelper.captureWindow(windowID) { image in
                     guard let image = image else { return }
 
-                    if self.store.screenshotSaveToFile {
-                        _ = ScreenshotHelper.exportAsPNG(image, to: self.store.screenshotSaveLocation,
+                    if self.store.screenshotSaveToFile,
+                       let folder = self.store.resolveScreenshotFolder() {
+                        _ = ScreenshotHelper.exportAsPNG(image, to: folder,
                                                          windowInfo: windowInfo)
                     }
 

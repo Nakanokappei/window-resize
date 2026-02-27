@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "Ambil tangkapan layar setelah mengubah ukuran";
 "settings.screenshot.save-to-file" = "Simpan ke file";
-"settings.screenshot.save-to" = "Simpan ke";
-"settings.screenshot.desktop" = "Desktop";
-"settings.screenshot.pictures" = "Gambar";
+"settings.screenshot.choose-folder" = "Pilih folder untuk menyimpan tangkapan layar";
+"settings.screenshot.choose-folder.button" = "Pilih…";
+"settings.screenshot.no-folder-selected" = "Belum ada folder dipilih";
 "settings.screenshot.copy-to-clipboard" = "Salin ke papan klip";
 
 /* Screen Recording permission */

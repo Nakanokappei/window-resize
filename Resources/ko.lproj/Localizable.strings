@@ -38,9 +38,9 @@
 /* Screenshot settings */
 "settings.screenshot.enabled" = "크기 조절 후 스크린샷 촬영";
 "settings.screenshot.save-to-file" = "파일로 저장";
-"settings.screenshot.save-to" = "저장 위치";
-"settings.screenshot.desktop" = "데스크탑";
-"settings.screenshot.pictures" = "사진";
+"settings.screenshot.choose-folder" = "스크린샷 저장 폴더 선택";
+"settings.screenshot.choose-folder.button" = "선택…";
+"settings.screenshot.no-folder-selected" = "폴더가 선택되지 않음";
 "settings.screenshot.copy-to-clipboard" = "클립보드에 복사";
 
 /* Screen Recording permission */
