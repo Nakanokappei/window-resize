@@ -40,8 +40,8 @@ Window Resize/
 │   ├── WindowManager.swift  # CGWindowList enumeration + AXUIElement resize
 │   ├── PresetSize.swift     # Dimension model (Codable, Identifiable, labeled)
 │   ├── SettingsStore.swift  # UserDefaults persistence, SMAppService login item, screenshot config
-│   ├── SettingsView.swift   # SwiftUI settings panel (top-aligned, fixed width, flexible height)
-│   ├── SettingsWindowController.swift  # NSHostingController wrapper (400pt wide, 400-800pt tall)
+│   ├── SettingsView.swift   # SwiftUI settings panel (fixed width, auto-height)
+│   ├── SettingsWindowController.swift  # NSHostingController wrapper (400pt wide, auto-height via KVO)
 │   ├── ScreenshotHelper.swift          # SCScreenshotManager (macOS 14+) / CGWindowList fallback + Retina
 │   ├── AccessibilityHelper.swift       # Permission check, stale detection, re-auth guidance
 │   └── Localization.swift   # L() shorthand for NSLocalizedString
@@ -158,9 +158,10 @@ Window Resize/
 
 ### Settings Window
 - SwiftUI → NSHostingController → NSWindow
-- Fixed width: 400pt; resizable height: 400–800pt
-- Content top-aligned so expanding screenshot options does not shrink the preset list
-- `.frame(width: 400)` + `.frame(minHeight: 400, idealHeight: 600, maxHeight: .infinity, alignment: .top)`
+- Fixed width: 400pt; height auto-adjusts to content (not user-resizable)
+- `NSHostingController.sizingOptions = .preferredContentSize` reports ideal height
+- KVO on `preferredContentSize` triggers animated window resize when toggles show/hide sub-options
+- `.frame(width: 400)` only — no height constraints, content determines natural height
 
 ### Settings Persistence
 - UserDefaults for custom presets (JSONEncoder/Decoder)
@@ -178,5 +179,4 @@ Window Resize/
 - `.icon` file (Icon Composer) IS bundled for future macOS 26 support
 
 ## Pending / Future
-- User mentioned a 3rd UI improvement item (not yet specified — "3はあとで書きます")
 - App Store publishing discussed but not started (requires sandbox, receipt validation, etc.)
