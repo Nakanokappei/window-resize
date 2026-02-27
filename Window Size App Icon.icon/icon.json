@@ -2,13 +2,13 @@
   "fill-specializations" : [
     {
       "value" : {
-        "solid" : "display-p3:0.86180,0.65414,0.49727,1.00000"
+        "solid" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
       }
     },
     {
       "appearance" : "dark",
       "value" : {
-        "solid" : "display-p3:0.74041,0.67355,0.54001,1.00000"
+        "solid" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
       }
     }
   ],
@@ -19,13 +19,13 @@
           "fill-specializations" : [
             {
               "value" : {
-                "solid" : "display-p3:0.67753,0.77920,0.81055,1.00000"
+                "solid" : "extended-gray:0.00000,1.00000"
               }
             },
             {
               "appearance" : "dark",
               "value" : {
-                "solid" : "display-p3:0.28956,0.28173,0.29346,1.00000"
+                "solid" : "extended-gray:1.00000,1.00000"
               }
             }
           ],
@@ -44,13 +44,13 @@
           "fill-specializations" : [
             {
               "value" : {
-                "solid" : "display-p3:0.77544,0.48535,0.46556,1.00000"
+                "solid" : "extended-gray:1.00000,1.00000"
               }
             },
             {
               "appearance" : "dark",
               "value" : {
-                "solid" : "display-p3:0.44215,0.47756,0.44995,1.00000"
+                "solid" : "extended-gray:0.00000,1.00000"
               }
             }
           ],
