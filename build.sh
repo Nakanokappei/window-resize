@@ -98,6 +98,10 @@ if [ -f "${LOCALIZATIONS_DIR}/MenuBarIcon.png" ]; then
     echo "=== Copied MenuBarIcon ==="
 fi
 
+# Strip com.apple.quarantine xattr from all files in the bundle.
+# iCloud Drive上のファイルやダウンロードファイルに付与される属性を除去
+find "${APP_BUNDLE}" -exec xattr -d com.apple.quarantine {} + 2>/dev/null || true
+
 # Developer ID code sign with hardened runtime (required for notarization)
 # Developer ID署名 + Hardened Runtime（公証に必須）
 echo "=== Signing ${APP_NAME}.app with Developer ID ==="

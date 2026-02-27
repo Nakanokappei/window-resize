@@ -117,6 +117,12 @@ if [ -f "${LOCALIZATIONS_DIR}/MenuBarIcon.png" ]; then
     cp "${LOCALIZATIONS_DIR}/MenuBarIcon@2x.png" "${RESOURCES_DIR}/MenuBarIcon@2x.png"
 fi
 
+# Strip com.apple.quarantine xattr from all files in the bundle.
+# Files on iCloud Drive or downloaded from the internet acquire this attribute,
+# which Apple rejects in App Store / TestFlight submissions (ITMS-91109).
+find "${APP_BUNDLE}" -exec xattr -d com.apple.quarantine {} + 2>/dev/null || true
+echo "=== Stripped quarantine xattrs ==="
+
 # Code sign with Apple Distribution certificate + entitlements (App Sandbox)
 echo "=== Signing ${APP_NAME}.app for App Store ==="
 codesign --force --sign "${SIGNING_IDENTITY}" \
