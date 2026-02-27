@@ -30,7 +30,7 @@ Window Resize utiliza a API de acessibilidade do macOS para redimensionar janela
 
 1. Clique no **ícone do Window Resize** na barra de menus.
 2. Passe o cursor sobre **"Redimensionar"** para abrir a lista de janelas.
-3. Todas as janelas abertas são listadas como **[Nome do app] Título da janela**.
+3. Todas as janelas abertas são exibidas com seu **ícone de aplicativo** e nome como **[Nome do app] Título da janela**. Títulos longos são automaticamente truncados para manter o menu legível.
 4. Passe o cursor sobre uma janela para ver os tamanhos predefinidos disponíveis.
 5. Clique em um tamanho para redimensionar a janela imediatamente.
 
@@ -101,6 +101,7 @@ Ative **"Capturar após redimensionar"** para capturar automaticamente a janela 
 Quando ativada, as seguintes opções estão disponíveis:
 
 - **Salvar em arquivo** — Salva a captura como um arquivo PNG. Quando ativada, escolha o local de salvamento:
+  > **Formato do nome do arquivo:** `MMddHHmmss_NomeApp_TítuloDaJanela.png` (ex. `0227193012_Safari_Apple.png`). Símbolos são removidos; apenas letras, dígitos e underscores são utilizados.
   - **Mesa** — Salvar na pasta Mesa.
   - **Imagens** — Salvar na pasta Imagens.
 - **Copiar para a área de transferência** — Copia a captura para a área de transferência para colar em outros aplicativos.

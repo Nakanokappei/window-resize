@@ -30,7 +30,7 @@ Window Resize sử dụng API Trợ năng của macOS để đổi kích thướ
 
 1. Nhấp **biểu tượng Window Resize** trên thanh menu.
 2. Di chuột qua **"Đổi kích thước"** để mở danh sách cửa sổ.
-3. Tất cả cửa sổ đang mở được liệt kê dưới dạng **[Tên ứng dụng] Tiêu đề cửa sổ**.
+3. Tất cả cửa sổ đang mở được hiển thị với **biểu tượng ứng dụng** và tên dưới dạng **[Tên ứng dụng] Tiêu đề cửa sổ**. Các tiêu đề dài sẽ được tự động rút gọn để giữ cho menu dễ đọc.
 4. Di chuột qua một cửa sổ để xem các kích thước đặt sẵn có sẵn.
 5. Nhấp vào một kích thước để đổi kích thước cửa sổ ngay lập tức.
 
@@ -101,6 +101,7 @@ Bật **"Chụp ảnh sau khi thay đổi kích thước"** để tự động c
 Khi được bật, các tùy chọn sau có sẵn:
 
 - **Lưu vào tệp** — Lưu ảnh chụp màn hình dưới dạng tệp PNG. Khi được bật, chọn vị trí lưu:
+  > **Định dạng tên tệp:** `MMddHHmmss_TênỨngDụng_TiêuĐềCửaSổ.png` (ví dụ: `0227193012_Safari_Apple.png`). Các ký hiệu được loại bỏ; chỉ sử dụng chữ cái, chữ số và dấu gạch dưới.
   - **Màn hình chính** — Lưu vào thư mục Màn hình chính.
   - **Hình ảnh** — Lưu vào thư mục Hình ảnh.
 - **Sao chép vào bảng nhớ tạm** — Sao chép ảnh chụp màn hình vào bảng nhớ tạm để dán vào các ứng dụng khác.

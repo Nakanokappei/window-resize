@@ -30,7 +30,7 @@ Window Resize uses the macOS Accessibility API to resize windows. You must grant
 
 1. Click the **Window Resize icon** in the menu bar.
 2. Hover over **"Resize"** to open the window list.
-3. All currently open windows are listed as **[App Name] Window Title**.
+3. All currently open windows are listed with their **application icon** and name as **[App Name] Window Title**. Long titles are automatically truncated to keep the menu readable.
 4. Hover over a window to see the available preset sizes.
 5. Click a size to resize the window immediately.
 
@@ -101,6 +101,7 @@ Toggle **"Take screenshot after resize"** to automatically capture the window af
 When enabled, the following options are available:
 
 - **Save to file** — Save the screenshot as a PNG file. When enabled, choose the save location:
+  > **Filename format:** `MMddHHmmss_AppName_WindowTitle.png` (e.g. `0227193012_Safari_Apple.png`). Symbols are removed; only letters, digits, and underscores are used.
   - **Desktop** — Save to your Desktop folder.
   - **Pictures** — Save to your Pictures folder.
 - **Copy to clipboard** — Copy the screenshot to the clipboard for pasting into other apps.

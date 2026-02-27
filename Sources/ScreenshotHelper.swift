@@ -129,8 +129,10 @@ class ScreenshotHelper {
     /// metadata (144 DPI for Retina captures), so the PNG displays at the correct
     /// logical size in image viewers.
     ///
-    /// Filename format: "Window Resize yyyy-MM-dd HH.mm.ss.png"
-    static func exportAsPNG(_ image: NSImage, to location: ScreenshotSaveLocation) -> Bool {
+    /// Filename format: MMddHHmmss_AppName_WindowTitle.png
+    /// All symbols are stripped; only letters, digits, and underscores remain.
+    static func exportAsPNG(_ image: NSImage, to location: ScreenshotSaveLocation,
+                            windowInfo: WindowInfo? = nil) -> Bool {
         guard let tiffData = image.tiffRepresentation,
               let bitmapRep = NSBitmapImageRep(data: tiffData),
               let pngData = bitmapRep.representation(using: .png, properties: [:]) else {
@@ -145,10 +147,7 @@ class ScreenshotHelper {
             directory = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first!
         }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
-        let timestamp = formatter.string(from: Date())
-        let filename = "Window Resize \(timestamp).png"
+        let filename = buildFilename(windowInfo: windowInfo)
         let fileURL = directory.appendingPathComponent(filename)
 
         do {
@@ -157,6 +156,42 @@ class ScreenshotHelper {
         } catch {
             return false
         }
+    }
+
+    /// Builds a compact filename from the current date/time and window identity.
+    ///
+    /// Format: MMddHHmmss_AppName_WindowTitle.png
+    /// e.g. "0227193012_Safari_Apple.png"
+    ///
+    /// All punctuation and symbols are stripped from app name and window title,
+    /// keeping only letters, digits, and spaces (spaces become underscores).
+    private static func buildFilename(windowInfo: WindowInfo?) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMddHHmmss"
+
+        var parts = [formatter.string(from: Date())]
+
+        if let info = windowInfo {
+            let appName = sanitizeForFilename(info.ownerName)
+            if !appName.isEmpty { parts.append(appName) }
+
+            let windowTitle = sanitizeForFilename(info.windowName)
+            if !windowTitle.isEmpty { parts.append(windowTitle) }
+        }
+
+        return parts.joined(separator: "_") + ".png"
+    }
+
+    /// Strips all characters except letters, digits, and spaces from a string,
+    /// then replaces spaces with underscores for use in filenames.
+    private static func sanitizeForFilename(_ name: String) -> String {
+        let allowed = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " "))
+        return name.unicodeScalars
+            .filter { allowed.contains($0) }
+            .map { String($0) }
+            .joined()
+            .trimmingCharacters(in: .whitespaces)
+            .replacingOccurrences(of: " ", with: "_")
     }
 
     /// Copies the image to the system clipboard via NSPasteboard.

@@ -30,7 +30,7 @@ Window Resize menggunakan API Aksesibilitas macOS untuk mengubah ukuran jendela.
 
 1. Klik **ikon Window Resize** di bilah menu.
 2. Arahkan kursor ke **"Ubah Ukuran"** untuk membuka daftar jendela.
-3. Semua jendela yang sedang terbuka ditampilkan sebagai **[Nama Aplikasi] Judul Jendela**.
+3. Semua jendela yang sedang terbuka ditampilkan dengan **ikon aplikasi** dan namanya sebagai **[Nama Aplikasi] Judul Jendela**. Judul yang panjang secara otomatis dipotong agar menu tetap mudah dibaca.
 4. Arahkan kursor ke suatu jendela untuk melihat ukuran preset yang tersedia.
 5. Klik sebuah ukuran untuk langsung mengubah ukuran jendela.
 
@@ -101,6 +101,7 @@ Aktifkan **"Ambil tangkapan layar setelah mengubah ukuran"** untuk secara otomat
 Saat diaktifkan, opsi berikut tersedia:
 
 - **Simpan ke file** — Simpan tangkapan layar sebagai file PNG. Saat diaktifkan, pilih lokasi penyimpanan:
+  > **Format nama file:** `MMddHHmmss_NamaAplikasi_JudulJendela.png` (contoh: `0227193012_Safari_Apple.png`). Simbol dihapus; hanya huruf, angka, dan garis bawah yang digunakan.
   - **Desktop** — Simpan ke folder Desktop Anda.
   - **Gambar** — Simpan ke folder Gambar Anda.
 - **Salin ke papan klip** — Salin tangkapan layar ke papan klip untuk ditempelkan ke aplikasi lain.

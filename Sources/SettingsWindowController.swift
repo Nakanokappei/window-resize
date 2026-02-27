@@ -15,7 +15,11 @@ class SettingsWindowController: NSWindowController {
         let window = NSWindow(contentViewController: hostingController)
         window.title = L("settings.title")
         window.setContentSize(NSSize(width: 400, height: 500))
-        window.styleMask = [.titled, .closable, .miniaturizable]
+        // Allow the window to resize vertically so it can grow when
+        // screenshot options are revealed, without shrinking the preset list.
+        window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
+        window.minSize = NSSize(width: 400, height: 400)
+        window.maxSize = NSSize(width: 400, height: 800)
         window.center()
 
         self.init(window: window)

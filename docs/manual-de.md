@@ -30,7 +30,7 @@ Window Resize verwendet die Bedienungshilfen-API von macOS, um Fenstergrößen z
 
 1. Klicken Sie auf das **Window Resize-Symbol** in der Menüleiste.
 2. Bewegen Sie den Mauszeiger über **"Größe ändern"**, um die Fensterliste zu öffnen.
-3. Alle derzeit geöffneten Fenster werden als **[App-Name] Fenstertitel** angezeigt.
+3. Alle derzeit geöffneten Fenster werden mit ihrem **Anwendungssymbol** und Namen als **[App-Name] Fenstertitel** angezeigt. Lange Titel werden automatisch gekürzt, um das Menü übersichtlich zu halten.
 4. Bewegen Sie den Mauszeiger über ein Fenster, um die verfügbaren voreingestellten Größen zu sehen.
 5. Klicken Sie auf eine Größe, um das Fenster sofort zu ändern.
 
@@ -101,6 +101,7 @@ Aktivieren Sie **"Nach Größenänderung fotografieren"**, um das Fenster nach d
 Wenn diese Option aktiviert ist, stehen folgende Optionen zur Verfügung:
 
 - **In Datei speichern** — Speichert das Bildschirmfoto als PNG-Datei. Wenn aktiviert, wählen Sie den Speicherort:
+  > **Dateinamenformat:** `MMddHHmmss_AppName_Fenstertitel.png` (z. B. `0227193012_Safari_Apple.png`). Sonderzeichen werden entfernt; es werden nur Buchstaben, Ziffern und Unterstriche verwendet.
   - **Schreibtisch** — Im Ordner „Schreibtisch" speichern.
   - **Bilder** — Im Ordner „Bilder" speichern.
 - **In die Zwischenablage kopieren** — Kopiert das Bildschirmfoto in die Zwischenablage zum Einfügen in andere Apps.

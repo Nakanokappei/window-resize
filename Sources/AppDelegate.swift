@@ -118,12 +118,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // its redraw/animation, then capture a screenshot if enabled.
         if store.screenshotEnabled {
             let windowID = action.windowInfo.windowID
+            let windowInfo = action.windowInfo
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 ScreenshotHelper.captureWindow(windowID) { image in
                     guard let image = image else { return }
 
                     if self.store.screenshotSaveToFile {
-                        _ = ScreenshotHelper.exportAsPNG(image, to: self.store.screenshotSaveLocation)
+                        _ = ScreenshotHelper.exportAsPNG(image, to: self.store.screenshotSaveLocation,
+                                                         windowInfo: windowInfo)
                     }
 
                     if self.store.screenshotCopyToClipboard {

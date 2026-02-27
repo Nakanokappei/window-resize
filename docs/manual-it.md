@@ -30,7 +30,7 @@ Window Resize utilizza l'API di accessibilità di macOS per ridimensionare le fi
 
 1. Fare clic sull'**icona di Window Resize** nella barra dei menu.
 2. Passare il cursore su **"Ridimensiona"** per aprire l'elenco delle finestre.
-3. Tutte le finestre attualmente aperte sono elencate come **[Nome dell'app] Titolo della finestra**.
+3. Tutte le finestre attualmente aperte sono visualizzate con la propria **icona dell'applicazione** e il nome come **[Nome dell'app] Titolo della finestra**. I titoli lunghi vengono automaticamente troncati per mantenere il menu leggibile.
 4. Passare il cursore su una finestra per visualizzare le dimensioni predefinite disponibili.
 5. Fare clic su una dimensione per ridimensionare la finestra immediatamente.
 
@@ -101,6 +101,7 @@ Attivare **"Scatta istantanea dopo il ridimensionamento"** per catturare automat
 Quando è attivata, sono disponibili le seguenti opzioni:
 
 - **Salva su file** — Salva l'istantanea come file PNG. Quando è attivata, scegliere la posizione di salvataggio:
+  > **Formato del nome file:** `MMddHHmmss_NomeApp_TitoloFinestra.png` (es. `0227193012_Safari_Apple.png`). I simboli vengono rimossi; vengono utilizzati solo lettere, cifre e trattini bassi.
   - **Scrivania** — Salvare nella cartella Scrivania.
   - **Immagini** — Salvare nella cartella Immagini.
 - **Copia negli appunti** — Copia l'istantanea negli appunti per incollarla in altre applicazioni.
