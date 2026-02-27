@@ -39,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let button = statusItem.button {
             if let image = NSImage(named: "MenuBarIcon") {
-                image.size = NSSize(width: 18, height: 18)
+                image.size = NSSize(width: 16, height: 16)
                 image.isTemplate = true
                 button.image = image
             } else if let image = NSImage(systemSymbolName: "rectangle.expand.vertical",
@@ -187,11 +187,28 @@ class WindowListMenu: NSMenu, NSMenuDelegate {
             return
         }
 
+        // Limit menu item width to 1/4 of the current display width.
+        let menuFont = NSFont.menuFont(ofSize: 14)
+        let menuFontAttrs: [NSAttributedString.Key: Any] = [.font: menuFont]
+        let screenWidth = NSScreen.main?.frame.width ?? 1920
+        let maxMenuWidth = screenWidth / 4.0
+
         // Each window gets a submenu of available preset sizes.
         for windowInfo in windows {
             let displayName = windowInfo.windowName.isEmpty ? L("menu.untitled") : windowInfo.windowName
-            let title = "[\(windowInfo.ownerName)] \(displayName)"
+            var title = "[\(windowInfo.ownerName)] \(displayName)"
+            // Truncate the title so its rendered width stays within the budget.
+            while title.count > 10 && (title as NSString).size(withAttributes: menuFontAttrs).width > maxMenuWidth {
+                title = String(title.dropLast(2)) + "…"
+            }
             let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
+
+            // Show the owning application's icon beside the menu item.
+            if let app = NSRunningApplication(processIdentifier: windowInfo.ownerPID),
+               let icon = app.icon {
+                icon.size = NSSize(width: 16, height: 16)
+                item.image = icon
+            }
 
             let sizeSubmenu = PresetSizeMenu(windowInfo: windowInfo, target: resizeTarget!)
             item.submenu = sizeSubmenu

@@ -61,11 +61,33 @@ if [ -d "${LOCALIZATIONS_DIR}" ]; then
     echo "=== Copied localizations: $(ls -d "${RESOURCES_DIR}"/*.lproj 2>/dev/null | xargs -n1 basename | tr '\n' ' ') ==="
 fi
 
-# Copy app icon (.icns) into bundle Resources
-# アプリアイコンをバンドルにコピー
+# Compile Asset Catalog (supports dark mode icon on macOS 15+)
+# Asset Catalogをコンパイル（macOS 15+のダークモードアイコン対応）
+XCASSETS_DIR="${LOCALIZATIONS_DIR}/Assets.xcassets"
+if [ -d "${XCASSETS_DIR}" ]; then
+    xcrun actool "${XCASSETS_DIR}" \
+        --compile "${RESOURCES_DIR}" \
+        --platform macosx \
+        --minimum-deployment-target 13.0 \
+        --app-icon AppIcon \
+        --output-partial-info-plist /dev/null \
+        > /dev/null 2>&1
+    echo "=== Compiled Assets.xcassets (light + dark + tinted icons) ==="
+fi
+
+# Copy .icns as fallback for older macOS (< 15)
+# 古いmacOS (< 15) 向けに.icnsもコピー
 if [ -f "${LOCALIZATIONS_DIR}/AppIcon.icns" ]; then
     cp "${LOCALIZATIONS_DIR}/AppIcon.icns" "${RESOURCES_DIR}/AppIcon.icns"
-    echo "=== Copied AppIcon.icns ==="
+    echo "=== Copied AppIcon.icns (fallback) ==="
+fi
+
+# Copy .icon package for macOS 26+ (Liquid Glass / dark mode icon)
+# macOS 26+向けの.iconパッケージをコピー（Liquid Glass / ダークモードアイコン対応）
+ICON_FILE="./Window Size App Icon.icon"
+if [ -d "${ICON_FILE}" ]; then
+    cp -R "${ICON_FILE}" "${RESOURCES_DIR}/AppIcon.icon"
+    echo "=== Copied AppIcon.icon (macOS 26+) ==="
 fi
 
 # Copy menu bar icon (template image) into bundle Resources
