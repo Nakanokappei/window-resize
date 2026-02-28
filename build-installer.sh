@@ -62,6 +62,7 @@ pkgbuild \
 cat > "${PKG_DIR}/resources/welcome.html" << 'HTML_EOF'
 <!DOCTYPE html>
 <html>
+<head><meta charset="utf-8"></head>
 <body style="font-family: -apple-system, Helvetica Neue, sans-serif; font-size: 13px; line-height: 1.6;">
 <h2>Window Resize</h2>
 <p>A menu bar application that resizes windows to preset sizes.</p>
@@ -88,6 +89,7 @@ HTML_EOF
 cat > "${PKG_DIR}/resources/license.html" << 'HTML_EOF'
 <!DOCTYPE html>
 <html>
+<head><meta charset="utf-8"></head>
 <body style="font-family: -apple-system, Helvetica Neue, sans-serif; font-size: 12px; line-height: 1.5;">
 <h3>MIT License</h3>
 <p>Copyright © 2026 Nakano Kappei</p>
