@@ -6,7 +6,7 @@ A menu bar app that resizes running application windows to preset sizes on macOS
 ## Tech Stack
 - **Language:** Swift (SwiftUI + AppKit)
 - **Build:** `swiftc` + shell script (no Xcode project)
-- **Signing:** Developer ID Application (Team: G466Q9TVYB) + Apple Notarization
+- **Signing:** Developer ID Application + Developer ID Installer + Apple Distribution (Team: G466Q9TVYB)
 - **Minimum OS:** macOS 13.0 (Ventura)
 - **Architecture:** Apple Silicon (arm64) / Intel (x86_64) auto-detected
 
@@ -18,18 +18,34 @@ bash build.sh
 open "build/Window Resize.app"
 ```
 - Builds in /tmp staging area (avoids iCloud Drive xattr issues with codesign)
-- Developer ID signing + Hardened Runtime (`--options runtime`)
+- Developer ID Application signing (SHA-1: `77561AD1...`) + Hardened Runtime (`--options runtime`)
 - Apple Notarization + Staple automated in build.sh
 - Keychain profile `notarytool-profile` stores notarization credentials
+- Outputs: `build/Window Resize.app` + `build/Window Resize.zip` (app + README + LICENSE + docs)
+
+### Installer (direct distribution)
+```bash
+bash build.sh            # app must be built first
+bash build-installer.sh
+```
+- macOS .pkg installer with customizable components:
+  - Window Resize.app → /Applications (required)
+  - User Manuals → /Library/Documentation/Window Resize/ (optional)
+- Welcome screen (README), license agreement, component selection
+- Developer ID Installer signing (SHA-1: `825427F1...`) + notarization + staple
+- HTML resources require `<meta charset="utf-8">` to render em dash / × correctly
+- Outputs: `build/Window Resize.pkg`
 
 ### App Store
 ```bash
 bash build-appstore.sh
+bash build-appstore.sh --upload   # build + upload to App Store Connect
 ```
 - Signs with Apple Distribution certificate + App Sandbox entitlements
-- Creates installer .pkg with `productbuild`
-- Upload via `xcrun altool` or Transporter
+- Creates installer .pkg with `productbuild` + 3rd Party Mac Developer Installer
+- Upload via `xcrun altool` with App Store Connect API Key or Transporter
 - Requires: provisioning profile at `./WindowResize_AppStore.provisionprofile`
+- API Key: `~/.private_keys/AuthKey_R9NF6Y7AM3.p8` (Key ID: `R9NF6Y7AM3`, Issuer: `10566932-d9cd-4409-8c3a-11c18d6326fc`)
 
 ### Testing
 - Language test: `open "build/Window Resize.app" --args -AppleLanguages "(ja)"`
@@ -40,7 +56,8 @@ Window Resize/
 ├── CLAUDE.md
 ├── Info.plist               # App metadata (LSUIElement, BundleID, LSApplicationCategoryType)
 ├── WindowResize.entitlements # App Sandbox entitlements (App Store build only)
-├── build.sh                 # Developer ID build (swiftc → sign → notarize → staple)
+├── build.sh                 # Developer ID build (swiftc → sign → notarize → staple → ZIP)
+├── build-installer.sh       # macOS .pkg installer (welcome → license → component selection)
 ├── build-appstore.sh        # App Store build (swiftc → sign w/ entitlements → .pkg)
 ├── README.md
 ├── LICENSE                  # MIT License
@@ -133,10 +150,13 @@ Window Resize/
 - `PresetSizeMenu.displayBounds(containing:)` converts between them for multi-display support
 
 ### Code Signing & Distribution
-- **Developer ID** (build.sh): Developer ID Application certificate, Hardened Runtime, notarization + staple
+- **Developer ID** (build.sh): Developer ID Application certificate (SHA-1 hash), Hardened Runtime, notarization + staple
+- **Installer** (build-installer.sh): Developer ID Installer certificate (SHA-1 hash), notarization + staple
 - **App Store** (build-appstore.sh): Apple Distribution certificate, App Sandbox entitlements, .pkg via productbuild
 - Team ID: G466Q9TVYB
+- Signing identities use SHA-1 hashes to avoid ambiguity with duplicate certificate names
 - Keychain profile `notarytool-profile` stores Apple ID + app-specific password (Developer ID only)
+- App Store Connect API Key at `~/.private_keys/AuthKey_R9NF6Y7AM3.p8`
 
 ### App Sandbox (App Store)
 - Entitlements: `com.apple.security.app-sandbox` + `com.apple.security.files.user-selected.read-write`
@@ -200,5 +220,13 @@ Window Resize/
 - `.af` files (Pixelmator Pro) are source artwork — not bundled in the app
 - `.icon` file (Icon Composer) IS bundled for future macOS 26 support
 
+## Distribution Outputs
+
+| Command | Output | Purpose |
+|---|---|---|
+| `bash build.sh` | `build/Window Resize.zip` | ZIP (app + README + LICENSE + docs) |
+| `bash build-installer.sh` | `build/Window Resize.pkg` | macOS installer (optional manual install) |
+| `bash build-appstore.sh` | `build-appstore/WindowResize.pkg` | App Store submission via Transporter / altool |
+
 ## Pending / Future
-- App Store: certificates, provisioning profile, and App Store Connect setup needed before first submission
+- (none)
