@@ -1,5 +1,9 @@
 # Build output
 build/
+build-appstore/
+
+# Signing / provisioning (sensitive)
+*.provisionprofile
 
 # macOS
 .DS_Store
