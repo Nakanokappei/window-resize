@@ -6,7 +6,8 @@ set -euo pipefail
 APP_NAME="Window Resize"
 EXECUTABLE_NAME="WindowResize"
 BUILD_DIR="./build"
-SIGNING_IDENTITY="Developer ID Application: Kappei Nakano (G466Q9TVYB)"
+# SHA-1 hash to avoid ambiguity when multiple certs share the same name
+SIGNING_IDENTITY="77561AD132E4555020CB86F15C14CC236A71AF65"
 NOTARYTOOL_PROFILE="notarytool-profile"
 # iCloud Drive上ではxattr (com.apple.provenance等) が自動付与されcodesignが失敗するため、
 # /tmp でビルドしてから成果物をコピーする
@@ -124,5 +125,24 @@ rm -f "${ZIP_PATH}"
 echo "=== Stapling notarization ticket ==="
 xcrun stapler staple "${BUILD_DIR}/${APP_NAME}.app"
 
-echo "=== Build complete: ${BUILD_DIR}/${APP_NAME}.app ==="
+# Create distribution ZIP with README, LICENSE, and docs
+# 配布用ZIPを作成（README、LICENSE、マニュアル同梱）
+echo "=== Creating distribution ZIP ==="
+DIST_DIR="${BUILD_DIR}/${APP_NAME}"
+rm -rf "${DIST_DIR}"
+mkdir -p "${DIST_DIR}/docs"
+
+cp -R "${BUILD_DIR}/${APP_NAME}.app" "${DIST_DIR}/"
+cp README.md "${DIST_DIR}/"
+cp LICENSE "${DIST_DIR}/"
+cp docs/manual-*.md "${DIST_DIR}/docs/"
+
+DIST_ZIP="${BUILD_DIR}/${APP_NAME}.zip"
+rm -f "${DIST_ZIP}"
+ditto -c -k --keepParent "${DIST_DIR}" "${DIST_ZIP}"
+rm -rf "${DIST_DIR}"
+
+echo "=== Build complete ==="
+echo "App:  ${BUILD_DIR}/${APP_NAME}.app"
+echo "ZIP:  ${DIST_ZIP}"
 echo "Run with: open \"${BUILD_DIR}/${APP_NAME}.app\""
