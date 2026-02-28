@@ -133,7 +133,6 @@ rm -rf "${DIST_DIR}"
 mkdir -p "${DIST_DIR}/docs"
 
 cp -R "${BUILD_DIR}/${APP_NAME}.app" "${DIST_DIR}/"
-ln -s /Applications "${DIST_DIR}/Applications"
 cp README.md "${DIST_DIR}/"
 cp LICENSE "${DIST_DIR}/"
 cp docs/manual-*.md "${DIST_DIR}/docs/"
