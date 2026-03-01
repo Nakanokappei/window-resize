@@ -146,17 +146,21 @@ productbuild \
 
 echo "=== Package created: ${PKG_PATH} ==="
 
+# App Store Connect API Key credentials
+API_KEY="R9NF6Y7AM3"
+API_ISSUER="10566932-d9cd-4409-8c3a-11c18d6326fc"
+
 # Upload to App Store Connect if --upload flag is provided
 if [ "${1:-}" = "--upload" ]; then
     echo "=== Validating package ==="
-    xcrun altool --validate-app -f "${PKG_PATH}" -t macos --apiKey "" --apiIssuer ""
+    xcrun altool --validate-app -f "${PKG_PATH}" -t macos --apiKey "${API_KEY}" --apiIssuer "${API_ISSUER}"
     echo "=== Uploading to App Store Connect ==="
-    xcrun altool --upload-app -f "${PKG_PATH}" -t macos --apiKey "" --apiIssuer ""
+    xcrun altool --upload-app -f "${PKG_PATH}" -t macos --apiKey "${API_KEY}" --apiIssuer "${API_ISSUER}"
     echo "=== Upload complete ==="
 else
     echo ""
     echo "To upload to App Store Connect:"
-    echo "  xcrun altool --upload-app -f \"${PKG_PATH}\" -t macos --apiKey YOUR_KEY --apiIssuer YOUR_ISSUER"
+    echo "  xcrun altool --upload-app -f \"${PKG_PATH}\" -t macos --apiKey ${API_KEY} --apiIssuer ${API_ISSUER}"
     echo "  or open Transporter.app and drag in \"${PKG_PATH}\""
 fi
 
