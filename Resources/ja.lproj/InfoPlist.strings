@@ -1,2 +1,2 @@
 "CFBundleName" = "Window Resize";
-"NSAccessibilityUsageDescription" = "Window Resize がアプリケーションのウインドウサイズを変更するには、アクセシビリティのアクセスが必要です。";
+"NSAccessibilityUsageDescription" = "Window Resize はマウスの精密操作が困難なユーザーがメニュー選択だけでウインドウサイズを簡単に変更できるよう、アクセシビリティ機能を使用します。";

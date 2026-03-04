@@ -1,2 +1,2 @@
 "CFBundleName" = "Window Resize";
-"NSAccessibilityUsageDescription" = "Window Resize 需要輔助使用權限才能調整應用程式視窗的大小。";
+"NSAccessibilityUsageDescription" = "Window Resize 使用輔助使用功能，幫助在精確滑鼠操作上有困難的使用者透過簡單的選單選擇輕鬆調整視窗大小。";

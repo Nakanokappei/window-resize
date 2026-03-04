@@ -44,7 +44,7 @@
         <string>zh-Hant</string>
     </array>
     <key>NSAccessibilityUsageDescription</key>
-    <string>Window Resize needs accessibility access to resize application windows.</string>
+    <string>Window Resize uses accessibility features to help users who have difficulty with precise mouse operations resize windows easily through simple menu selections.</string>
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.utilities</string>
 </dict>

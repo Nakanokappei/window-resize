@@ -1,2 +1,2 @@
 "CFBundleName" = "Window Resize";
-"NSAccessibilityUsageDescription" = "Window Resize cần quyền trợ năng để đổi kích thước cửa sổ ứng dụng.";
+"NSAccessibilityUsageDescription" = "Window Resize sử dụng các tính năng trợ năng để giúp người dùng gặp khó khăn với thao tác chuột chính xác dễ dàng đổi kích thước cửa sổ thông qua các lựa chọn menu đơn giản.";

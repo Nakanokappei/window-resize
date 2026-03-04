@@ -1,2 +1,2 @@
 "CFBundleName" = "Window Resize";
-"NSAccessibilityUsageDescription" = "Window Resize a besoin de l'accès à l'accessibilité pour redimensionner les fenêtres des applications.";
+"NSAccessibilityUsageDescription" = "Window Resize utilise les fonctionnalités d'accessibilité pour aider les utilisateurs ayant des difficultés avec les opérations précises de la souris à redimensionner facilement les fenêtres par de simples sélections de menu.";

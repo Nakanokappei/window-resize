@@ -1,2 +1,2 @@
 "CFBundleName" = "Window Resize";
-"NSAccessibilityUsageDescription" = "يحتاج Window Resize إلى إذن تسهيلات الاستخدام لتغيير حجم نوافذ التطبيقات.";
+"NSAccessibilityUsageDescription" = "يستخدم Window Resize ميزات تسهيلات الاستخدام لمساعدة المستخدمين الذين يعانون من صعوبة في عمليات الماوس الدقيقة على تغيير حجم النوافذ بسهولة من خلال تحديدات القائمة البسيطة.";
