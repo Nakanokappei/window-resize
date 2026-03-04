@@ -20,6 +20,11 @@ SOURCES_DIR="./Sources"
 
 echo "=== Building ${APP_NAME} ==="
 
+# Merge/remove AppleDouble (._) files created by Parallels/Windows file sharing.
+# These break code signatures when included in ZIP/PKG archives.
+# Parallels/Windows共有で生成される._ファイルをマージ・除去
+dot_clean .
+
 # Clean previous build
 rm -rf "${BUILD_DIR}"
 
@@ -114,6 +119,11 @@ mkdir -p "${BUILD_DIR}"
 cp -R "${APP_BUNDLE}" "${BUILD_DIR}/"
 rm -rf "${STAGING_DIR}"
 
+# Strip extended attributes added by external/network volumes.
+# AppleDouble (._) files in the ZIP break the code signature seal.
+# 外付けドライブ等で付与される拡張属性を除去（ZIP内の._ファイルが署名を壊す）
+find "${BUILD_DIR}/${APP_NAME}.app" -exec xattr -c {} + 2>/dev/null || true
+
 # Notarize the app / アプリを公証する
 echo "=== Notarizing ${APP_NAME}.app ==="
 ZIP_PATH="${BUILD_DIR}/WindowResize.zip"
@@ -139,7 +149,10 @@ cp docs/manual-*.md "${DIST_DIR}/docs/"
 
 DIST_ZIP="${BUILD_DIR}/${APP_NAME}.zip"
 rm -f "${DIST_ZIP}"
-ditto -c -k --keepParent "${DIST_DIR}" "${DIST_ZIP}"
+# --norsrc --noextattr: exclude AppleDouble (._) files from ZIP.
+# They break code signature validation on extraction.
+# ZIP内に._ファイルを含めない（展開時にコード署名の検証を壊す）
+ditto -c -k --keepParent --norsrc --noextattr "${DIST_DIR}" "${DIST_ZIP}"
 rm -rf "${DIST_DIR}"
 
 echo "=== Build complete ==="

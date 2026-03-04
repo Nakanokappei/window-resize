@@ -42,6 +42,10 @@ if [ ! -d "${APP_PATH}" ]; then
     exit 1
 fi
 
+# Merge/remove AppleDouble (._) files created by Parallels/Windows file sharing
+# Parallels/Windows共有で生成される._ファイルをマージ・除去
+dot_clean .
+
 echo "=== Creating installer for ${APP_NAME} v${VERSION} ==="
 
 # Clean
@@ -54,6 +58,7 @@ mkdir -p "${PKG_DIR}/resources" "${PKG_DIR}/components"
 APP_PAYLOAD="${PKG_DIR}/payload-app"
 mkdir -p "${APP_PAYLOAD}/Applications"
 cp -R "${APP_PATH}" "${APP_PAYLOAD}/Applications/"
+find "${APP_PAYLOAD}" -exec xattr -c {} + 2>/dev/null || true
 
 pkgbuild \
     --root "${APP_PAYLOAD}" \
@@ -242,25 +247,17 @@ echo "</installer-gui-script>" >> "${PKG_DIR}/distribution.xml"
 # -------------------------------------------------------
 # Assemble product archive
 # -------------------------------------------------------
-UNSIGNED_PKG="${PKG_DIR}/${APP_NAME}-unsigned.pkg"
 SIGNED_PKG="${BUILD_DIR}/${APP_NAME}.pkg"
 
+# Sign directly with productbuild (avoids productsign chain warning)
+# productbuildで直接署名（productsignの証明書チェーン警告を回避）
+echo "=== Signing installer ==="
 productbuild \
     --distribution "${PKG_DIR}/distribution.xml" \
     --resources "${PKG_DIR}/resources" \
     --package-path "${PKG_DIR}/components" \
-    "${UNSIGNED_PKG}"
-
-# -------------------------------------------------------
-# Sign with Developer ID Installer
-# -------------------------------------------------------
-echo "=== Signing installer ==="
-productsign \
     --sign "${INSTALLER_SIGNING_IDENTITY}" \
-    "${UNSIGNED_PKG}" \
     "${SIGNED_PKG}"
-
-rm -f "${UNSIGNED_PKG}"
 
 # -------------------------------------------------------
 # Notarize & staple
