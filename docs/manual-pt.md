@@ -5,7 +5,8 @@
 1. [Configuração inicial](#configuração-inicial)
 2. [Redimensionar uma janela](#redimensionar-uma-janela)
 3. [Configurações](#configurações)
-4. [Solução de problemas](#solução-de-problemas)
+4. [Recursos de acessibilidade](#recursos-de-acessibilidade)
+5. [Solução de problemas](#solução-de-problemas)
 
 ---
 
@@ -31,8 +32,9 @@ Window Resize utiliza a API de acessibilidade do macOS para redimensionar janela
 1. Clique no **ícone do Window Resize** na barra de menus.
 2. Passe o cursor sobre **"Redimensionar"** para abrir a lista de janelas.
 3. Todas as janelas abertas são exibidas com seu **ícone de aplicativo** e nome como **[Nome do app] Título da janela**. Títulos longos são automaticamente truncados para manter o menu legível.
-4. Passe o cursor sobre uma janela para ver os tamanhos predefinidos disponíveis.
-5. Clique em um tamanho para redimensionar a janela imediatamente.
+4. Quando um aplicativo tem **3 ou mais janelas**, elas são automaticamente agrupadas sob o nome do aplicativo (ex.: **"Safari (4)"**). Passe o cursor sobre o aplicativo para ver as janelas individuais e, em seguida, sobre uma janela para ver os tamanhos.
+5. Passe o cursor sobre uma janela para ver os tamanhos predefinidos disponíveis.
+6. Clique em um tamanho para redimensionar a janela imediatamente.
 
 ### Como os tamanhos são exibidos
 
@@ -94,21 +96,51 @@ Para remover um tamanho personalizado, clique no botão vermelho **"Remover"** a
 
 Ative **"Iniciar ao Fazer Login"** para que o Window Resize inicie automaticamente quando você fizer login no macOS.
 
+---
+
+## Recursos de acessibilidade
+
+Os recursos a seguir aprimoram a acessibilidade no gerenciamento de janelas. Quando qualquer um deles estiver ativado, o menu de redimensionamento inclui a opção **"Tamanho atual"** no topo, permitindo reposicionar ou trazer uma janela para a frente sem alterar seu tamanho.
+
+### Trazer para frente
+
+Ative **"Trazer janela para frente após redimensionar"** para elevar automaticamente a janela redimensionada acima de todas as outras. Isso é útil quando a janela de destino está parcialmente oculta por outras janelas.
+
+### Mover para a tela principal
+
+Ative **"Mover para a tela principal"** para realocar a janela para o monitor principal ao redimensionar. Isso é útil em configurações com múltiplos monitores quando você deseja mover rapidamente uma janela de um monitor secundário.
+
+### Posição da janela
+
+Escolha onde posicionar a janela na tela após o redimensionamento. Uma fileira de 9 botões representa as opções de posicionamento:
+
+- **Cantos:** Superior esquerdo, Superior direito, Inferior esquerdo, Inferior direito
+- **Bordas:** Centro superior, Centro esquerdo, Centro direito, Centro inferior
+- **Centro:** Centro da tela
+
+Clique em um botão de posição para selecioná-lo. Clique no mesmo botão novamente (ou clique em **"Não mover"**) para desmarcar. Quando nenhuma posição estiver selecionada, a janela permanece no lugar após o redimensionamento.
+
+> **Nota:** O posicionamento da janela leva em conta a barra de menus e o Dock, mantendo a janela dentro da área utilizável da tela.
+
+---
+
 ### Captura de tela
 
 Ative **"Capturar após redimensionar"** para capturar automaticamente a janela após o redimensionamento.
 
 Quando ativada, as seguintes opções estão disponíveis:
 
-- **Salvar em arquivo** — Salva a captura como um arquivo PNG. Quando ativada, escolha o local de salvamento:
+- **Salvar em arquivo** — Salva a captura como um arquivo PNG. Clique em **"Escolher..."** para selecionar a pasta de destino.
   > **Formato do nome do arquivo:** `MMddHHmmss_NomeApp_TítuloDaJanela.png` (ex. `0227193012_Safari_Apple.png`). Símbolos são removidos; apenas letras, dígitos e underscores são utilizados.
-  - **Mesa** — Salvar na pasta Mesa.
-  - **Imagens** — Salvar na pasta Imagens.
 - **Copiar para a área de transferência** — Copia a captura para a área de transferência para colar em outros aplicativos.
 
 Ambas as opções podem ser ativadas de forma independente. Por exemplo, você pode copiar para a área de transferência sem salvar em um arquivo.
 
 > **Nota:** O recurso de captura de tela requer a permissão de **Gravação de Tela**. Quando você usar este recurso pela primeira vez, o macOS solicitará que conceda a permissão em **Ajustes do Sistema > Privacidade e Segurança > Gravação de Tela**.
+
+### Idioma
+
+Selecione o idioma de exibição do aplicativo no menu suspenso **Idioma**. Escolha entre 16 idiomas ou **"Padrão do sistema"** para seguir o idioma do macOS. A alteração do idioma requer reiniciar o aplicativo.
 
 ### Status da acessibilidade
 

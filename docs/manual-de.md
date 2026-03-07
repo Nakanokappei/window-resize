@@ -5,7 +5,8 @@
 1. [Ersteinrichtung](#ersteinrichtung)
 2. [Fenstergröße ändern](#fenstergröße-ändern)
 3. [Einstellungen](#einstellungen)
-4. [Fehlerbehebung](#fehlerbehebung)
+4. [Barrierefreiheitsfunktionen](#barrierefreiheitsfunktionen)
+5. [Fehlerbehebung](#fehlerbehebung)
 
 ---
 
@@ -31,8 +32,9 @@ Window Resize verwendet die Bedienungshilfen-API von macOS, um Fenstergrößen z
 1. Klicken Sie auf das **Window Resize-Symbol** in der Menüleiste.
 2. Bewegen Sie den Mauszeiger über **"Größe ändern"**, um die Fensterliste zu öffnen.
 3. Alle derzeit geöffneten Fenster werden mit ihrem **Anwendungssymbol** und Namen als **[App-Name] Fenstertitel** angezeigt. Lange Titel werden automatisch gekürzt, um das Menü übersichtlich zu halten.
-4. Bewegen Sie den Mauszeiger über ein Fenster, um die verfügbaren voreingestellten Größen zu sehen.
-5. Klicken Sie auf eine Größe, um das Fenster sofort zu ändern.
+4. Wenn eine Anwendung **3 oder mehr Fenster** hat, werden diese automatisch unter dem Anwendungsnamen gruppiert (z. B. **"Safari (4)"**). Bewegen Sie den Mauszeiger über die App, um die einzelnen Fenster anzuzeigen, und dann über ein Fenster, um die verfügbaren Größen zu sehen.
+5. Bewegen Sie den Mauszeiger über ein Fenster, um die verfügbaren voreingestellten Größen zu sehen.
+6. Klicken Sie auf eine Größe, um das Fenster sofort zu ändern.
 
 ### Darstellung der Größen
 
@@ -94,21 +96,51 @@ Um eine benutzerdefinierte Größe zu entfernen, klicken Sie auf die rote Schalt
 
 Aktivieren Sie **"Beim Anmelden starten"**, damit Window Resize automatisch gestartet wird, wenn Sie sich bei macOS anmelden.
 
+---
+
+## Barrierefreiheitsfunktionen
+
+Die folgenden Funktionen verbessern die Barrierefreiheit bei der Fensterverwaltung. Wenn eine dieser Funktionen aktiviert ist, wird im Größenmenü oben die Option **"Aktuelle Größe"** angezeigt, mit der Sie ein Fenster neu positionieren oder in den Vordergrund bringen können, ohne seine Größe zu ändern.
+
+### In den Vordergrund bringen
+
+Aktivieren Sie **"Fenster nach Größenänderung in den Vordergrund bringen"**, um das geänderte Fenster automatisch über alle anderen Fenster zu heben. Dies ist nützlich, wenn das Zielfenster teilweise von anderen Fenstern verdeckt wird.
+
+### Auf den Hauptbildschirm verschieben
+
+Aktivieren Sie **"Auf den Hauptbildschirm verschieben"**, um das Fenster beim Ändern der Größe auf den primären Bildschirm zu verschieben. Dies ist bei Konfigurationen mit mehreren Bildschirmen hilfreich, wenn Sie ein Fenster schnell von einem sekundären Bildschirm verschieben möchten.
+
+### Fensterposition
+
+Wählen Sie, wo das Fenster nach der Größenänderung auf dem Bildschirm platziert werden soll. Eine Reihe von 9 Schaltflächen stellt die Positionierungsoptionen dar:
+
+- **Ecken:** Oben links, Oben rechts, Unten links, Unten rechts
+- **Kanten:** Oben Mitte, Links Mitte, Rechts Mitte, Unten Mitte
+- **Mitte:** Bildschirmmitte
+
+Klicken Sie auf eine Positionsschaltfläche, um sie auszuwählen. Klicken Sie erneut auf dieselbe Schaltfläche (oder auf **"Nicht verschieben"**), um die Auswahl aufzuheben. Wenn keine Position ausgewählt ist, bleibt das Fenster nach der Größenänderung an seiner aktuellen Position.
+
+> **Hinweis:** Die Fensterpositionierung berücksichtigt die Menüleiste und das Dock, sodass das Fenster innerhalb des nutzbaren Bildschirmbereichs bleibt.
+
+---
+
 ### Bildschirmfoto
 
 Aktivieren Sie **"Nach Größenänderung fotografieren"**, um das Fenster nach der Größenänderung automatisch aufzunehmen.
 
 Wenn diese Option aktiviert ist, stehen folgende Optionen zur Verfügung:
 
-- **In Datei speichern** — Speichert das Bildschirmfoto als PNG-Datei. Wenn aktiviert, wählen Sie den Speicherort:
+- **In Datei speichern** — Speichert das Bildschirmfoto als PNG-Datei. Klicken Sie auf **"Auswählen ..."**, um den Speicherordner festzulegen.
   > **Dateinamenformat:** `MMddHHmmss_AppName_Fenstertitel.png` (z. B. `0227193012_Safari_Apple.png`). Sonderzeichen werden entfernt; es werden nur Buchstaben, Ziffern und Unterstriche verwendet.
-  - **Schreibtisch** — Im Ordner „Schreibtisch" speichern.
-  - **Bilder** — Im Ordner „Bilder" speichern.
 - **In die Zwischenablage kopieren** — Kopiert das Bildschirmfoto in die Zwischenablage zum Einfügen in andere Apps.
 
 Beide Optionen können unabhängig voneinander aktiviert werden. Sie können beispielsweise in die Zwischenablage kopieren, ohne in eine Datei zu speichern.
 
 > **Hinweis:** Die Bildschirmfoto-Funktion erfordert die Berechtigung für **Bildschirmaufnahme**. Wenn Sie diese Funktion zum ersten Mal verwenden, fordert macOS Sie auf, die Berechtigung unter **Systemeinstellungen > Datenschutz & Sicherheit > Bildschirmaufnahme** zu erteilen.
+
+### Sprache
+
+Wählen Sie die Anzeigesprache der App über das Dropdown-Menü **Sprache** aus. Sie können aus 16 Sprachen wählen oder **"Systemstandard"** auswählen, um der macOS-Systemsprache zu folgen. Nach dem Ändern der Sprache ist ein Neustart der App erforderlich.
 
 ### Status der Bedienungshilfen
 

@@ -104,7 +104,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
-        let success = WindowManager.resizeWindow(action.windowInfo, to: action.size)
+        let success = WindowManager.resizeWindow(
+            action.windowInfo,
+            to: action.size,
+            position: store.windowPosition,
+            bringToFront: store.bringToFront,
+            moveToMainScreen: store.moveToMainScreen
+        )
         if !success {
             let alert = NSAlert()
             alert.messageText = L("alert.resize-failed.title")
@@ -178,6 +184,8 @@ class WindowListMenu: NSMenu, NSMenuDelegate {
 
     /// Called by AppKit each time the submenu is about to open.
     /// Replaces all items with the current window list.
+    /// Groups windows by application when an app has 3 or more windows,
+    /// keeping flat items for apps with fewer windows.
     func menuNeedsUpdate(_ menu: NSMenu) {
         menu.removeAllItems()
 
@@ -196,26 +204,66 @@ class WindowListMenu: NSMenu, NSMenuDelegate {
         let screenWidth = NSScreen.main?.frame.width ?? 1920
         let maxMenuWidth = screenWidth / 4.0
 
-        // Each window gets a submenu of available preset sizes.
+        // Group windows by owning application (PID).
+        var windowsByPID: [pid_t: [WindowInfo]] = [:]
+        var pidOrder: [pid_t] = []
         for windowInfo in windows {
-            let displayName = windowInfo.windowName.isEmpty ? L("menu.untitled") : windowInfo.windowName
-            var title = "[\(windowInfo.ownerName)] \(displayName)"
-            // Truncate the title so its rendered width stays within the budget.
-            while title.count > 10 && (title as NSString).size(withAttributes: menuFontAttrs).width > maxMenuWidth {
-                title = String(title.dropLast(2)) + "…"
+            if windowsByPID[windowInfo.ownerPID] == nil {
+                pidOrder.append(windowInfo.ownerPID)
             }
-            let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
+            windowsByPID[windowInfo.ownerPID, default: []].append(windowInfo)
+        }
 
-            // Show the owning application's icon beside the menu item.
-            if let app = NSRunningApplication(processIdentifier: windowInfo.ownerPID),
+        for pid in pidOrder {
+            guard let appWindows = windowsByPID[pid] else { continue }
+            let ownerName = appWindows[0].ownerName
+
+            // Retrieve the application icon once per app.
+            var appIcon: NSImage? = nil
+            if let app = NSRunningApplication(processIdentifier: pid),
                let icon = app.icon {
                 icon.size = NSSize(width: 16, height: 16)
-                item.image = icon
+                appIcon = icon
             }
 
-            let sizeSubmenu = PresetSizeMenu(windowInfo: windowInfo, target: resizeTarget!)
-            item.submenu = sizeSubmenu
-            menu.addItem(item)
+            if appWindows.count >= 3 {
+                // Grouped mode: app-level item with window submenu inside.
+                let appTitle = "\(ownerName) (\(appWindows.count))"
+                let appItem = NSMenuItem(title: appTitle, action: nil, keyEquivalent: "")
+                appItem.image = appIcon
+
+                let windowSubmenu = NSMenu()
+                for windowInfo in appWindows {
+                    let displayName = windowInfo.windowName.isEmpty ? L("menu.untitled") : windowInfo.windowName
+                    var title = displayName
+                    // Truncate the window title to fit the width budget.
+                    while title.count > 10 && (title as NSString).size(withAttributes: menuFontAttrs).width > maxMenuWidth {
+                        title = String(title.dropLast(2)) + "…"
+                    }
+                    let windowItem = NSMenuItem(title: title, action: nil, keyEquivalent: "")
+                    let sizeSubmenu = PresetSizeMenu(windowInfo: windowInfo, target: resizeTarget!)
+                    windowItem.submenu = sizeSubmenu
+                    windowSubmenu.addItem(windowItem)
+                }
+                appItem.submenu = windowSubmenu
+                menu.addItem(appItem)
+            } else {
+                // Flat mode: each window is shown directly with [AppName] prefix.
+                for windowInfo in appWindows {
+                    let displayName = windowInfo.windowName.isEmpty ? L("menu.untitled") : windowInfo.windowName
+                    var title = "[\(ownerName)] \(displayName)"
+                    // Truncate the title so its rendered width stays within the budget.
+                    while title.count > 10 && (title as NSString).size(withAttributes: menuFontAttrs).width > maxMenuWidth {
+                        title = String(title.dropLast(2)) + "…"
+                    }
+                    let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
+                    item.image = appIcon
+
+                    let sizeSubmenu = PresetSizeMenu(windowInfo: windowInfo, target: resizeTarget!)
+                    item.submenu = sizeSubmenu
+                    menu.addItem(item)
+                }
+            }
         }
     }
 }
@@ -232,6 +280,38 @@ class PresetSizeMenu: NSMenu {
         let screenSize = displayBounds(containing: windowInfo)
 
         let store = SettingsStore.shared
+
+        // When any accessibility feature is active, offer a "keep current size"
+        // option so the user can reposition or bring-to-front without resizing.
+        if store.hasActiveAccessibilityFeatures {
+            let currentWidth = Int(windowInfo.bounds.width)
+            let currentHeight = Int(windowInfo.bounds.height)
+            let currentSize = PresetSize(width: currentWidth, height: currentHeight,
+                                         label: L("menu.current-size"))
+
+            let currentItem = NSMenuItem(title: "", action: #selector(AppDelegate.resizeSelectedWindow(_:)), keyEquivalent: "")
+            currentItem.target = target
+
+            let paragraphStyle = NSMutableParagraphStyle()
+            let tabStop = NSTextTab(textAlignment: .right, location: 230)
+            paragraphStyle.tabStops = [tabStop]
+            let baseAttrs: [NSAttributedString.Key: Any] = [
+                .font: NSFont.menuFont(ofSize: 14),
+                .paragraphStyle: paragraphStyle
+            ]
+            let labelAttrs: [NSAttributedString.Key: Any] = [
+                .font: NSFont.menuFont(ofSize: 11),
+                .foregroundColor: NSColor.secondaryLabelColor,
+                .paragraphStyle: paragraphStyle
+            ]
+            let currentText = NSMutableAttributedString(string: currentSize.displayName, attributes: baseAttrs)
+            currentText.append(NSAttributedString(string: "\t\(currentSize.label ?? "")", attributes: labelAttrs))
+            currentItem.attributedTitle = currentText
+            currentItem.representedObject = ResizeAction(windowInfo: windowInfo, size: currentSize)
+            addItem(currentItem)
+            addItem(NSMenuItem.separator())
+        }
+
         for size in store.allPresets {
             let exceedsScreen = CGFloat(size.width) > screenSize.width || CGFloat(size.height) > screenSize.height
 

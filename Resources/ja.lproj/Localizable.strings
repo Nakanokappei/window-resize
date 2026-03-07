@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "フォルダ未選択";
 "settings.screenshot.copy-to-clipboard" = "クリップボードにコピー";
 
+/* Current size menu item */
+"menu.current-size" = "現在のサイズ";
+
+/* Accessibility features */
+"settings.bring-to-front" = "リサイズ後にウインドウを最前面に移動";
+"settings.window-position" = "リサイズ後の配置";
+"settings.window-position.none" = "移動しない";
+"settings.move-to-main-screen" = "メインスクリーンに移動";
+
+/* Language */
+"settings.language" = "言語";
+"settings.language.system" = "システム設定に従う";
+"settings.language.restart-title" = "言語を変更しました";
+"settings.language.restart-body" = "新しい言語を適用するにはアプリの再起動が必要です。";
+"settings.language.restart-button" = "今すぐ再起動";
+"settings.language.restart-later" = "あとで";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "画面収録の権限が必要です";
 "alert.screen-recording.body" = "ウインドウのスクリーンショットを撮影するには、画面収録の権限が必要です。\n\n以下の手順で操作してください：\nシステム設定 > プライバシーとセキュリティ > 画面収録\n\n「Window Resize」を有効にしてください。";

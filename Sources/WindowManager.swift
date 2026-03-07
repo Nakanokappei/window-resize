@@ -6,6 +6,16 @@
 import AppKit
 import ApplicationServices
 
+/// Represents the 9 anchor positions where a window can be placed on screen.
+/// Positions form a 3x3 grid matching the screen edges and center.
+/// Clockwise from top-left: topLeft, top, topRight, right, bottomRight,
+/// bottom, bottomLeft, left, plus center.
+enum WindowPosition: String, Codable, CaseIterable {
+    case topLeft, top, topRight
+    case left, center, right
+    case bottomLeft, bottom, bottomRight
+}
+
 /// Lightweight snapshot of a window's identity and geometry, sourced from
 /// CGWindowListCopyWindowInfo. Coordinates use the top-left screen origin.
 struct WindowInfo {
@@ -17,6 +27,11 @@ struct WindowInfo {
 }
 
 class WindowManager {
+
+    /// Standard macOS title bar height, used as margin when positioning
+    /// windows near screen edges so they don't sit flush against the
+    /// boundary and remain easy to interact with.
+    private static let titleBarMargin: CGFloat = 28.0
 
     /// Enumerates all visible, resizable application windows on screen.
     ///
@@ -64,7 +79,8 @@ class WindowManager {
         }
     }
 
-    /// Resizes a window to the given preset dimensions using the AXUIElement API.
+    /// Resizes a window to the given preset dimensions using the AXUIElement API,
+    /// with optional positioning, bring-to-front, and move-to-main-screen.
     ///
     /// There is no direct mapping from CGWindowID to AXUIElement, so we locate
     /// the target window by matching the PID and title from CGWindowList against
@@ -73,7 +89,10 @@ class WindowManager {
     /// If the title doesn't match any AX window (e.g. the title changed between
     /// enumeration and resize), we fall back to resizing the first window of the
     /// application — a reasonable default since most apps have one main window.
-    static func resizeWindow(_ windowInfo: WindowInfo, to size: PresetSize) -> Bool {
+    static func resizeWindow(_ windowInfo: WindowInfo, to size: PresetSize,
+                              position: WindowPosition? = nil,
+                              bringToFront: Bool = false,
+                              moveToMainScreen: Bool = false) -> Bool {
         let appElement = AXUIElementCreateApplication(windowInfo.ownerPID)
 
         var windowsRef: CFTypeRef?
@@ -83,27 +102,126 @@ class WindowManager {
         }
 
         // Try to find the exact window by matching titles.
+        var targetWindow: AXUIElement?
         for window in windows {
             var titleRef: CFTypeRef?
             AXUIElementCopyAttributeValue(window, kAXTitleAttribute as CFString, &titleRef)
             let title = titleRef as? String ?? ""
 
             if title == windowInfo.windowName || (windowInfo.windowName.isEmpty && title.isEmpty) {
-                var newSize = CGSize(width: CGFloat(size.width), height: CGFloat(size.height))
-                guard let sizeValue = AXValueCreate(.cgSize, &newSize) else { return false }
-                let sizeResult = AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, sizeValue)
-                return sizeResult == .success
+                targetWindow = window
+                break
             }
         }
 
-        // Fallback: no title match found — resize the first window of this app.
-        if let firstWindow = windows.first {
-            var newSize = CGSize(width: CGFloat(size.width), height: CGFloat(size.height))
-            guard let sizeValue = AXValueCreate(.cgSize, &newSize) else { return false }
-            let sizeResult = AXUIElementSetAttributeValue(firstWindow, kAXSizeAttribute as CFString, sizeValue)
-            return sizeResult == .success
+        // Fallback: no title match found — use the first window of this app.
+        if targetWindow == nil { targetWindow = windows.first }
+        guard let window = targetWindow else { return false }
+
+        // Apply the new window size.
+        var newSize = CGSize(width: CGFloat(size.width), height: CGFloat(size.height))
+        guard let sizeValue = AXValueCreate(.cgSize, &newSize) else { return false }
+        let sizeResult = AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, sizeValue)
+        guard sizeResult == .success else { return false }
+
+        // Reposition the window if a target position or main-screen move is requested.
+        // When no explicit position is given but move-to-main-screen is on,
+        // default to centering on the main screen.
+        if position != nil || moveToMainScreen {
+            let targetScreen = moveToMainScreen ? NSScreen.main : screenContaining(windowInfo)
+            if let screen = targetScreen ?? NSScreen.main {
+                let anchorPosition = position ?? .center
+                let origin = calculateOrigin(for: anchorPosition, windowSize: newSize, on: screen)
+                var point = origin
+                if let posValue = AXValueCreate(.cgPoint, &point) {
+                    AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, posValue)
+                }
+            }
         }
 
-        return false
+        // Bring the window to front by raising it and activating its owning app.
+        if bringToFront {
+            AXUIElementPerformAction(window, kAXRaiseAction as CFString)
+            if let app = NSRunningApplication(processIdentifier: windowInfo.ownerPID) {
+                app.activate(options: .activateIgnoringOtherApps)
+            }
+        }
+
+        return true
+    }
+
+    // MARK: - Screen Detection
+
+    /// Returns the NSScreen containing the center of the given window.
+    /// Converts between CGWindowList coordinates (top-left origin) and
+    /// NSScreen coordinates (bottom-left origin) for accurate hit-testing.
+    /// Falls back to the main screen if no match is found.
+    private static func screenContaining(_ windowInfo: WindowInfo) -> NSScreen? {
+        let primaryHeight = NSScreen.screens.first?.frame.height ?? 0
+        let windowCenter = CGPoint(x: windowInfo.bounds.midX, y: windowInfo.bounds.midY)
+
+        for screen in NSScreen.screens {
+            let frame = screen.frame
+            // Convert NSScreen bottom-left origin to top-left origin for hit-testing.
+            let screenTopLeft = CGRect(
+                x: frame.origin.x,
+                y: primaryHeight - frame.origin.y - frame.height,
+                width: frame.width,
+                height: frame.height
+            )
+            if screenTopLeft.contains(windowCenter) {
+                return screen
+            }
+        }
+
+        return NSScreen.main
+    }
+
+    // MARK: - Position Calculation
+
+    /// Calculates the window origin for a given anchor position on the target
+    /// screen. Uses the screen's visible frame (excluding menu bar and Dock)
+    /// and adds a title-bar-height margin from edges so windows don't sit
+    /// flush against screen boundaries.
+    ///
+    /// Coordinates are returned in the AXUIElement/CGWindowList coordinate
+    /// system (top-left origin of the primary screen).
+    private static func calculateOrigin(for position: WindowPosition,
+                                         windowSize: CGSize,
+                                         on screen: NSScreen) -> CGPoint {
+        let primaryHeight = NSScreen.screens.first?.frame.height ?? 0
+        let visible = screen.visibleFrame
+        let margin = titleBarMargin
+
+        // Convert NSScreen visible frame (bottom-left origin) to top-left origin.
+        let top = primaryHeight - visible.maxY
+        let left = visible.origin.x
+        let width = visible.width
+        let height = visible.height
+
+        let x: CGFloat
+        let y: CGFloat
+
+        // Horizontal position: left edge, center, or right edge.
+        switch position {
+        case .topLeft, .left, .bottomLeft:
+            x = left + margin
+        case .top, .center, .bottom:
+            x = left + (width - windowSize.width) / 2
+        case .topRight, .right, .bottomRight:
+            x = left + width - windowSize.width - margin
+        }
+
+        // Vertical position: top edge, middle, or bottom edge.
+        switch position {
+        case .topLeft, .top, .topRight:
+            y = top + margin
+        case .left, .center, .right:
+            y = top + (height - windowSize.height) / 2
+        case .bottomLeft, .bottom, .bottomRight:
+            y = top + height - windowSize.height - margin
+        }
+
+        return CGPoint(x: x, y: y)
     }
 }

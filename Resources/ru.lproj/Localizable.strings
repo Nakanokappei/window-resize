@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "Папка не выбрана";
 "settings.screenshot.copy-to-clipboard" = "Скопировать в буфер обмена";
 
+/* Current size menu item */
+"menu.current-size" = "Текущий размер";
+
+/* Accessibility features */
+"settings.bring-to-front" = "Вывести окно на передний план после изменения размера";
+"settings.window-position" = "Положение после изменения размера";
+"settings.window-position.none" = "Не перемещать";
+"settings.move-to-main-screen" = "Переместить на основной экран";
+
+/* Language */
+"settings.language" = "Язык";
+"settings.language.system" = "Системный";
+"settings.language.restart-title" = "Язык изменён";
+"settings.language.restart-body" = "Для применения нового языка необходимо перезапустить приложение.";
+"settings.language.restart-button" = "Перезапустить сейчас";
+"settings.language.restart-later" = "Позже";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "Требуется разрешение на запись экрана";
 "alert.screen-recording.body" = "Для создания снимков окон требуется разрешение на запись экрана.\n\nПерейдите в:\nСистемные настройки > Конфиденциальность и безопасность > Запись экрана\n\nЗатем включите \"Window Resize\".";

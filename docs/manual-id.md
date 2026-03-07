@@ -5,7 +5,8 @@
 1. [Pengaturan Awal](#pengaturan-awal)
 2. [Mengubah Ukuran Jendela](#mengubah-ukuran-jendela)
 3. [Pengaturan](#pengaturan)
-4. [Pemecahan Masalah](#pemecahan-masalah)
+4. [Fitur Aksesibilitas](#fitur-aksesibilitas)
+5. [Pemecahan Masalah](#pemecahan-masalah)
 
 ---
 
@@ -31,8 +32,9 @@ Window Resize menggunakan API Aksesibilitas macOS untuk mengubah ukuran jendela.
 1. Klik **ikon Window Resize** di bilah menu.
 2. Arahkan kursor ke **"Ubah Ukuran"** untuk membuka daftar jendela.
 3. Semua jendela yang sedang terbuka ditampilkan dengan **ikon aplikasi** dan namanya sebagai **[Nama Aplikasi] Judul Jendela**. Judul yang panjang secara otomatis dipotong agar menu tetap mudah dibaca.
-4. Arahkan kursor ke suatu jendela untuk melihat ukuran preset yang tersedia.
-5. Klik sebuah ukuran untuk langsung mengubah ukuran jendela.
+4. Jika suatu aplikasi memiliki **3 jendela atau lebih**, jendela-jendela tersebut secara otomatis dikelompokkan di bawah nama aplikasinya (contoh: **"Safari (4)"**). Arahkan kursor ke nama aplikasi untuk melihat daftar jendela, lalu arahkan kursor ke jendela untuk melihat ukuran yang tersedia.
+5. Arahkan kursor ke suatu jendela untuk melihat ukuran preset yang tersedia.
+6. Klik sebuah ukuran untuk langsung mengubah ukuran jendela.
 
 ### Cara Ukuran Ditampilkan
 
@@ -94,21 +96,51 @@ Untuk menghapus ukuran kustom, klik tombol **"Hapus"** berwarna merah di sebelah
 
 Aktifkan **"Jalankan Saat Login"** agar Window Resize otomatis berjalan saat Anda masuk ke macOS.
 
+---
+
+## Fitur Aksesibilitas
+
+Fitur-fitur berikut meningkatkan aksesibilitas pengelolaan jendela. Jika salah satu fitur ini diaktifkan, menu ubah ukuran akan menampilkan opsi **"Ukuran Saat Ini"** di bagian atas, sehingga Anda dapat memindahkan posisi atau membawa jendela ke depan tanpa mengubah ukurannya.
+
+### Bawa ke Depan
+
+Aktifkan **"Bawa jendela ke depan setelah mengubah ukuran"** untuk secara otomatis menampilkan jendela yang diubah ukurannya di atas semua jendela lain. Fitur ini berguna saat jendela target sebagian tersembunyi di balik jendela lain.
+
+### Pindahkan ke Layar Utama
+
+Aktifkan **"Pindahkan ke layar utama"** untuk memindahkan jendela ke layar utama saat mengubah ukuran. Fitur ini membantu pada pengaturan multi-monitor saat Anda ingin memindahkan jendela dari layar sekunder dengan cepat.
+
+### Posisi Jendela
+
+Pilih di mana jendela akan ditempatkan di layar setelah mengubah ukuran. Satu baris berisi 9 tombol menunjukkan pilihan posisi:
+
+- **Sudut:** Kiri atas, Kanan atas, Kiri bawah, Kanan bawah
+- **Tepi:** Tengah atas, Tengah kiri, Tengah kanan, Tengah bawah
+- **Tengah:** Tengah layar
+
+Klik tombol posisi untuk memilihnya. Klik tombol yang sama lagi (atau klik **"Jangan pindahkan"**) untuk membatalkan pilihan. Jika tidak ada posisi yang dipilih, jendela tetap di tempatnya setelah diubah ukurannya.
+
+> **Catatan:** Penempatan jendela memperhitungkan bilah menu dan Dock, sehingga jendela tetap berada dalam area layar yang dapat digunakan.
+
+---
+
 ### Tangkapan Layar
 
 Aktifkan **"Ambil tangkapan layar setelah mengubah ukuran"** untuk secara otomatis menangkap jendela setelah diubah ukurannya.
 
 Saat diaktifkan, opsi berikut tersedia:
 
-- **Simpan ke file** — Simpan tangkapan layar sebagai file PNG. Saat diaktifkan, pilih lokasi penyimpanan:
+- **Simpan ke file** — Simpan tangkapan layar sebagai file PNG. Klik **"Pilih..."** untuk memilih folder penyimpanan.
   > **Format nama file:** `MMddHHmmss_NamaAplikasi_JudulJendela.png` (contoh: `0227193012_Safari_Apple.png`). Simbol dihapus; hanya huruf, angka, dan garis bawah yang digunakan.
-  - **Desktop** — Simpan ke folder Desktop Anda.
-  - **Gambar** — Simpan ke folder Gambar Anda.
 - **Salin ke papan klip** — Salin tangkapan layar ke papan klip untuk ditempelkan ke aplikasi lain.
 
 Kedua opsi dapat diaktifkan secara independen. Misalnya, Anda dapat menyalin ke papan klip tanpa menyimpan ke file.
 
 > **Catatan:** Fitur tangkapan layar memerlukan izin **Perekaman Layar**. Saat pertama kali menggunakan fitur ini, macOS akan meminta Anda untuk memberikan izin di **Pengaturan Sistem > Privasi & Keamanan > Perekaman Layar**.
+
+### Bahasa
+
+Pilih bahasa tampilan aplikasi dari dropdown **Bahasa**. Tersedia 16 bahasa atau **"Bawaan Sistem"** untuk mengikuti bahasa sistem macOS. Perubahan bahasa memerlukan peluncuran ulang aplikasi.
 
 ### Status Aksesibilitas
 

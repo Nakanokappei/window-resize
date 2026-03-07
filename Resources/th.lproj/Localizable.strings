@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "ยังไม่ได้เลือกโฟลเดอร์";
 "settings.screenshot.copy-to-clipboard" = "คัดลอกไปยังคลิปบอร์ด";
 
+/* Current size menu item */
+"menu.current-size" = "ขนาดปัจจุบัน";
+
+/* Accessibility features */
+"settings.bring-to-front" = "นำหน้าต่างมาด้านหน้าหลังปรับขนาด";
+"settings.window-position" = "ตำแหน่งหลังปรับขนาด";
+"settings.window-position.none" = "ไม่เปลี่ยนตำแหน่ง";
+"settings.move-to-main-screen" = "ย้ายไปหน้าจอหลัก";
+
+/* Language */
+"settings.language" = "ภาษา";
+"settings.language.system" = "ค่าเริ่มต้นของระบบ";
+"settings.language.restart-title" = "เปลี่ยนภาษาแล้ว";
+"settings.language.restart-body" = "แอปจำเป็นต้องเริ่มต้นใหม่เพื่อใช้ภาษาใหม่";
+"settings.language.restart-button" = "เริ่มใหม่ตอนนี้";
+"settings.language.restart-later" = "ภายหลัง";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "ต้องการสิทธิ์บันทึกหน้าจอ";
 "alert.screen-recording.body" = "ในการถ่ายภาพหน้าจอของหน้าต่าง จำเป็นต้องมีสิทธิ์บันทึกหน้าจอ\n\nกรุณาไปที่:\nการตั้งค่าระบบ > ความเป็นส่วนตัวและความปลอดภัย > บันทึกหน้าจอ\n\nจากนั้นเปิดใช้งาน \"Window Resize\"";

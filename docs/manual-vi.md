@@ -5,7 +5,8 @@
 1. [Thiết lập ban đầu](#thiết-lập-ban-đầu)
 2. [Đổi kích thước cửa sổ](#đổi-kích-thước-cửa-sổ)
 3. [Cài đặt](#cài-đặt)
-4. [Khắc phục sự cố](#khắc-phục-sự-cố)
+4. [Tính năng hỗ trợ tiếp cận](#tính-năng-hỗ-trợ-tiếp-cận)
+5. [Khắc phục sự cố](#khắc-phục-sự-cố)
 
 ---
 
@@ -31,8 +32,9 @@ Window Resize sử dụng API Trợ năng của macOS để đổi kích thướ
 1. Nhấp **biểu tượng Window Resize** trên thanh menu.
 2. Di chuột qua **"Đổi kích thước"** để mở danh sách cửa sổ.
 3. Tất cả cửa sổ đang mở được hiển thị với **biểu tượng ứng dụng** và tên dưới dạng **[Tên ứng dụng] Tiêu đề cửa sổ**. Các tiêu đề dài sẽ được tự động rút gọn để giữ cho menu dễ đọc.
-4. Di chuột qua một cửa sổ để xem các kích thước đặt sẵn có sẵn.
-5. Nhấp vào một kích thước để đổi kích thước cửa sổ ngay lập tức.
+4. Khi một ứng dụng có **3 cửa sổ trở lên**, chúng sẽ được tự động gom nhóm dưới tên ứng dụng (ví dụ: **"Safari (4)"**). Di chuột qua tên ứng dụng để xem từng cửa sổ, sau đó di chuột qua cửa sổ để xem các kích thước.
+5. Di chuột qua một cửa sổ để xem các kích thước đặt sẵn có sẵn.
+6. Nhấp vào một kích thước để đổi kích thước cửa sổ ngay lập tức.
 
 ### Cách hiển thị kích thước
 
@@ -94,21 +96,51 @@ Bạn có thể thêm kích thước của riêng mình vào danh sách:
 
 Bật **"Khởi chạy khi đăng nhập"** để Window Resize tự động khởi động khi bạn đăng nhập vào macOS.
 
+---
+
+## Tính năng hỗ trợ tiếp cận
+
+Các tính năng dưới đây giúp cải thiện khả năng tiếp cận khi quản lý cửa sổ. Khi bất kỳ tính năng nào được bật, menu đổi kích thước sẽ hiển thị thêm tùy chọn **"Kích thước hiện tại"** ở đầu danh sách, cho phép bạn di chuyển hoặc đưa cửa sổ lên trước mà không thay đổi kích thước.
+
+### Đưa lên trước
+
+Bật **"Đưa cửa sổ lên trước sau khi đổi kích thước"** để tự động đưa cửa sổ vừa đổi kích thước lên phía trên tất cả các cửa sổ khác. Tính năng này hữu ích khi cửa sổ đích bị che khuất một phần bởi các cửa sổ khác.
+
+### Di chuyển đến màn hình chính
+
+Bật **"Di chuyển đến màn hình chính"** để tự động chuyển cửa sổ sang màn hình chính khi đổi kích thước. Tính năng này tiện lợi trong cấu hình nhiều màn hình khi bạn muốn nhanh chóng đưa cửa sổ từ màn hình phụ sang.
+
+### Vị trí cửa sổ
+
+Chọn vị trí đặt cửa sổ trên màn hình sau khi đổi kích thước. Một dãy 9 nút đại diện cho các vị trí:
+
+- **Góc:** Trên-trái, Trên-phải, Dưới-trái, Dưới-phải
+- **Cạnh:** Trên-giữa, Trái-giữa, Phải-giữa, Dưới-giữa
+- **Trung tâm:** Giữa màn hình
+
+Nhấp vào một nút vị trí để chọn. Nhấp lại vào nút đó (hoặc nhấp **"Không di chuyển"**) để bỏ chọn. Khi không có vị trí nào được chọn, cửa sổ sẽ giữ nguyên vị trí sau khi đổi kích thước.
+
+> **Lưu ý:** Tính năng đặt vị trí cửa sổ có tính đến thanh menu và Dock, đảm bảo cửa sổ nằm trong vùng màn hình sử dụng được.
+
+---
+
 ### Ảnh chụp màn hình
 
 Bật **"Chụp ảnh sau khi thay đổi kích thước"** để tự động chụp cửa sổ sau khi đổi kích thước.
 
 Khi được bật, các tùy chọn sau có sẵn:
 
-- **Lưu vào tệp** — Lưu ảnh chụp màn hình dưới dạng tệp PNG. Khi được bật, chọn vị trí lưu:
+- **Lưu vào tệp** — Lưu ảnh chụp màn hình dưới dạng tệp PNG. Nhấp nút **"Chọn..."** để chọn thư mục lưu.
   > **Định dạng tên tệp:** `MMddHHmmss_TênỨngDụng_TiêuĐềCửaSổ.png` (ví dụ: `0227193012_Safari_Apple.png`). Các ký hiệu được loại bỏ; chỉ sử dụng chữ cái, chữ số và dấu gạch dưới.
-  - **Màn hình chính** — Lưu vào thư mục Màn hình chính.
-  - **Hình ảnh** — Lưu vào thư mục Hình ảnh.
 - **Sao chép vào bảng nhớ tạm** — Sao chép ảnh chụp màn hình vào bảng nhớ tạm để dán vào các ứng dụng khác.
 
 Cả hai tùy chọn có thể được bật độc lập. Ví dụ, bạn có thể sao chép vào bảng nhớ tạm mà không cần lưu vào tệp.
 
 > **Lưu ý:** Tính năng chụp ảnh màn hình yêu cầu quyền **Ghi màn hình**. Khi bạn sử dụng tính năng này lần đầu tiên, macOS sẽ yêu cầu bạn cấp quyền trong **Cài đặt hệ thống > Quyền riêng tư & Bảo mật > Ghi màn hình**.
+
+### Ngôn ngữ
+
+Chọn ngôn ngữ hiển thị của ứng dụng từ menu thả xuống **Ngôn ngữ**. Bạn có thể chọn từ 16 ngôn ngữ hoặc **"Mặc định hệ thống"** để theo ngôn ngữ hệ thống macOS. Thay đổi ngôn ngữ yêu cầu khởi động lại ứng dụng.
 
 ### Trạng thái Trợ năng
 

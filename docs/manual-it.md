@@ -5,7 +5,8 @@
 1. [Configurazione iniziale](#configurazione-iniziale)
 2. [Ridimensionare una finestra](#ridimensionare-una-finestra)
 3. [Impostazioni](#impostazioni)
-4. [Risoluzione dei problemi](#risoluzione-dei-problemi)
+4. [Funzioni di accessibilità](#funzioni-di-accessibilità)
+5. [Risoluzione dei problemi](#risoluzione-dei-problemi)
 
 ---
 
@@ -31,8 +32,9 @@ Window Resize utilizza l'API di accessibilità di macOS per ridimensionare le fi
 1. Fare clic sull'**icona di Window Resize** nella barra dei menu.
 2. Passare il cursore su **"Ridimensiona"** per aprire l'elenco delle finestre.
 3. Tutte le finestre attualmente aperte sono visualizzate con la propria **icona dell'applicazione** e il nome come **[Nome dell'app] Titolo della finestra**. I titoli lunghi vengono automaticamente troncati per mantenere il menu leggibile.
-4. Passare il cursore su una finestra per visualizzare le dimensioni predefinite disponibili.
-5. Fare clic su una dimensione per ridimensionare la finestra immediatamente.
+4. Quando un'applicazione ha **3 o più finestre**, queste vengono raggruppate automaticamente sotto il nome dell'applicazione (es. **"Safari (4)"**). Passare il cursore sull'app per visualizzare le singole finestre, quindi passare su una finestra per vedere le dimensioni.
+5. Passare il cursore su una finestra per visualizzare le dimensioni predefinite disponibili.
+6. Fare clic su una dimensione per ridimensionare la finestra immediatamente.
 
 ### Come vengono visualizzate le dimensioni
 
@@ -94,21 +96,51 @@ Per rimuovere una dimensione personalizzata, fare clic sul pulsante rosso **"Rim
 
 Attivare **"Avvia al login"** per far avviare Window Resize automaticamente quando si accede a macOS.
 
+---
+
+## Funzioni di accessibilità
+
+Le seguenti funzioni migliorano l'accessibilità nella gestione delle finestre. Quando una qualsiasi di queste funzioni è attivata, nel menu di ridimensionamento compare un'opzione **"Dimensione attuale"**, che consente di riposizionare o portare in primo piano una finestra senza modificarne le dimensioni.
+
+### Porta in primo piano
+
+Attivare **"Porta la finestra in primo piano dopo il ridimensionamento"** per sollevare automaticamente la finestra ridimensionata sopra tutte le altre. È utile quando la finestra di destinazione è parzialmente nascosta dietro ad altre.
+
+### Sposta sullo schermo principale
+
+Attivare **"Sposta sullo schermo principale"** per spostare la finestra sul display principale al momento del ridimensionamento. È comodo nelle configurazioni multi-monitor quando si desidera spostare rapidamente una finestra da un display secondario.
+
+### Posizione della finestra
+
+Scegliere dove posizionare la finestra sullo schermo dopo il ridimensionamento. Una riga di 9 pulsanti rappresenta le opzioni di posizionamento:
+
+- **Angoli:** In alto a sinistra, In alto a destra, In basso a sinistra, In basso a destra
+- **Lati:** Centro superiore, Centro sinistro, Centro destro, Centro inferiore
+- **Centro:** Centro dello schermo
+
+Fare clic su un pulsante per selezionare la posizione. Fare clic di nuovo sullo stesso pulsante (oppure fare clic su **"Non spostare"**) per deselezionare. Quando nessuna posizione è selezionata, la finestra resta nella posizione corrente dopo il ridimensionamento.
+
+> **Nota:** Il posizionamento della finestra tiene conto della barra dei menu e del Dock, mantenendo la finestra nell'area utilizzabile dello schermo.
+
+---
+
 ### Istantanea dello schermo
 
 Attivare **"Scatta istantanea dopo il ridimensionamento"** per catturare automaticamente la finestra dopo il ridimensionamento.
 
 Quando è attivata, sono disponibili le seguenti opzioni:
 
-- **Salva su file** — Salva l'istantanea come file PNG. Quando è attivata, scegliere la posizione di salvataggio:
+- **Salva su file** — Salva l'istantanea come file PNG. Fare clic su **"Scegli..."** per selezionare la cartella di salvataggio.
   > **Formato del nome file:** `MMddHHmmss_NomeApp_TitoloFinestra.png` (es. `0227193012_Safari_Apple.png`). I simboli vengono rimossi; vengono utilizzati solo lettere, cifre e trattini bassi.
-  - **Scrivania** — Salvare nella cartella Scrivania.
-  - **Immagini** — Salvare nella cartella Immagini.
 - **Copia negli appunti** — Copia l'istantanea negli appunti per incollarla in altre applicazioni.
 
 Entrambe le opzioni possono essere attivate in modo indipendente. Ad esempio, è possibile copiare negli appunti senza salvare su file.
 
 > **Nota:** La funzione di istantanea richiede il permesso di **Registrazione schermo**. Quando si utilizza questa funzione per la prima volta, macOS chiederà di concedere il permesso in **Impostazioni di Sistema > Privacy e Sicurezza > Registrazione schermo**.
+
+### Lingua
+
+Selezionare la lingua di visualizzazione dell'app dal menu a discesa **Lingua**. Sono disponibili 16 lingue oppure **"Predefinita di sistema"** per utilizzare la lingua di macOS. La modifica della lingua richiede il riavvio dell'app.
 
 ### Stato dell'accessibilità
 

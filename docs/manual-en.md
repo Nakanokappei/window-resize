@@ -5,7 +5,8 @@
 1. [Initial Setup](#initial-setup)
 2. [Resizing a Window](#resizing-a-window)
 3. [Settings](#settings)
-4. [Troubleshooting](#troubleshooting)
+4. [Accessibility Features](#accessibility-features)
+5. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -31,8 +32,9 @@ Window Resize uses the macOS Accessibility API to resize windows. You must grant
 1. Click the **Window Resize icon** in the menu bar.
 2. Hover over **"Resize"** to open the window list.
 3. All currently open windows are listed with their **application icon** and name as **[App Name] Window Title**. Long titles are automatically truncated to keep the menu readable.
-4. Hover over a window to see the available preset sizes.
-5. Click a size to resize the window immediately.
+4. When an application has **3 or more windows**, they are automatically grouped under the application name (e.g., **"Safari (4)"**). Hover over the app to see individual windows, then hover over a window to see sizes.
+5. Hover over a window to see the available preset sizes.
+6. Click a size to resize the window immediately.
 
 ### How Sizes Are Displayed
 
@@ -94,21 +96,51 @@ To remove a custom size, click the red **"Remove"** button next to it.
 
 Toggle **"Launch at Login"** to have Window Resize start automatically when you log in to macOS.
 
+---
+
+## Accessibility Features
+
+The following features enhance window management accessibility. When any of these features is enabled, the resize menu includes a **"Current Size"** option at the top, allowing you to reposition or bring a window to the front without changing its size.
+
+### Bring to Front
+
+Toggle **"Bring window to front after resize"** to automatically raise the resized window above all other windows. This is useful when the target window is partially hidden behind others.
+
+### Move to Main Screen
+
+Toggle **"Move to main screen"** to relocate the window to the primary display when resizing. This is helpful in multi-monitor setups where you want to quickly move a window from a secondary display.
+
+### Window Position
+
+Choose where to place the window on screen after resizing. A row of 9 buttons represents the placement options:
+
+- **Corners:** Top-left, Top-right, Bottom-left, Bottom-right
+- **Edges:** Top center, Left center, Right center, Bottom center
+- **Center:** Center of the screen
+
+Click a position button to select it. Click the same button again (or click **"Don't move"**) to deselect. When no position is selected, the window stays where it is after resizing.
+
+> **Note:** Window positioning accounts for the menu bar and Dock, keeping the window within the usable screen area.
+
+---
+
 ### Screenshot
 
 Toggle **"Take screenshot after resize"** to automatically capture the window after resizing.
 
 When enabled, the following options are available:
 
-- **Save to file** — Save the screenshot as a PNG file. When enabled, choose the save location:
+- **Save to file** — Save the screenshot as a PNG file. Click **"Choose..."** to select the save folder.
   > **Filename format:** `MMddHHmmss_AppName_WindowTitle.png` (e.g. `0227193012_Safari_Apple.png`). Symbols are removed; only letters, digits, and underscores are used.
-  - **Desktop** — Save to your Desktop folder.
-  - **Pictures** — Save to your Pictures folder.
 - **Copy to clipboard** — Copy the screenshot to the clipboard for pasting into other apps.
 
 Both options can be enabled independently. For example, you can copy to the clipboard without saving to a file.
 
 > **Note:** The screenshot feature requires **Screen Recording** permission. When you first use this feature, macOS will prompt you to grant permission in **System Settings > Privacy & Security > Screen Recording**.
+
+### Language
+
+Select the app display language from the **Language** dropdown. Choose from 16 languages or **"System Default"** to follow the macOS system language. Changing the language requires an app restart.
 
 ### Accessibility Status
 

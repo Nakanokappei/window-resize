@@ -9,7 +9,13 @@ Also available for Windows: [Window Resize for Windows](https://github.com/Nakan
 - **Menu bar resident** — click the icon to open the menu
 - **12 built-in preset sizes** — Mac Retina displays + standard resolutions
 - **Custom sizes** — add your own width x height presets
+- **Bring to front** — automatically bring the window to the foreground after resize
+- **9-position placement** — snap windows to corners, edges, or center of the screen
+- **Move to main screen** — relocate windows to the primary display on resize
+- **Automatic grouping** — apps with 3+ windows are grouped into submenus
+- **Screenshot after resize** — save to file and/or copy to clipboard
 - **Launch at login** — optional auto-start via SMAppService
+- **In-app language selection** — switch between 16 languages without changing system settings
 - **Accessibility permission detection** — detects stale permissions after rebuild
 - **16 languages** — English, Simplified Chinese, Spanish, Hindi, Arabic, Indonesian, Portuguese, French, Japanese, Russian, German, Vietnamese, Thai, Korean, Italian, Traditional Chinese
 
@@ -25,7 +31,7 @@ Download the latest release from [Releases](https://github.com/Nakanokappei/wind
 2. Grant Accessibility permission when prompted (System Settings > Privacy & Security > Accessibility)
 3. Click the menu bar icon
 4. Select **Resize** > choose a window > select a preset size
-5. Open **Settings** to add custom sizes or enable launch at login
+5. Open **Settings** to add custom sizes, configure window positioning, enable screenshots, or change the language
 
 ## System Requirements
 

@@ -18,6 +18,10 @@ class SettingsStore: ObservableObject {
 
     private let defaultsKey = "customPresetSizes"
     private let launchAtLoginKey = "launchAtLogin"
+    private let bringToFrontKey = "bringToFront"
+    private let windowPositionKey = "windowPosition"
+    private let moveToMainScreenKey = "moveToMainScreen"
+    private let appLanguageKey = "appLanguage"
     private let screenshotEnabledKey = "screenshotEnabled"
     private let screenshotSaveToFileKey = "screenshotSaveToFile"
     private let screenshotSaveFolderBookmarkKey = "screenshotSaveFolderBookmark"
@@ -37,15 +41,57 @@ class SettingsStore: ObservableObject {
         }
     }
 
+    // Accessibility feature settings — bring to front, positioning, main screen.
+    @Published var bringToFront: Bool = true {
+        didSet { UserDefaults.standard.set(bringToFront, forKey: bringToFrontKey) }
+    }
+    @Published var windowPosition: WindowPosition? = nil {
+        didSet {
+            if let pos = windowPosition {
+                UserDefaults.standard.set(pos.rawValue, forKey: windowPositionKey)
+            } else {
+                UserDefaults.standard.removeObject(forKey: windowPositionKey)
+            }
+        }
+    }
+    @Published var moveToMainScreen: Bool = false {
+        didSet { UserDefaults.standard.set(moveToMainScreen, forKey: moveToMainScreenKey) }
+    }
+
+    // Language override — "system" follows OS setting, otherwise a specific locale code.
+    @Published var appLanguage: String = "system" {
+        didSet {
+            UserDefaults.standard.set(appLanguage, forKey: appLanguageKey)
+            applyLanguage()
+        }
+    }
+
     // Screenshot settings — each persists immediately on change.
+    // Turning on the master toggle with no destination defaults to clipboard.
+    // Turning off both destinations automatically disables the master toggle.
     @Published var screenshotEnabled: Bool = false {
-        didSet { UserDefaults.standard.set(screenshotEnabled, forKey: screenshotEnabledKey) }
+        didSet {
+            UserDefaults.standard.set(screenshotEnabled, forKey: screenshotEnabledKey)
+            if screenshotEnabled && !screenshotSaveToFile && !screenshotCopyToClipboard {
+                screenshotCopyToClipboard = true
+            }
+        }
     }
     @Published var screenshotSaveToFile: Bool = true {
-        didSet { UserDefaults.standard.set(screenshotSaveToFile, forKey: screenshotSaveToFileKey) }
+        didSet {
+            UserDefaults.standard.set(screenshotSaveToFile, forKey: screenshotSaveToFileKey)
+            if !screenshotSaveToFile && !screenshotCopyToClipboard {
+                screenshotEnabled = false
+            }
+        }
     }
     @Published var screenshotCopyToClipboard: Bool = false {
-        didSet { UserDefaults.standard.set(screenshotCopyToClipboard, forKey: screenshotCopyToClipboardKey) }
+        didSet {
+            UserDefaults.standard.set(screenshotCopyToClipboard, forKey: screenshotCopyToClipboardKey)
+            if !screenshotSaveToFile && !screenshotCopyToClipboard {
+                screenshotEnabled = false
+            }
+        }
     }
 
     /// The display path of the currently selected screenshot save folder.
@@ -85,6 +131,20 @@ class SettingsStore: ObservableObject {
     init() {
         loadCustomPresets()
         launchAtLogin = UserDefaults.standard.bool(forKey: launchAtLoginKey)
+
+        // bringToFront defaults to true if the key has never been set.
+        if UserDefaults.standard.object(forKey: bringToFrontKey) != nil {
+            bringToFront = UserDefaults.standard.bool(forKey: bringToFrontKey)
+        }
+        if let posRaw = UserDefaults.standard.string(forKey: windowPositionKey),
+           let pos = WindowPosition(rawValue: posRaw) {
+            windowPosition = pos
+        }
+        moveToMainScreen = UserDefaults.standard.bool(forKey: moveToMainScreenKey)
+        if let lang = UserDefaults.standard.string(forKey: appLanguageKey) {
+            appLanguage = lang
+        }
+
         screenshotEnabled = UserDefaults.standard.bool(forKey: screenshotEnabledKey)
 
         // screenshotSaveToFile defaults to true if the key has never been set.
@@ -207,6 +267,36 @@ class SettingsStore: ObservableObject {
         if let encoded = try? JSONEncoder().encode(customSizes) {
             UserDefaults.standard.set(encoded, forKey: defaultsKey)
         }
+    }
+
+    // MARK: - Language
+
+    /// Sets the AppleLanguages UserDefaults key to override the app's locale.
+    /// When set to "system", removes the override so the OS default is used.
+    func applyLanguage() {
+        if appLanguage == "system" {
+            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+        } else {
+            UserDefaults.standard.set([appLanguage], forKey: "AppleLanguages")
+        }
+    }
+
+    /// Relaunches the app by spawning a shell that waits for this process
+    /// to exit, then re-opens the bundle. Used after language changes.
+    func relaunchApp() {
+        let path = Bundle.main.bundlePath
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/sh")
+        process.arguments = ["-c", "sleep 0.5 && open \"\(path)\""]
+        try? process.run()
+        NSApp.terminate(nil)
+    }
+
+    /// Returns true if any accessibility feature (bring-to-front, positioning,
+    /// or move-to-main-screen) is active. Used to show the "keep current size"
+    /// option in the preset size menu.
+    var hasActiveAccessibilityFeatures: Bool {
+        bringToFront || windowPosition != nil || moveToMainScreen
     }
 
     // MARK: - Login Item

@@ -9,6 +9,28 @@ struct SettingsView: View {
     @ObservedObject private var store = SettingsStore.shared
     @State private var newWidth: String = ""
     @State private var newHeight: String = ""
+    @State private var showRestartAlert = false
+
+    /// Supported languages shown with their native names so users can
+    /// identify them regardless of the current app language.
+    private let supportedLanguages: [(code: String, name: String)] = [
+        ("en", "English"),
+        ("ja", "日本語"),
+        ("zh-Hans", "简体中文"),
+        ("zh-Hant", "繁體中文"),
+        ("ko", "한국어"),
+        ("es", "Español"),
+        ("fr", "Français"),
+        ("de", "Deutsch"),
+        ("it", "Italiano"),
+        ("pt", "Português"),
+        ("ru", "Русский"),
+        ("ar", "العربية"),
+        ("hi", "हिन्दी"),
+        ("id", "Bahasa Indonesia"),
+        ("vi", "Tiếng Việt"),
+        ("th", "ไทย"),
+    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -35,7 +57,7 @@ struct SettingsView: View {
                     }
                     .padding(.vertical, 4)
                 }
-                .frame(maxHeight: 200)
+                .frame(maxHeight: 130)
             }
 
             // Custom presets: user-defined sizes with add/remove controls.
@@ -97,6 +119,30 @@ struct SettingsView: View {
 
             Divider()
 
+            // Accessibility features: bring-to-front, move-to-main-screen, positioning.
+            Toggle(L("settings.bring-to-front"), isOn: $store.bringToFront)
+                .toggleStyle(.switch)
+
+            Toggle(L("settings.move-to-main-screen"), isOn: $store.moveToMainScreen)
+                .toggleStyle(.switch)
+
+            // Window position: horizontal row of 9 buttons using inset-rectangle
+            // SF Symbols, grouped visually as top / middle / bottom rows.
+            HStack {
+                Text(L("settings.window-position"))
+                Spacer()
+                if store.windowPosition != nil {
+                    Button(L("settings.window-position.none")) {
+                        store.windowPosition = nil
+                    }
+                    .font(.caption)
+                    .buttonStyle(.borderless)
+                }
+            }
+            positionRow
+
+            Divider()
+
             // Screenshot settings — the master toggle gates visibility of sub-options.
             // Save-to-file and copy-to-clipboard can be enabled independently.
             Toggle(L("settings.screenshot.enabled"), isOn: $store.screenshotEnabled)
@@ -141,6 +187,26 @@ struct SettingsView: View {
 
             Divider()
 
+            // Language picker — allows overriding the app language for
+            // screenshots and testing. Requires restart to take effect.
+            HStack {
+                Text(L("settings.language"))
+                Spacer()
+                Picker("", selection: $store.appLanguage) {
+                    Text(L("settings.language.system")).tag("system")
+                    Divider()
+                    ForEach(supportedLanguages, id: \.code) { lang in
+                        Text(lang.name).tag(lang.code)
+                    }
+                }
+                .frame(width: 180)
+                .onChange(of: store.appLanguage) { _ in
+                    showRestartAlert = true
+                }
+            }
+
+            Divider()
+
             // Accessibility permission status indicator.
             // Green = working, Orange = granted but stale, Red = not granted.
             HStack {
@@ -175,5 +241,62 @@ struct SettingsView: View {
         }
         .padding()
         .frame(width: 400)
+        .alert(L("settings.language.restart-title"), isPresented: $showRestartAlert) {
+            Button(L("settings.language.restart-button")) {
+                store.relaunchApp()
+            }
+            Button(L("settings.language.restart-later"), role: .cancel) { }
+        } message: {
+            Text(L("settings.language.restart-body"))
+        }
+    }
+
+    // MARK: - Position Row
+
+    /// A horizontal row of 9 buttons representing the window anchor positions.
+    /// Uses inset-rectangle SF Symbols to show where the window will be placed.
+    /// Grouped visually as top-row / middle-row / bottom-row with wider gaps.
+    private var positionRow: some View {
+        HStack(spacing: 2) {
+            // Top row: top-left, top, top-right
+            positionButton(.topLeft, symbol: "inset.filled.topleft.rectangle")
+            positionButton(.top, symbol: "inset.filled.tophalf.rectangle")
+            positionButton(.topRight, symbol: "inset.filled.topright.rectangle")
+
+            Spacer().frame(width: 6)
+
+            // Middle row: left, center, right
+            positionButton(.left, symbol: "inset.filled.leadinghalf.rectangle")
+            positionButton(.center, symbol: "inset.filled.center.rectangle")
+            positionButton(.right, symbol: "inset.filled.trailinghalf.rectangle")
+
+            Spacer().frame(width: 6)
+
+            // Bottom row: bottom-left, bottom, bottom-right
+            positionButton(.bottomLeft, symbol: "inset.filled.bottomleft.rectangle")
+            positionButton(.bottom, symbol: "inset.filled.bottomhalf.rectangle")
+            positionButton(.bottomRight, symbol: "inset.filled.bottomright.rectangle")
+        }
+    }
+
+    /// A single position button with toggle behavior.
+    private func positionButton(_ position: WindowPosition, symbol: String) -> some View {
+        let isSelected = store.windowPosition == position
+        return Button(action: {
+            store.windowPosition = isSelected ? nil : position
+        }) {
+            Image(systemName: symbol)
+                .font(.system(size: 14))
+                .frame(width: 28, height: 28)
+                .background(
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(isSelected ? Color.accentColor.opacity(0.3) : Color.secondary.opacity(0.1))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 1)
+                )
+        }
+        .buttonStyle(.borderless)
     }
 }

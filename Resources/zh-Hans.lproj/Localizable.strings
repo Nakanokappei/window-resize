@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "未选择文件夹";
 "settings.screenshot.copy-to-clipboard" = "复制到剪贴板";
 
+/* Current size menu item */
+"menu.current-size" = "当前大小";
+
+/* Accessibility features */
+"settings.bring-to-front" = "调整后将窗口置于最前";
+"settings.window-position" = "调整后的位置";
+"settings.window-position.none" = "不移动";
+"settings.move-to-main-screen" = "移至主屏幕";
+
+/* Language */
+"settings.language" = "语言";
+"settings.language.system" = "跟随系统";
+"settings.language.restart-title" = "语言已更改";
+"settings.language.restart-body" = "需要重新启动应用以应用新语言。";
+"settings.language.restart-button" = "立即重启";
+"settings.language.restart-later" = "稍后";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "需要屏幕录制权限";
 "alert.screen-recording.body" = "要截取窗口图片，需要屏幕录制权限。\n\n请前往：\n系统设置 > 隐私与安全性 > 屏幕录制\n\n然后启用「Window Resize」。";

@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "Nessuna cartella selezionata";
 "settings.screenshot.copy-to-clipboard" = "Copia negli appunti";
 
+/* Current size menu item */
+"menu.current-size" = "Dimensione attuale";
+
+/* Accessibility features */
+"settings.bring-to-front" = "Porta la finestra in primo piano dopo il ridimensionamento";
+"settings.window-position" = "Posizione dopo il ridimensionamento";
+"settings.window-position.none" = "Non riposizionare";
+"settings.move-to-main-screen" = "Sposta sullo schermo principale";
+
+/* Language */
+"settings.language" = "Lingua";
+"settings.language.system" = "Predefinita di sistema";
+"settings.language.restart-title" = "Lingua modificata";
+"settings.language.restart-body" = "L'app deve essere riavviata per applicare la nuova lingua.";
+"settings.language.restart-button" = "Riavvia ora";
+"settings.language.restart-later" = "Più tardi";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "Autorizzazione registrazione schermo richiesta";
 "alert.screen-recording.body" = "Per acquisire istantanee delle finestre, è necessaria l'autorizzazione per la registrazione dello schermo.\n\nVai su:\nImpostazioni di Sistema > Privacy e Sicurezza > Registrazione schermo\n\nQuindi attiva \"Window Resize\".";

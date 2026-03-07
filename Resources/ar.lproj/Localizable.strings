@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "لم يتم اختيار مجلد";
 "settings.screenshot.copy-to-clipboard" = "نسخ إلى الحافظة";
 
+/* Current size menu item */
+"menu.current-size" = "الحجم الحالي";
+
+/* Accessibility features */
+"settings.bring-to-front" = "إحضار النافذة للأمام بعد تغيير الحجم";
+"settings.window-position" = "الموضع بعد تغيير الحجم";
+"settings.window-position.none" = "بدون تغيير الموضع";
+"settings.move-to-main-screen" = "نقل إلى الشاشة الرئيسية";
+
+/* Language */
+"settings.language" = "اللغة";
+"settings.language.system" = "إعداد النظام";
+"settings.language.restart-title" = "تم تغيير اللغة";
+"settings.language.restart-body" = "يجب إعادة تشغيل التطبيق لتطبيق اللغة الجديدة.";
+"settings.language.restart-button" = "إعادة التشغيل الآن";
+"settings.language.restart-later" = "لاحقاً";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "مطلوب إذن تسجيل الشاشة";
 "alert.screen-recording.body" = "لالتقاط صور للنوافذ، يلزم إذن تسجيل الشاشة.\n\nيرجى الانتقال إلى:\nإعدادات النظام > الخصوصية والأمان > تسجيل الشاشة\n\nثم قم بتفعيل \"Window Resize\".";

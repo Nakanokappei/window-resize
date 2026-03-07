@@ -10,7 +10,7 @@
 "alert.resize-failed.title" = "Größenänderung fehlgeschlagen";
 "alert.resize-failed.body" = "Das Fenster konnte nicht in der Größe verändert werden. Die Anwendung unterstützt möglicherweise keine Größenänderung über Bedienungshilfen, oder das Fenster befindet sich im Vollbildmodus.";
 "alert.stale-permission.title" = "Berechtigung für Bedienungshilfen muss aktualisiert werden";
-"alert.stale-permission.body" = "Die App wurde neu erstellt und die vorherige Berechtigung für Bedienungshilfen ist nicht mehr gültig.\n\nBitte gehen Sie zu:\nSystemeinstellungen > Datenschutz & Sicherheit > Bedienungshilfen\n\nSchalten Sie „Window Resize" aus und wieder ein,\noder entfernen Sie es und fügen Sie es erneut hinzu.";
+"alert.stale-permission.body" = "Die App wurde neu erstellt und die vorherige Berechtigung für Bedienungshilfen ist nicht mehr gültig.\n\nBitte gehen Sie zu:\nSystemeinstellungen > Datenschutz & Sicherheit > Bedienungshilfen\n\nSchalten Sie \"Window Resize\" aus und wieder ein,\noder entfernen Sie es und fügen Sie es erneut hinzu.";
 "alert.button.open-settings" = "Einstellungen öffnen";
 "alert.button.ok" = "OK";
 
@@ -42,6 +42,23 @@
 "settings.screenshot.choose-folder.button" = "Wählen…";
 "settings.screenshot.no-folder-selected" = "Kein Ordner ausgewählt";
 "settings.screenshot.copy-to-clipboard" = "In die Zwischenablage kopieren";
+
+/* Current size menu item */
+"menu.current-size" = "Aktuelle Größe";
+
+/* Accessibility features */
+"settings.bring-to-front" = "Fenster nach dem Ändern in den Vordergrund bringen";
+"settings.window-position" = "Position nach dem Ändern";
+"settings.window-position.none" = "Nicht verschieben";
+"settings.move-to-main-screen" = "Zum Hauptbildschirm verschieben";
+
+/* Language */
+"settings.language" = "Sprache";
+"settings.language.system" = "Systemstandard";
+"settings.language.restart-title" = "Sprache geändert";
+"settings.language.restart-body" = "Die App muss neu gestartet werden, um die neue Sprache anzuwenden.";
+"settings.language.restart-button" = "Jetzt neu starten";
+"settings.language.restart-later" = "Später";
 
 /* Screen Recording permission */
 "alert.screen-recording.title" = "Bildschirmaufnahme-Berechtigung erforderlich";

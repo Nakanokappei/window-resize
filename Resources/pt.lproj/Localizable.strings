@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "Nenhuma pasta selecionada";
 "settings.screenshot.copy-to-clipboard" = "Copiar para a área de transferência";
 
+/* Current size menu item */
+"menu.current-size" = "Tamanho atual";
+
+/* Accessibility features */
+"settings.bring-to-front" = "Trazer janela para frente após redimensionar";
+"settings.window-position" = "Posição após redimensionar";
+"settings.window-position.none" = "Não reposicionar";
+"settings.move-to-main-screen" = "Mover para a tela principal";
+
+/* Language */
+"settings.language" = "Idioma";
+"settings.language.system" = "Padrão do sistema";
+"settings.language.restart-title" = "Idioma alterado";
+"settings.language.restart-body" = "O app precisa ser reiniciado para aplicar o novo idioma.";
+"settings.language.restart-button" = "Reiniciar agora";
+"settings.language.restart-later" = "Mais tarde";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "Permissão de gravação de tela necessária";
 "alert.screen-recording.body" = "Para capturar janelas, a permissão de gravação de tela é necessária.\n\nAcesse:\nAjustes do Sistema > Privacidade e Segurança > Gravação de Tela\n\nEntão ative \"Window Resize\".";

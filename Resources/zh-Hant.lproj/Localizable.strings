@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "未選擇資料夾";
 "settings.screenshot.copy-to-clipboard" = "拷貝到剪貼板";
 
+/* Current size menu item */
+"menu.current-size" = "目前大小";
+
+/* Accessibility features */
+"settings.bring-to-front" = "調整後將視窗移至最前";
+"settings.window-position" = "調整後的位置";
+"settings.window-position.none" = "不移動";
+"settings.move-to-main-screen" = "移至主螢幕";
+
+/* Language */
+"settings.language" = "語言";
+"settings.language.system" = "跟隨系統";
+"settings.language.restart-title" = "語言已變更";
+"settings.language.restart-body" = "需要重新啟動應用程式以套用新語言。";
+"settings.language.restart-button" = "立即重新啟動";
+"settings.language.restart-later" = "稍後";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "需要螢幕錄製權限";
 "alert.screen-recording.body" = "要擷取視窗圖片，需要螢幕錄製權限。\n\n請前往：\n系統設定 > 隱私權與安全性 > 螢幕錄製\n\n然後啟用「Window Resize」。";

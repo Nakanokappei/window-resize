@@ -43,6 +43,23 @@
 "settings.screenshot.no-folder-selected" = "No folder selected";
 "settings.screenshot.copy-to-clipboard" = "Copy to clipboard";
 
+/* Current size menu item */
+"menu.current-size" = "Current";
+
+/* Accessibility features */
+"settings.bring-to-front" = "Bring window to front after resize";
+"settings.window-position" = "Position after resize";
+"settings.window-position.none" = "Don't reposition";
+"settings.move-to-main-screen" = "Move to main screen";
+
+/* Language */
+"settings.language" = "Language";
+"settings.language.system" = "System Default";
+"settings.language.restart-title" = "Language Changed";
+"settings.language.restart-body" = "The app needs to restart to apply the new language.";
+"settings.language.restart-button" = "Restart Now";
+"settings.language.restart-later" = "Later";
+
 /* Screen Recording permission */
 "alert.screen-recording.title" = "Screen Recording Permission Required";
 "alert.screen-recording.body" = "To take screenshots of windows, Screen Recording permission is required.\n\nPlease go to:\nSystem Settings > Privacy & Security > Screen Recording\n\nThen enable \"Window Resize\".";

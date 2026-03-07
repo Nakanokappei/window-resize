@@ -5,7 +5,8 @@
 1. [Configuración inicial](#configuración-inicial)
 2. [Redimensionar una ventana](#redimensionar-una-ventana)
 3. [Ajustes](#ajustes)
-4. [Solución de problemas](#solución-de-problemas)
+4. [Funciones de accesibilidad](#funciones-de-accesibilidad)
+5. [Solución de problemas](#solución-de-problemas)
 
 ---
 
@@ -31,8 +32,9 @@ Window Resize utiliza la API de accesibilidad de macOS para redimensionar ventan
 1. Haga clic en el **icono de Window Resize** en la barra de menús.
 2. Pase el cursor sobre **"Redimensionar"** para abrir la lista de ventanas.
 3. Todas las ventanas abiertas se muestran con su **icono de aplicación** y nombre como **[Nombre de la app] Título de la ventana**. Los títulos largos se truncan automáticamente para mantener el menú legible.
-4. Pase el cursor sobre una ventana para ver los tamaños predefinidos disponibles.
-5. Haga clic en un tamaño para redimensionar la ventana inmediatamente.
+4. Cuando una aplicación tiene **3 o más ventanas**, estas se agrupan automáticamente bajo el nombre de la aplicación (por ejemplo, **"Safari (4)"**). Pase el cursor sobre la aplicación para ver las ventanas individuales y luego sobre una ventana para ver los tamaños disponibles.
+5. Pase el cursor sobre una ventana para ver los tamaños predefinidos disponibles.
+6. Haga clic en un tamaño para redimensionar la ventana inmediatamente.
 
 ### Cómo se muestran los tamaños
 
@@ -94,21 +96,51 @@ Para eliminar un tamaño personalizado, haga clic en el botón rojo **"Eliminar"
 
 Active **"Iniciar sesión automáticamente"** para que Window Resize se inicie automáticamente cuando inicie sesión en macOS.
 
+---
+
+## Funciones de accesibilidad
+
+Las siguientes funciones mejoran la accesibilidad en la gestión de ventanas. Cuando cualquiera de estas funciones está activada, el menú de redimensionamiento incluye una opción **"Tamaño actual"** en la parte superior, que permite reposicionar o traer una ventana al frente sin cambiar su tamaño.
+
+### Traer al frente
+
+Active **"Traer ventana al frente tras redimensionar"** para que la ventana redimensionada se coloque automáticamente por encima de las demás ventanas. Esto resulta útil cuando la ventana de destino está parcialmente oculta detrás de otras.
+
+### Mover a la pantalla principal
+
+Active **"Mover a la pantalla principal"** para trasladar la ventana a la pantalla principal al redimensionarla. Esto es especialmente práctico en configuraciones con varios monitores, cuando desea mover rápidamente una ventana desde una pantalla secundaria.
+
+### Posición de la ventana
+
+Elija dónde colocar la ventana en la pantalla después de redimensionarla. Una fila de 9 botones representa las opciones de ubicación:
+
+- **Esquinas:** Superior izquierda, Superior derecha, Inferior izquierda, Inferior derecha
+- **Bordes:** Centro superior, Centro izquierdo, Centro derecho, Centro inferior
+- **Centro:** Centro de la pantalla
+
+Haga clic en un botón de posición para seleccionarlo. Haga clic de nuevo en el mismo botón (o en **"No mover"**) para deseleccionarlo. Cuando no hay ninguna posición seleccionada, la ventana permanece en su lugar tras el redimensionamiento.
+
+> **Nota:** El posicionamiento de las ventanas tiene en cuenta la barra de menús y el Dock, manteniendo la ventana dentro del área útil de la pantalla.
+
+---
+
 ### Captura de pantalla
 
 Active **"Tomar captura después de redimensionar"** para capturar automáticamente la ventana después de redimensionarla.
 
 Cuando está activada, las siguientes opciones están disponibles:
 
-- **Guardar en archivo** — Guarda la captura como un archivo PNG. Cuando está activada, elija la ubicación de guardado:
+- **Guardar en archivo** — Guarda la captura como un archivo PNG. Haga clic en **"Seleccionar..."** para elegir la carpeta de destino.
   > **Formato del nombre de archivo:** `MMddHHmmss_NombreApp_TítuloVentana.png` (ej. `0227193012_Safari_Apple.png`). Los símbolos se eliminan; solo se utilizan letras, dígitos y guiones bajos.
-  - **Escritorio** — Guardar en la carpeta Escritorio.
-  - **Imágenes** — Guardar en la carpeta Imágenes.
 - **Copiar al portapapeles** — Copia la captura al portapapeles para pegarla en otras aplicaciones.
 
 Ambas opciones se pueden activar de forma independiente. Por ejemplo, puede copiar al portapapeles sin guardar en un archivo.
 
 > **Nota:** La función de captura de pantalla requiere el permiso de **Grabación de pantalla**. Cuando utilice esta función por primera vez, macOS le pedirá que conceda el permiso en **Ajustes del Sistema > Privacidad y Seguridad > Grabación de pantalla**.
+
+### Idioma
+
+Seleccione el idioma de la aplicación en el menú desplegable **Idioma**. Puede elegir entre 16 idiomas o **"Idioma del sistema"** para seguir el idioma configurado en macOS. Para que el cambio de idioma surta efecto es necesario reiniciar la aplicación.
 
 ### Estado de accesibilidad
 
