@@ -34,15 +34,6 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-
-/* Screenshot settings */
-"settings.screenshot.enabled" = "Scatta istantanea dopo il ridimensionamento";
-"settings.screenshot.save-to-file" = "Salva su file";
-"settings.screenshot.choose-folder" = "Seleziona una cartella per gli screenshot";
-"settings.screenshot.choose-folder.button" = "Scegli…";
-"settings.screenshot.no-folder-selected" = "Nessuna cartella selezionata";
-"settings.screenshot.copy-to-clipboard" = "Copia negli appunti";
-
 /* Current size menu item */
 "menu.current-size" = "Dimensione attuale";
 
@@ -59,7 +50,3 @@
 "settings.language.restart-body" = "L'app deve essere riavviata per applicare la nuova lingua.";
 "settings.language.restart-button" = "Riavvia ora";
 "settings.language.restart-later" = "Più tardi";
-
-/* Screen Recording permission */
-"alert.screen-recording.title" = "Autorizzazione registrazione schermo richiesta";
-"alert.screen-recording.body" = "Per acquisire istantanee delle finestre, è necessaria l'autorizzazione per la registrazione dello schermo.\n\nVai su:\nImpostazioni di Sistema > Privacy e Sicurezza > Registrazione schermo\n\nQuindi attiva \"Window Resize\".";

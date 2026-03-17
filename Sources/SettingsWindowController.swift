@@ -3,9 +3,8 @@
 // the app uses NSStatusItem (AppKit) for its menu bar presence, and SwiftUI
 // Settings scenes are not available for LSUIElement (menu bar only) apps.
 //
-// The window height adjusts automatically when toggles (e.g. screenshot
-// options) show or hide sub-options, using KVO on the hosting controller's
-// preferredContentSize.
+// The window height adjusts automatically when toggles show or hide
+// sub-options, using KVO on the hosting controller's preferredContentSize.
 
 import AppKit
 import SwiftUI

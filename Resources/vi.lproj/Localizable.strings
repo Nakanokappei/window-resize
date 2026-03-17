@@ -34,15 +34,6 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-
-/* Screenshot settings */
-"settings.screenshot.enabled" = "Chụp ảnh sau khi thay đổi kích thước";
-"settings.screenshot.save-to-file" = "Lưu vào tệp";
-"settings.screenshot.choose-folder" = "Chọn thư mục lưu ảnh chụp màn hình";
-"settings.screenshot.choose-folder.button" = "Chọn…";
-"settings.screenshot.no-folder-selected" = "Chưa chọn thư mục";
-"settings.screenshot.copy-to-clipboard" = "Sao chép vào bảng nhớ tạm";
-
 /* Current size menu item */
 "menu.current-size" = "Kích thước hiện tại";
 
@@ -59,7 +50,3 @@
 "settings.language.restart-body" = "Ứng dụng cần khởi động lại để áp dụng ngôn ngữ mới.";
 "settings.language.restart-button" = "Khởi động lại ngay";
 "settings.language.restart-later" = "Để sau";
-
-/* Screen Recording permission */
-"alert.screen-recording.title" = "Cần quyền ghi màn hình";
-"alert.screen-recording.body" = "Để chụp ảnh cửa sổ, cần có quyền ghi màn hình.\n\nVui lòng đi tới:\nCài đặt hệ thống > Quyền riêng tư & Bảo mật > Ghi màn hình\n\nSau đó bật \"Window Resize\".";

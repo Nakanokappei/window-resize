@@ -34,15 +34,6 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-
-/* Screenshot settings */
-"settings.screenshot.enabled" = "Сделать снимок после изменения размера";
-"settings.screenshot.save-to-file" = "Сохранить в файл";
-"settings.screenshot.choose-folder" = "Выберите папку для снимков экрана";
-"settings.screenshot.choose-folder.button" = "Выбрать…";
-"settings.screenshot.no-folder-selected" = "Папка не выбрана";
-"settings.screenshot.copy-to-clipboard" = "Скопировать в буфер обмена";
-
 /* Current size menu item */
 "menu.current-size" = "Текущий размер";
 
@@ -59,7 +50,3 @@
 "settings.language.restart-body" = "Для применения нового языка необходимо перезапустить приложение.";
 "settings.language.restart-button" = "Перезапустить сейчас";
 "settings.language.restart-later" = "Позже";
-
-/* Screen Recording permission */
-"alert.screen-recording.title" = "Требуется разрешение на запись экрана";
-"alert.screen-recording.body" = "Для создания снимков окон требуется разрешение на запись экрана.\n\nПерейдите в:\nСистемные настройки > Конфиденциальность и безопасность > Запись экрана\n\nЗатем включите \"Window Resize\".";

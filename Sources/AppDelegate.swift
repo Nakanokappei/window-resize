@@ -1,7 +1,6 @@
 // AppDelegate.swift — Coordinates the status bar item, menu construction,
-// window resize execution, and post-resize screenshot capture. This is the
-// central orchestrator that connects WindowManager, ScreenshotHelper,
-// AccessibilityHelper, and SettingsStore.
+// and snap-based window management. This is the central orchestrator that
+// connects WindowTracker, WindowManager, AccessibilityHelper, and SettingsStore.
 
 import AppKit
 import SwiftUI
@@ -22,6 +21,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var settingsWindowController: SettingsWindowController?
     private let store = SettingsStore.shared
+
+    /// The drag tracker that monitors window resize/move operations globally
+    /// and triggers snap behavior when preset sizes or screen edges are detected.
+    private let windowTracker = WindowTracker()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Check Accessibility permission on launch. Two failure modes:
@@ -60,6 +63,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             name: .settingsChanged,
             object: nil
         )
+
+        // Start the snap tracking engine (global event monitors for drag detection).
+        windowTracker.start()
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        windowTracker.stop()
     }
 
     /// Constructs the status bar dropdown menu.
@@ -117,29 +127,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             alert.informativeText = L("alert.resize-failed.body")
             alert.alertStyle = .warning
             alert.runModal()
-            return
-        }
-
-        // After a successful resize, wait 0.5 seconds for the window to finish
-        // its redraw/animation, then capture a screenshot if enabled.
-        if store.screenshotEnabled {
-            let windowID = action.windowInfo.windowID
-            let windowInfo = action.windowInfo
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                ScreenshotHelper.captureWindow(windowID) { image in
-                    guard let image = image else { return }
-
-                    if self.store.screenshotSaveToFile,
-                       let folder = self.store.resolveScreenshotFolder() {
-                        _ = ScreenshotHelper.exportAsPNG(image, to: folder,
-                                                         windowInfo: windowInfo)
-                    }
-
-                    if self.store.screenshotCopyToClipboard {
-                        ScreenshotHelper.copyToClipboard(image)
-                    }
-                }
-            }
         }
     }
 

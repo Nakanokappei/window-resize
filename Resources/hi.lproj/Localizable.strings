@@ -34,15 +34,6 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-
-/* Screenshot settings */
-"settings.screenshot.enabled" = "आकार बदलने के बाद स्क्रीनशॉट लें";
-"settings.screenshot.save-to-file" = "फ़ाइल में सहेजें";
-"settings.screenshot.choose-folder" = "स्क्रीनशॉट सहेजने के लिए फ़ोल्डर चुनें";
-"settings.screenshot.choose-folder.button" = "चुनें…";
-"settings.screenshot.no-folder-selected" = "कोई फ़ोल्डर नहीं चुना गया";
-"settings.screenshot.copy-to-clipboard" = "क्लिपबोर्ड पर कॉपी करें";
-
 /* Current size menu item */
 "menu.current-size" = "वर्तमान आकार";
 
@@ -59,7 +50,3 @@
 "settings.language.restart-body" = "नई भाषा लागू करने के लिए ऐप को पुनः आरंभ करना आवश्यक है।";
 "settings.language.restart-button" = "अभी पुनः आरंभ करें";
 "settings.language.restart-later" = "बाद में";
-
-/* Screen Recording permission */
-"alert.screen-recording.title" = "स्क्रीन रिकॉर्डिंग अनुमति आवश्यक";
-"alert.screen-recording.body" = "विंडो का स्क्रीनशॉट लेने के लिए स्क्रीन रिकॉर्डिंग अनुमति आवश्यक है।\n\nकृपया जाएँ:\nसिस्टम सेटिंग्स > गोपनीयता और सुरक्षा > स्क्रीन रिकॉर्डिंग\n\nफिर \"Window Resize\" को सक्षम करें।";

@@ -34,15 +34,6 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-
-/* Screenshot settings */
-"settings.screenshot.enabled" = "Nach Größenänderung fotografieren";
-"settings.screenshot.save-to-file" = "In Datei speichern";
-"settings.screenshot.choose-folder" = "Ordner für Bildschirmfotos wählen";
-"settings.screenshot.choose-folder.button" = "Wählen…";
-"settings.screenshot.no-folder-selected" = "Kein Ordner ausgewählt";
-"settings.screenshot.copy-to-clipboard" = "In die Zwischenablage kopieren";
-
 /* Current size menu item */
 "menu.current-size" = "Aktuelle Größe";
 
@@ -59,7 +50,3 @@
 "settings.language.restart-body" = "Die App muss neu gestartet werden, um die neue Sprache anzuwenden.";
 "settings.language.restart-button" = "Jetzt neu starten";
 "settings.language.restart-later" = "Später";
-
-/* Screen Recording permission */
-"alert.screen-recording.title" = "Bildschirmaufnahme-Berechtigung erforderlich";
-"alert.screen-recording.body" = "Zum Aufnehmen von Fensterbildern ist die Bildschirmaufnahme-Berechtigung erforderlich.\n\nBitte gehen Sie zu:\nSystemeinstellungen > Datenschutz & Sicherheit > Bildschirmaufnahme\n\nAktivieren Sie dann \"Window Resize\".";

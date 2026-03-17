@@ -1,7 +1,7 @@
 // SettingsView.swift — SwiftUI settings panel displayed in a standalone
 // NSWindow (via SettingsWindowController). Provides UI for viewing built-in
-// presets, managing custom presets, configuring launch-at-login, screenshot
-// options, and Accessibility permission status.
+// presets, managing custom presets, configuring launch-at-login, accessibility
+// features, and Accessibility permission status.
 
 import SwiftUI
 
@@ -143,52 +143,8 @@ struct SettingsView: View {
 
             Divider()
 
-            // Screenshot settings — the master toggle gates visibility of sub-options.
-            // Save-to-file and copy-to-clipboard can be enabled independently.
-            Toggle(L("settings.screenshot.enabled"), isOn: $store.screenshotEnabled)
-                .toggleStyle(.switch)
-
-            if store.screenshotEnabled {
-                Toggle(L("settings.screenshot.save-to-file"), isOn: $store.screenshotSaveToFile)
-                    .toggleStyle(.switch)
-                    .font(.caption)
-
-                if store.screenshotSaveToFile {
-                    HStack {
-                        Image(systemName: "folder")
-                            .font(.caption)
-                        Text(store.screenshotSaveFolderPath ?? L("settings.screenshot.no-folder-selected"))
-                            .font(.caption)
-                            .foregroundColor(store.screenshotSaveFolderPath != nil ? .primary : .secondary)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                        Spacer()
-                        Button(L("settings.screenshot.choose-folder.button")) {
-                            store.selectScreenshotFolder()
-                        }
-                        .font(.caption)
-                    }
-                    .padding(.leading, 20)
-                    .onChange(of: store.screenshotSaveToFile) { newValue in
-                        // Auto-show folder picker when save-to-file is enabled
-                        // but no folder is selected yet.
-                        if newValue && store.screenshotSaveFolderPath == nil {
-                            if !store.selectScreenshotFolder() {
-                                store.screenshotSaveToFile = false
-                            }
-                        }
-                    }
-                }
-
-                Toggle(L("settings.screenshot.copy-to-clipboard"), isOn: $store.screenshotCopyToClipboard)
-                    .toggleStyle(.switch)
-                    .font(.caption)
-            }
-
-            Divider()
-
-            // Language picker — allows overriding the app language for
-            // screenshots and testing. Requires restart to take effect.
+            // Language picker — allows overriding the app language.
+            // Requires restart to take effect.
             HStack {
                 Text(L("settings.language"))
                 Spacer()
