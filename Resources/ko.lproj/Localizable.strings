@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "크기 조절 중";
 "settings.overlay.snap" = "스냅 중";
 "settings.overlay.dashed" = "점선";
+"settings.overlay.animated" = "애니메이션";
 "settings.overlay.solid" = "실선";
 "settings.overlay.show-resize-overlay" = "크기 조절 중 오버레이 표시";
 "settings.overlay.show-ratio" = "화면비 표시";
@@ -49,6 +50,10 @@
 "settings.color.red" = "빨강";
 "settings.color.purple" = "보라";
 "settings.color.white" = "흰색";
+"settings.color.pink" = "분홍";
+"settings.color.yellow" = "노랑";
+"settings.color.cyan" = "청록";
+"settings.color.gray" = "회색";
 
 /* Language */
 "settings.language" = "언어";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "크기 조절";
 "settings.shortcuts.precision" = "정밀 조절 (±1px)";
 "settings.shortcuts.undo-redo" = "실행 취소 / 다시 실행";
-"settings.shortcuts.press-shortcut" = "단축키를 누르세요...";
+"settings.shortcuts.press-shortcut" = "키 입력…";
 "settings.shortcuts.reset" = "기본값으로 재설정";
 "settings.shortcuts.conflict-system" = "시스템 단축키와 충돌합니다";
 "settings.shortcuts.conflict-app" = "이 앱의 다른 동작과 충돌합니다";
+"settings.shortcuts.escape-to-cancel" = "Esc로 취소";
 "settings.shortcuts.grow-width" = "너비 늘리기";
 "settings.shortcuts.shrink-width" = "너비 줄이기";
 "settings.shortcuts.grow-height" = "높이 늘리기";

@@ -39,7 +39,7 @@ class SettingsWindowController: NSWindowController {
 
         // Set initial size from content, with fixed width.
         let contentHeight = hostingController.preferredContentSize.height
-        window.setContentSize(NSSize(width: 480, height: max(contentHeight, 300)))
+        window.setContentSize(NSSize(width: 540, height: max(contentHeight, 300)))
 
         // Restore saved position if the display resolution matches,
         // otherwise center the window on screen.

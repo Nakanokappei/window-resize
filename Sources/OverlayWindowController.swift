@@ -65,13 +65,17 @@ class OverlayWindowController {
         if let label = label {
             // Snap candidate active: apply snap overlay settings.
             let color = SettingsStore.nsColor(forName: settings.snapBorderColor)
-            primaryBorderView?.updateStyle(color: color, dashed: settings.snapBorderDashed)
+            primaryBorderView?.updateStyle(color: color,
+                                           dashed: settings.snapBorderDashed || settings.snapBorderAnimated,
+                                           animated: settings.snapBorderAnimated)
             sizeLabelView?.update(snapText: label, currentSizeText: currentSizeText, corner: corner)
             sizeLabelView?.isHidden = false
         } else if let currentSizeText = currentSizeText {
             // No snap candidate: apply resize overlay settings.
             let color = SettingsStore.nsColor(forName: settings.resizeBorderColor)
-            primaryBorderView?.updateStyle(color: color, dashed: settings.resizeBorderDashed)
+            primaryBorderView?.updateStyle(color: color,
+                                           dashed: settings.resizeBorderDashed || settings.resizeBorderAnimated,
+                                           animated: settings.resizeBorderAnimated)
             sizeLabelView?.update(snapText: "", currentSizeText: currentSizeText, corner: corner)
             sizeLabelView?.isHidden = false
         } else {
@@ -113,9 +117,11 @@ class OverlayWindowController {
 
     // MARK: - Hide
 
-    /// Hides the overlay with a short fade-out animation.
+    /// Hides the overlay with a short fade-out animation and stops any
+    /// running dash animation timer.
     func hide() {
         currentPrimaryFrame = .zero
+        primaryBorderView?.updateStyle(color: .clear, dashed: false, animated: false)
 
         if let window = primaryWindow, window.isVisible {
             NSAnimationContext.runAnimationGroup({ context in
@@ -283,11 +289,45 @@ private class OverlayBorderView: NSView {
     /// Whether the border is dashed (true) or solid (false).
     private var isDashed: Bool = false
 
-    /// Updates the border color and line style, triggering a redraw.
-    func updateStyle(color: NSColor, dashed: Bool) {
+    /// Whether the dashes are animated (marching ants effect).
+    private var isAnimated: Bool = false
+
+    /// Current dash phase offset, incremented by the animation timer.
+    private var dashPhase: CGFloat = 0
+
+    /// Timer that drives the marching ants animation (~30fps).
+    private var animationTimer: Timer?
+
+    /// Updates the border color, line style, and animation state.
+    func updateStyle(color: NSColor, dashed: Bool, animated: Bool = false) {
         borderColor = color
         isDashed = dashed
+        isAnimated = animated
+
+        // Start or stop the animation timer based on the animated state.
+        if animated && animationTimer == nil {
+            dashPhase = 0
+            animationTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 30.0,
+                                                   repeats: true) { [weak self] _ in
+                guard let self = self else { return }
+                self.dashPhase += 1.0
+                if self.dashPhase > 14.0 { self.dashPhase = 0 }
+                self.needsDisplay = true
+            }
+        } else if !animated {
+            animationTimer?.invalidate()
+            animationTimer = nil
+            dashPhase = 0
+        }
+
         needsDisplay = true
+    }
+
+    /// Stops the animation timer when the view is removed from the window.
+    override func removeFromSuperview() {
+        animationTimer?.invalidate()
+        animationTimer = nil
+        super.removeFromSuperview()
     }
 
     // MARK: - Ratio Label State
@@ -319,12 +359,12 @@ private class OverlayBorderView: NSView {
         borderColor.withAlphaComponent(fillAlpha).setFill()
         path.fill()
 
-        // Stroke: solid or dashed at the configured color.
+        // Stroke: solid, dashed, or animated dashed at the configured color.
         let strokeAlpha: CGFloat = isDashed ? 0.5 : 0.8
         borderColor.withAlphaComponent(strokeAlpha).setStroke()
         path.lineWidth = 3.0
         if isDashed {
-            path.setLineDash([8, 6], count: 2, phase: 0)
+            path.setLineDash([8, 6], count: 2, phase: dashPhase)
         }
         path.stroke()
 

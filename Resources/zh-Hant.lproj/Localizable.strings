@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "調整大小時";
 "settings.overlay.snap" = "貼靠時";
 "settings.overlay.dashed" = "虛線";
+"settings.overlay.animated" = "動畫";
 "settings.overlay.solid" = "實線";
 "settings.overlay.show-resize-overlay" = "調整大小時顯示疊加層";
 "settings.overlay.show-ratio" = "顯示寬高比";
@@ -49,6 +50,10 @@
 "settings.color.red" = "紅色";
 "settings.color.purple" = "紫色";
 "settings.color.white" = "白色";
+"settings.color.pink" = "粉色";
+"settings.color.yellow" = "黃色";
+"settings.color.cyan" = "青色";
+"settings.color.gray" = "灰色";
 
 /* Language */
 "settings.language" = "語言";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "調整大小";
 "settings.shortcuts.precision" = "精確調整 (±1px)";
 "settings.shortcuts.undo-redo" = "還原 / 重做";
-"settings.shortcuts.press-shortcut" = "請按快捷鍵...";
+"settings.shortcuts.press-shortcut" = "按鍵...";
 "settings.shortcuts.reset" = "重置為預設值";
 "settings.shortcuts.conflict-system" = "與系統快捷鍵衝突";
 "settings.shortcuts.conflict-app" = "與此應用程式中的其他操作衝突";
+"settings.shortcuts.escape-to-cancel" = "按Esc取消";
 "settings.shortcuts.grow-width" = "增加寬度";
 "settings.shortcuts.shrink-width" = "減少寬度";
 "settings.shortcuts.grow-height" = "增加高度";

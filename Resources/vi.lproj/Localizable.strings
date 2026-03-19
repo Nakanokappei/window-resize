@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "Khi thay doi kich thuoc";
 "settings.overlay.snap" = "Khi snap";
 "settings.overlay.dashed" = "Net dut";
+"settings.overlay.animated" = "Động";
 "settings.overlay.solid" = "Lien tuc";
 "settings.overlay.show-resize-overlay" = "Hiển thị lớp phủ khi thay đổi kích thước";
 "settings.overlay.show-ratio" = "Hiển thị tỷ lệ khung hình";
@@ -49,6 +50,10 @@
 "settings.color.red" = "Đỏ";
 "settings.color.purple" = "Tím";
 "settings.color.white" = "Trắng";
+"settings.color.pink" = "Hồng";
+"settings.color.yellow" = "Vàng";
+"settings.color.cyan" = "Lục lam";
+"settings.color.gray" = "Xám";
 
 /* Language */
 "settings.language" = "Ngôn ngữ";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "Thay đổi kích thước";
 "settings.shortcuts.precision" = "Chính xác (±1px)";
 "settings.shortcuts.undo-redo" = "Hoàn tác / Làm lại";
-"settings.shortcuts.press-shortcut" = "Nhấn phím tắt...";
+"settings.shortcuts.press-shortcut" = "Phím...";
 "settings.shortcuts.reset" = "Đặt lại mặc định";
 "settings.shortcuts.conflict-system" = "Xung đột với phím tắt hệ thống";
 "settings.shortcuts.conflict-app" = "Xung đột với thao tác khác trong ứng dụng này";
+"settings.shortcuts.escape-to-cancel" = "Esc để hủy";
 "settings.shortcuts.grow-width" = "Tăng chiều rộng";
 "settings.shortcuts.shrink-width" = "Giảm chiều rộng";
 "settings.shortcuts.grow-height" = "Tăng chiều cao";

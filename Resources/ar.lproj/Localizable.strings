@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "اثناء تغيير الحجم";
 "settings.overlay.snap" = "اثناء الالتقاط";
 "settings.overlay.dashed" = "متقطع";
+"settings.overlay.animated" = "متحرك";
 "settings.overlay.solid" = "متصل";
 "settings.overlay.show-resize-overlay" = "إظهار التراكب أثناء تغيير الحجم";
 "settings.overlay.show-ratio" = "إظهار نسبة العرض إلى الارتفاع";
@@ -49,6 +50,10 @@
 "settings.color.red" = "أحمر";
 "settings.color.purple" = "بنفسجي";
 "settings.color.white" = "أبيض";
+"settings.color.pink" = "وردي";
+"settings.color.yellow" = "أصفر";
+"settings.color.cyan" = "سماوي";
+"settings.color.gray" = "رمادي";
 
 /* Language */
 "settings.language" = "اللغة";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "تغيير الحجم";
 "settings.shortcuts.precision" = "دقة (±1px)";
 "settings.shortcuts.undo-redo" = "تراجع / إعادة";
-"settings.shortcuts.press-shortcut" = "اضغط اختصارًا...";
+"settings.shortcuts.press-shortcut" = "...مفتاح";
 "settings.shortcuts.reset" = "إعادة التعيين إلى الإعدادات الافتراضية";
 "settings.shortcuts.conflict-system" = "يتعارض مع اختصار النظام";
 "settings.shortcuts.conflict-app" = "يتعارض مع إجراء آخر في هذا التطبيق";
+"settings.shortcuts.escape-to-cancel" = "Esc للإلغاء";
 "settings.shortcuts.grow-width" = "زيادة العرض";
 "settings.shortcuts.shrink-width" = "تقليل العرض";
 "settings.shortcuts.grow-height" = "زيادة الارتفاع";

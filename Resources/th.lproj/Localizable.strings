@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "ขณะปรับขนาด";
 "settings.overlay.snap" = "ขณะสแนป";
 "settings.overlay.dashed" = "เส้นประ";
+"settings.overlay.animated" = "เคลื่อนไหว";
 "settings.overlay.solid" = "เส้นทึบ";
 "settings.overlay.show-resize-overlay" = "แสดงโอเวอร์เลย์ขณะปรับขนาด";
 "settings.overlay.show-ratio" = "แสดงอัตราส่วนภาพ";
@@ -49,6 +50,10 @@
 "settings.color.red" = "แดง";
 "settings.color.purple" = "ม่วง";
 "settings.color.white" = "ขาว";
+"settings.color.pink" = "ชมพู";
+"settings.color.yellow" = "เหลือง";
+"settings.color.cyan" = "ฟ้า";
+"settings.color.gray" = "เทา";
 
 /* Language */
 "settings.language" = "ภาษา";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "ปรับขนาด";
 "settings.shortcuts.precision" = "ปรับละเอียด (±1px)";
 "settings.shortcuts.undo-redo" = "เลิกทำ / ทำซ้ำ";
-"settings.shortcuts.press-shortcut" = "กดปุ่มลัด...";
+"settings.shortcuts.press-shortcut" = "กดปุ่ม...";
 "settings.shortcuts.reset" = "รีเซ็ตเป็นค่าเริ่มต้น";
 "settings.shortcuts.conflict-system" = "ขัดแย้งกับปุ่มลัดของระบบ";
 "settings.shortcuts.conflict-app" = "ขัดแย้งกับการทำงานอื่นในแอปนี้";
+"settings.shortcuts.escape-to-cancel" = "Esc เพื่อยกเลิก";
 "settings.shortcuts.grow-width" = "เพิ่มความกว้าง";
 "settings.shortcuts.shrink-width" = "ลดความกว้าง";
 "settings.shortcuts.grow-height" = "เพิ่มความสูง";

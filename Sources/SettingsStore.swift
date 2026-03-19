@@ -18,6 +18,8 @@ class SettingsStore: ObservableObject {
     private let snapBorderColorKey = "snapBorderColor"
     private let snapBorderDashedKey = "snapBorderDashed"
     private let showResizeOverlayKey = "showResizeOverlay"
+    private let resizeBorderAnimatedKey = "resizeBorderAnimated"
+    private let snapBorderAnimatedKey = "snapBorderAnimated"
     private let showRatioLabelKey = "showRatioLabel"
     private let shiftToLockRatioKey = "shiftToLockRatio"
     private let quickPresetsKey = "quickPresets"
@@ -68,6 +70,16 @@ class SettingsStore: ObservableObject {
     /// When false, the overlay is only shown when a snap candidate is detected.
     @Published var showResizeOverlay: Bool = true {
         didSet { UserDefaults.standard.set(showResizeOverlay, forKey: showResizeOverlayKey) }
+    }
+
+    /// Whether the resize overlay border uses animated dashes (marching ants).
+    @Published var resizeBorderAnimated: Bool = false {
+        didSet { UserDefaults.standard.set(resizeBorderAnimated, forKey: resizeBorderAnimatedKey) }
+    }
+
+    /// Whether the snap overlay border uses animated dashes (marching ants).
+    @Published var snapBorderAnimated: Bool = false {
+        didSet { UserDefaults.standard.set(snapBorderAnimated, forKey: snapBorderAnimatedKey) }
     }
 
     /// Whether to show the aspect ratio label at the opposite corner during resize.
@@ -371,24 +383,25 @@ class SettingsStore: ObservableObject {
     /// Predefined color options for overlay borders.
     /// Each entry has an internal name, a localization key, and an NSColor.
     static let borderColorOptions: [(name: String, locKey: String, color: NSColor)] = [
-        ("orange", "settings.color.orange", NSColor(calibratedRed: 1.0, green: 0.6, blue: 0.0, alpha: 1.0)),
-        ("blue",   "settings.color.blue",   NSColor.systemBlue),
-        ("green",  "settings.color.green",  NSColor.systemGreen),
         ("red",    "settings.color.red",    NSColor.systemRed),
+        ("orange", "settings.color.orange", NSColor(calibratedRed: 1.0, green: 0.6, blue: 0.0, alpha: 1.0)),
+        ("yellow", "settings.color.yellow", NSColor.systemYellow),
+        ("green",  "settings.color.green",  NSColor.systemGreen),
+        ("cyan",   "settings.color.cyan",   NSColor.systemTeal),
+        ("blue",   "settings.color.blue",   NSColor.systemBlue),
         ("purple", "settings.color.purple", NSColor.systemPurple),
         ("white",  "settings.color.white",  NSColor.white),
+        ("gray",   "settings.color.gray",   NSColor.systemGray),
     ]
 
     /// Converts a color name to an NSColor for overlay rendering.
     static func nsColor(forName name: String) -> NSColor {
-        switch name {
-        case "blue":   return NSColor.systemBlue
-        case "green":  return NSColor.systemGreen
-        case "red":    return NSColor.systemRed
-        case "purple": return NSColor.systemPurple
-        case "white":  return NSColor.white
-        default:       return NSColor(calibratedRed: 1.0, green: 0.6, blue: 0.0, alpha: 1.0)
+        // Look up from the canonical color options array to avoid duplication.
+        if let match = borderColorOptions.first(where: { $0.name == name }) {
+            return match.color
         }
+        // Fallback to orange if the name is unrecognized.
+        return NSColor(calibratedRed: 1.0, green: 0.6, blue: 0.0, alpha: 1.0)
     }
 
     // MARK: - Built-in Presets
@@ -445,6 +458,12 @@ class SettingsStore: ObservableObject {
         }
         if defaults.object(forKey: showResizeOverlayKey) != nil {
             showResizeOverlay = defaults.bool(forKey: showResizeOverlayKey)
+        }
+        if defaults.object(forKey: resizeBorderAnimatedKey) != nil {
+            resizeBorderAnimated = defaults.bool(forKey: resizeBorderAnimatedKey)
+        }
+        if defaults.object(forKey: snapBorderAnimatedKey) != nil {
+            snapBorderAnimated = defaults.bool(forKey: snapBorderAnimatedKey)
         }
         if defaults.object(forKey: showRatioLabelKey) != nil {
             showRatioLabel = defaults.bool(forKey: showRatioLabelKey)

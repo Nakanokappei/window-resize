@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "При изменении размера";
 "settings.overlay.snap" = "При привязке";
 "settings.overlay.dashed" = "Пунктирная";
+"settings.overlay.animated" = "Анимация";
 "settings.overlay.solid" = "Сплошная";
 "settings.overlay.show-resize-overlay" = "Показывать наложение при изменении размера";
 "settings.overlay.show-ratio" = "Показывать соотношение сторон";
@@ -49,6 +50,10 @@
 "settings.color.red" = "Красный";
 "settings.color.purple" = "Фиолетовый";
 "settings.color.white" = "Белый";
+"settings.color.pink" = "Розовый";
+"settings.color.yellow" = "Жёлтый";
+"settings.color.cyan" = "Голубой";
+"settings.color.gray" = "Серый";
 
 /* Language */
 "settings.language" = "Язык";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "Изменение размера";
 "settings.shortcuts.precision" = "Точная настройка (±1px)";
 "settings.shortcuts.undo-redo" = "Отменить / Повторить";
-"settings.shortcuts.press-shortcut" = "Нажмите сочетание клавиш...";
+"settings.shortcuts.press-shortcut" = "Клавиша...";
 "settings.shortcuts.reset" = "Сбросить настройки";
 "settings.shortcuts.conflict-system" = "Конфликтует с системным сочетанием клавиш";
 "settings.shortcuts.conflict-app" = "Конфликтует с другим действием в этом приложении";
+"settings.shortcuts.escape-to-cancel" = "Esc для отмены";
 "settings.shortcuts.grow-width" = "Увеличить ширину";
 "settings.shortcuts.shrink-width" = "Уменьшить ширину";
 "settings.shortcuts.grow-height" = "Увеличить высоту";

@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "आकार बदलते समय";
 "settings.overlay.snap" = "स्नैप करते समय";
 "settings.overlay.dashed" = "डैश्ड";
+"settings.overlay.animated" = "एनिमेशन";
 "settings.overlay.solid" = "सॉलिड";
 "settings.overlay.show-resize-overlay" = "आकार बदलते समय ओवरले दिखाएं";
 "settings.overlay.show-ratio" = "पक्षानुपात दिखाएं";
@@ -49,6 +50,10 @@
 "settings.color.red" = "लाल";
 "settings.color.purple" = "बैंगनी";
 "settings.color.white" = "सफ़ेद";
+"settings.color.pink" = "गुलाबी";
+"settings.color.yellow" = "पीला";
+"settings.color.cyan" = "हल्का नीला";
+"settings.color.gray" = "धूसर";
 
 /* Language */
 "settings.language" = "भाषा";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "आकार बदलें";
 "settings.shortcuts.precision" = "सटीक समायोजन (±1px)";
 "settings.shortcuts.undo-redo" = "पूर्ववत करें / फिर से करें";
-"settings.shortcuts.press-shortcut" = "शॉर्टकट दबाएं...";
+"settings.shortcuts.press-shortcut" = "कुंजी…";
 "settings.shortcuts.reset" = "डिफ़ॉल्ट पर रीसेट करें";
 "settings.shortcuts.conflict-system" = "सिस्टम शॉर्टकट से विरोध है";
 "settings.shortcuts.conflict-app" = "इस ऐप में किसी अन्य क्रिया से विरोध है";
+"settings.shortcuts.escape-to-cancel" = "Esc से रद्द करें";
 "settings.shortcuts.grow-width" = "चौड़ाई बढ़ाएं";
 "settings.shortcuts.shrink-width" = "चौड़ाई घटाएं";
 "settings.shortcuts.grow-height" = "ऊंचाई बढ़ाएं";

@@ -18,6 +18,9 @@ struct ShortcutRecorderView: NSViewRepresentable {
 
     func makeNSView(context: Context) -> KeyRecorderNSView {
         let view = KeyRecorderNSView()
+        view.onRecordingStarted = {
+            isRecording.wrappedValue = true
+        }
         view.onBindingChanged = { newBinding in
             binding = newBinding
             isRecording.wrappedValue = false
@@ -48,6 +51,9 @@ struct ShortcutRecorderView: NSViewRepresentable {
 /// It renders as a rounded rectangle button showing the current shortcut
 /// or a "press shortcut…" prompt when recording.
 class KeyRecorderNSView: NSView {
+
+    /// Callback invoked when recording starts (mouse click on the view).
+    var onRecordingStarted: (() -> Void)?
 
     /// Callback invoked when a valid shortcut is captured.
     var onBindingChanged: ((SettingsStore.ShortcutBinding) -> Void)?
@@ -105,6 +111,7 @@ class KeyRecorderNSView: NSView {
     override func mouseDown(with event: NSEvent) {
         if !isRecording {
             startRecording()
+            onRecordingStarted?()
         }
     }
 

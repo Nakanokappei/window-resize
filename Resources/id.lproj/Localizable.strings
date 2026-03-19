@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "Saat Mengubah Ukuran";
 "settings.overlay.snap" = "Saat Snap";
 "settings.overlay.dashed" = "Putus-putus";
+"settings.overlay.animated" = "Animasi";
 "settings.overlay.solid" = "Solid";
 "settings.overlay.show-resize-overlay" = "Tampilkan overlay saat mengubah ukuran";
 "settings.overlay.show-ratio" = "Tampilkan rasio aspek";
@@ -49,6 +50,10 @@
 "settings.color.red" = "Merah";
 "settings.color.purple" = "Ungu";
 "settings.color.white" = "Putih";
+"settings.color.pink" = "Merah Muda";
+"settings.color.yellow" = "Kuning";
+"settings.color.cyan" = "Sian";
+"settings.color.gray" = "Abu-abu";
 
 /* Language */
 "settings.language" = "Bahasa";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "Ubah Ukuran";
 "settings.shortcuts.precision" = "Presisi (±1px)";
 "settings.shortcuts.undo-redo" = "Urungkan / Ulangi";
-"settings.shortcuts.press-shortcut" = "Tekan pintasan...";
+"settings.shortcuts.press-shortcut" = "Tombol...";
 "settings.shortcuts.reset" = "Atur ulang ke default";
 "settings.shortcuts.conflict-system" = "Bertentangan dengan pintasan sistem";
 "settings.shortcuts.conflict-app" = "Bertentangan dengan tindakan lain di aplikasi ini";
+"settings.shortcuts.escape-to-cancel" = "Esc untuk membatalkan";
 "settings.shortcuts.grow-width" = "Perbesar Lebar";
 "settings.shortcuts.shrink-width" = "Perkecil Lebar";
 "settings.shortcuts.grow-height" = "Perbesar Tinggi";

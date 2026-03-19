@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "Ao redimensionar";
 "settings.overlay.snap" = "Ao ajustar";
 "settings.overlay.dashed" = "Tracejado";
+"settings.overlay.animated" = "Animado";
 "settings.overlay.solid" = "Solido";
 "settings.overlay.show-resize-overlay" = "Mostrar sobreposicao ao redimensionar";
 "settings.overlay.show-ratio" = "Mostrar proporcao";
@@ -49,6 +50,10 @@
 "settings.color.red" = "Vermelho";
 "settings.color.purple" = "Roxo";
 "settings.color.white" = "Branco";
+"settings.color.pink" = "Rosa";
+"settings.color.yellow" = "Amarelo";
+"settings.color.cyan" = "Ciano";
+"settings.color.gray" = "Cinza";
 
 /* Language */
 "settings.language" = "Idioma";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "Redimensionar";
 "settings.shortcuts.precision" = "Precisão (±1px)";
 "settings.shortcuts.undo-redo" = "Desfazer / Refazer";
-"settings.shortcuts.press-shortcut" = "Pressione um atalho...";
+"settings.shortcuts.press-shortcut" = "Tecla...";
 "settings.shortcuts.reset" = "Restaurar padrões";
 "settings.shortcuts.conflict-system" = "Conflita com um atalho do sistema";
 "settings.shortcuts.conflict-app" = "Conflita com outra ação neste app";
+"settings.shortcuts.escape-to-cancel" = "Esc para cancelar";
 "settings.shortcuts.grow-width" = "Aumentar largura";
 "settings.shortcuts.shrink-width" = "Reduzir largura";
 "settings.shortcuts.grow-height" = "Aumentar altura";

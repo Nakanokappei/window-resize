@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "调整大小时";
 "settings.overlay.snap" = "贴靠时";
 "settings.overlay.dashed" = "虚线";
+"settings.overlay.animated" = "动画";
 "settings.overlay.solid" = "实线";
 "settings.overlay.show-resize-overlay" = "调整大小时显示叠加层";
 "settings.overlay.show-ratio" = "显示宽高比";
@@ -49,6 +50,10 @@
 "settings.color.red" = "红色";
 "settings.color.purple" = "紫色";
 "settings.color.white" = "白色";
+"settings.color.pink" = "粉色";
+"settings.color.yellow" = "黄色";
+"settings.color.cyan" = "青色";
+"settings.color.gray" = "灰色";
 
 /* Language */
 "settings.language" = "语言";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "调整大小";
 "settings.shortcuts.precision" = "精确调整 (±1px)";
 "settings.shortcuts.undo-redo" = "撤销 / 重做";
-"settings.shortcuts.press-shortcut" = "请按快捷键...";
+"settings.shortcuts.press-shortcut" = "按键...";
 "settings.shortcuts.reset" = "恢复默认设置";
 "settings.shortcuts.conflict-system" = "与系统快捷键冲突";
 "settings.shortcuts.conflict-app" = "与此应用中的其他操作冲突";
+"settings.shortcuts.escape-to-cancel" = "按Esc取消";
 "settings.shortcuts.grow-width" = "增加宽度";
 "settings.shortcuts.shrink-width" = "减少宽度";
 "settings.shortcuts.grow-height" = "增加高度";

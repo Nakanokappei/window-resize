@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "リサイズ中";
 "settings.overlay.snap" = "スナップ中";
 "settings.overlay.dashed" = "破線";
+"settings.overlay.animated" = "アニメ";
 "settings.overlay.solid" = "実線";
 "settings.overlay.show-resize-overlay" = "リサイズ中にオーバーレイを表示";
 "settings.overlay.show-ratio" = "縦横比を表示";
@@ -49,6 +50,10 @@
 "settings.color.red" = "レッド";
 "settings.color.purple" = "パープル";
 "settings.color.white" = "ホワイト";
+"settings.color.pink" = "ピンク";
+"settings.color.yellow" = "黄色";
+"settings.color.cyan" = "シアン";
+"settings.color.gray" = "グレー";
 
 /* Language */
 "settings.language" = "言語";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "リサイズ";
 "settings.shortcuts.precision" = "精密操作 (±1px)";
 "settings.shortcuts.undo-redo" = "取り消し / やり直し";
-"settings.shortcuts.press-shortcut" = "ショートカットを入力...";
+"settings.shortcuts.press-shortcut" = "キーを入力…";
 "settings.shortcuts.reset" = "デフォルトに戻す";
 "settings.shortcuts.conflict-system" = "システムのショートカットと競合しています";
 "settings.shortcuts.conflict-app" = "このアプリ内の別の操作と競合しています";
+"settings.shortcuts.escape-to-cancel" = "Escでキャンセル";
 "settings.shortcuts.grow-width" = "幅を広げる";
 "settings.shortcuts.shrink-width" = "幅を縮める";
 "settings.shortcuts.grow-height" = "高さを広げる";

@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "During Resize";
 "settings.overlay.snap" = "During Snap";
 "settings.overlay.dashed" = "Dashed";
+"settings.overlay.animated" = "Animated";
 "settings.overlay.solid" = "Solid";
 "settings.overlay.show-resize-overlay" = "Show Overlay During Resize";
 "settings.overlay.show-ratio" = "Show Aspect Ratio";
@@ -49,6 +50,10 @@
 "settings.color.red" = "Red";
 "settings.color.purple" = "Purple";
 "settings.color.white" = "White";
+"settings.color.pink" = "Pink";
+"settings.color.yellow" = "Yellow";
+"settings.color.cyan" = "Cyan";
+"settings.color.gray" = "Gray";
 
 /* Language */
 "settings.language" = "Language";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "Resize";
 "settings.shortcuts.precision" = "Precision (±1px)";
 "settings.shortcuts.undo-redo" = "Undo / Redo";
-"settings.shortcuts.press-shortcut" = "Press shortcut...";
+"settings.shortcuts.press-shortcut" = "Type key...";
 "settings.shortcuts.reset" = "Reset to Defaults";
 "settings.shortcuts.conflict-system" = "Conflicts with a system shortcut";
 "settings.shortcuts.conflict-app" = "Conflicts with another action in this app";
+"settings.shortcuts.escape-to-cancel" = "Esc to cancel";
 "settings.shortcuts.grow-width" = "Grow Width";
 "settings.shortcuts.shrink-width" = "Shrink Width";
 "settings.shortcuts.grow-height" = "Grow Height";

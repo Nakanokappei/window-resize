@@ -37,6 +37,7 @@
 "settings.overlay.resize" = "Beim Skalieren";
 "settings.overlay.snap" = "Beim Einrasten";
 "settings.overlay.dashed" = "Gestrichelt";
+"settings.overlay.animated" = "Animiert";
 "settings.overlay.solid" = "Durchgezogen";
 "settings.overlay.show-resize-overlay" = "Overlay beim Skalieren anzeigen";
 "settings.overlay.show-ratio" = "Seitenverhaltnis anzeigen";
@@ -49,6 +50,10 @@
 "settings.color.red" = "Rot";
 "settings.color.purple" = "Lila";
 "settings.color.white" = "Weiss";
+"settings.color.pink" = "Rosa";
+"settings.color.yellow" = "Gelb";
+"settings.color.cyan" = "Cyan";
+"settings.color.gray" = "Grau";
 
 /* Language */
 "settings.language" = "Sprache";
@@ -75,10 +80,11 @@
 "settings.shortcuts.resize" = "Größe ändern";
 "settings.shortcuts.precision" = "Präzision (±1px)";
 "settings.shortcuts.undo-redo" = "Widerrufen / Wiederholen";
-"settings.shortcuts.press-shortcut" = "Tastenkürzel drücken...";
+"settings.shortcuts.press-shortcut" = "Taste...";
 "settings.shortcuts.reset" = "Auf Standardwerte zurücksetzen";
 "settings.shortcuts.conflict-system" = "Steht in Konflikt mit einem Systemtastenkürzel";
 "settings.shortcuts.conflict-app" = "Steht in Konflikt mit einer anderen Aktion in dieser App";
+"settings.shortcuts.escape-to-cancel" = "Esc zum Abbrechen";
 "settings.shortcuts.grow-width" = "Breite vergrößern";
 "settings.shortcuts.shrink-width" = "Breite verkleinern";
 "settings.shortcuts.grow-height" = "Höhe vergrößern";
