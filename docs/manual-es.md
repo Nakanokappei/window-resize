@@ -2,147 +2,224 @@
 
 ## Tabla de contenidos
 
-1. [Configuración inicial](#configuración-inicial)
-2. [Redimensionamiento por ajuste automático](#redimensionamiento-por-ajuste-automático)
-3. [Ajustes](#ajustes)
-4. [Solución de problemas](#solución-de-problemas)
+1. [Configuracion inicial](#configuracion-inicial)
+2. [Redimensionamiento por ajuste automatico](#redimensionamiento-por-ajuste-automatico)
+3. [Atajos de teclado](#atajos-de-teclado)
+4. [Ajustes](#ajustes)
+5. [Solucion de problemas](#solucion-de-problemas)
 
 ---
 
-## Configuración inicial
+## Configuracion inicial
 
 ### Conceder permiso de accesibilidad
 
-Window Resize utiliza la API de accesibilidad de macOS para detectar y redimensionar ventanas. Debe conceder el permiso la primera vez que inicie la aplicación.
+Window Resize utiliza la API de accesibilidad de macOS para detectar y redimensionar ventanas. Debe conceder el permiso la primera vez que inicie la aplicacion.
 
-1. Inicie **Window Resize**. Aparecerá un diálogo del sistema solicitando acceso de accesibilidad.
+1. Inicie **Window Resize**. Aparecera un dialogo del sistema solicitando acceso de accesibilidad.
 2. Haga clic en **"Abrir Ajustes del Sistema"** (o vaya manualmente a **Ajustes del Sistema > Privacidad y seguridad > Accesibilidad**).
 3. Busque **"Window Resize"** en la lista y active el interruptor.
-4. Vuelva a la aplicación: el icono de la barra de menús aparecerá y la aplicación estará lista para usar.
+4. Vuelva a la aplicacion: el icono de la barra de menus aparecera y la aplicacion estara lista para usar.
 
-> **Nota:** Si el diálogo no aparece, puede abrir los ajustes de accesibilidad directamente desde la ventana de Ajustes de la aplicación (consulte [Estado de accesibilidad](#estado-de-accesibilidad)).
+> **Nota:** Si el dialogo no aparece, puede abrir los ajustes de accesibilidad directamente desde la ventana de Ajustes de la aplicacion (consulte [Estado de accesibilidad](#estado-de-accesibilidad)).
 
 ---
 
-## Redimensionamiento por ajuste automático
+## Redimensionamiento por ajuste automatico
 
-### Cómo funciona
+### Como funciona
 
-Window Resize monitoriza las operaciones de redimensionamiento de ventanas en tiempo real. Cuando arrastra el borde o la esquina de una ventana para redimensionarla, la aplicación detecta la proximidad de las dimensiones de la ventana a cualquier tamaño predefinido.
+Window Resize monitoriza las operaciones de redimensionamiento de ventanas en tiempo real. Cuando arrastra el borde o la esquina de una ventana para redimensionarla, la aplicacion detecta la proximidad de las dimensiones de la ventana a cualquier tamano predefinido.
 
-1. **Comience a redimensionar** — arrastre el borde o la esquina de cualquier ventana como lo haría normalmente.
-2. **Aparece la superposición** — cuando el tamaño de la ventana se aproxima a un tamaño predefinido (a menos de 30 píxeles de distancia), aparece una superposición con un borde de color alrededor de la ventana que muestra el tamaño de destino.
-3. **Suelte para ajustar** — suelte el ratón y la ventana se ajustará con precisión al tamaño predefinido.
-4. **Cancelar** — si aleja el tamaño de la ventana del valor predefinido antes de soltar, la superposición desaparece y no se realiza ningún ajuste.
+1. **Comience a redimensionar** — arrastre el borde o la esquina de cualquier ventana como lo haria normalmente.
+2. **Aparece la superposicion** — cuando el tamano de la ventana se aproxima a un tamano predefinido (a menos de 30 pixeles de distancia), aparece una superposicion con un borde de color alrededor de la ventana que muestra el tamano de destino.
+3. **Suelte para ajustar** — suelte el raton y la ventana se ajustara con precision al tamano predefinido.
+4. **Cancelar** — si aleja el tamano de la ventana del valor predefinido antes de soltar, la superposicion desaparece y no se realiza ningun ajuste.
 
-### Visualización de la relación de aspecto
+### Ajuste por movimiento
 
-Durante el redimensionamiento, la relación de aspecto actual se muestra en la superposición. Cuando la relación coincide con una proporción conocida, se muestra su nombre:
+Arrastre una ventana hacia un borde o esquina de la pantalla para ajustarla en su posicion:
 
-- **Proporción áurea** (1,618:1)
-- **Proporción de plata** (2,414:1)
-- **Proporción de platino** (1,325:1)
-- **Proporción de bronce** (3,303:1)
+- **Ajuste de borde** (izquierda/derecha) — llena la altura, conserva el ancho
+- **Ajuste de borde** (arriba/abajo) — llena el ancho, conserva la altura
+- **Ajuste de esquina** — posiciona la ventana en la esquina, conserva ambas dimensiones
+
+### Visualizacion de la relacion de aspecto
+
+Durante el redimensionamiento, la relacion de aspecto actual se muestra en la superposicion. Cuando la relacion coincide con una proporcion conocida, se muestra su nombre:
+
+- **Proporcion aurea** (1.618:1)
+- **Proporcion de plata** (2.414:1)
+- **Proporcion de platino** (1.325:1)
+- **Proporcion de bronce** (3.303:1)
 
 Otras relaciones se muestran como fracciones simplificadas (por ejemplo, "16:9", "4:3").
 
-> Esta función se puede desactivar en Ajustes (consulte [Mostrar relación de aspecto](#apariencia-de-la-superposición)).
+> Esta funcion se puede desactivar en Ajustes (consulte [Pestana Apariencia](#pestana-apariencia)).
 
-### Shift para bloquear la relación de aspecto
+### Shift para bloquear la relacion de aspecto
 
-Mantenga presionada la tecla **Shift** mientras redimensiona para bloquear la relación de aspecto. La ventana mantendrá sus proporciones actuales mientras arrastra.
+Mantenga presionada la tecla **Shift** mientras redimensiona para bloquear la relacion de aspecto. La ventana mantendra sus proporciones actuales mientras arrastra.
 
-> Esta función se puede desactivar en Ajustes (consulte [Shift para bloquear relación](#apariencia-de-la-superposición)).
+> Esta funcion se puede desactivar en Ajustes (consulte [Pestana Apariencia](#pestana-apariencia)).
+
+---
+
+## Atajos de teclado
+
+Todos los atajos de teclado son completamente personalizables en la pestana Atajos de Ajustes. Valores predeterminados:
+
+### Presets rapidos
+
+Pulse **Control+Option+1** a **Control+Option+9** para redimensionar instantaneamente la ventana activa a un tamano predefinido con nombre. Un HUD centrado muestra brevemente el nombre del preset y el tamano.
+
+| Atajo | Preset predeterminado |
+|-------|----------------------|
+| Control+Option+1 | Writing (1280 x 800) |
+| Control+Option+2 | Reading (900 x 1200) |
+| Control+Option+3 | Browsing (1440 x 900) |
+| Control+Option+4 | Sidebar (720 x 900) |
+| Control+Option+5 | Preview (1920 x 1080) |
+
+Los Presets rapidos se pueden editar (nombre, tamano y atajo) en la pestana General de Ajustes. Se admiten hasta 9 presets.
+
+### Redimensionamiento incremental
+
+Redimensione la ventana activa en 10 pixeles por pulsacion de tecla, manteniendo la ventana centrada:
+
+| Atajo | Accion |
+|-------|--------|
+| Control+Option+Right | Aumentar ancho (+10px) |
+| Control+Option+Left | Reducir ancho (-10px) |
+| Control+Option+Up | Aumentar altura (+10px) |
+| Control+Option+Down | Reducir altura (-10px) |
+
+### Modo de precision
+
+Mantenga Shift para ajustes de 1 pixel:
+
+| Atajo | Accion |
+|-------|--------|
+| Control+Option+Shift+Right | Aumentar ancho (+1px) |
+| Control+Option+Shift+Left | Reducir ancho (-1px) |
+| Control+Option+Shift+Up | Aumentar altura (+1px) |
+| Control+Option+Shift+Down | Reducir altura (-1px) |
+
+### Deshacer / Rehacer
+
+| Atajo | Accion |
+|-------|--------|
+| Control+Option+Z | Deshacer ultimo redimensionamiento |
+| Control+Option+Shift+Z | Rehacer |
+
+Cada ventana mantiene su propio historial de deshacer/rehacer.
+
+### Retroalimentacion HUD
+
+Cuando utiliza un atajo de teclado, aparece un HUD centrado en la ventana de destino:
+
+- **Preset rapido:** muestra el nombre del preset (por ejemplo, "Writing") con el tamano debajo (por ejemplo, "1280 x 800")
+- **Redimensionamiento incremental:** muestra el tamano actual (por ejemplo, "1290 x 800")
+- **Deshacer:** muestra "Restored" con el tamano restaurado
+
+El HUD se muestra durante 0,8 segundos y luego se desvanece.
 
 ---
 
 ## Ajustes
 
-Abra los Ajustes desde la barra de menús: haga clic en el icono de Window Resize y seleccione **"Ajustes..."** (atajo: **Cmd+,**).
+Abra los Ajustes desde la barra de menus: haga clic en el icono de Window Resize y seleccione **"Ajustes..."**.
 
-### Tamaños integrados
+Los Ajustes estan organizados en 4 pestanas: **General**, **Apariencia**, **Atajos** y **Presets**.
 
-La aplicación incluye 12 tamaños predefinidos integrados:
+### Pestana General
 
-| Tamaño | Etiqueta |
-|--------|----------|
-| 2560 x 1600 | MacBook Pro 16" |
-| 2560 x 1440 | QHD / iMac |
-| 1728 x 1117 | MacBook Pro 14" |
-| 1512 x 982 | MacBook Air 15" |
-| 1470 x 956 | MacBook Air 13" M3 |
-| 1440 x 900 | MacBook Air 13" |
-| 1920 x 1080 | Full HD |
-| 1680 x 1050 | WSXGA+ |
-| 1280 x 800 | WXGA |
-| 1280 x 720 | HD |
-| 1024 x 768 | XGA |
-| 800 x 600 | SVGA |
+#### Presets rapidos
 
-Los tamaños integrados no se pueden eliminar ni editar.
+Configure hasta 9 Presets rapidos que se pueden aplicar mediante atajos de teclado (Control+Option+1-9). Cada preset tiene:
 
-### Tamaños personalizados
+- **Atajo** — haga clic en el campo de atajo para registrar una nueva combinacion de teclas
+- **Nombre** — un nombre descriptivo (por ejemplo, "Writing", "Coding")
+- **Tamano** — ancho y alto en pixeles
 
-Puede agregar sus propios tamaños a la lista:
+Para agregar un preset, complete los campos de nombre, ancho y alto en la parte inferior y haga clic en **"Anadir"**. Para eliminar un preset, haga clic en el boton X junto a el.
 
-1. En la sección **"Personalizados"**, introduzca el **Ancho** y el **Alto** en píxeles.
-2. Haga clic en **"Añadir"**.
-3. El nuevo tamaño estará disponible de inmediato para la detección de ajuste durante el redimensionamiento.
+#### Iniciar sesion automaticamente
 
-Para eliminar un tamaño personalizado, haga clic en el botón rojo **"Eliminar"** junto a él.
+Active **"Iniciar sesion automaticamente"** para que Window Resize se inicie automaticamente cuando inicie sesion en macOS.
 
-### Apariencia de la superposición
+#### Idioma
 
-Configure el estilo visual de la superposición de ajuste:
+Seleccione el idioma de la aplicacion en el menu desplegable. Puede elegir entre 16 idiomas o **"Idioma del sistema"** para seguir el idioma configurado en macOS. Para que el cambio de idioma surta efecto es necesario reiniciar la aplicacion.
 
-- **Borde de redimensionamiento** — el color y el estilo de línea (sólida o discontinua) del borde que se muestra al redimensionar cerca de un tamaño predefinido. Predeterminado: naranja, discontinua.
-- **Borde de ajuste** — el color y el estilo de línea del borde que se muestra cuando la ventana se ajusta a un tamaño predefinido. Predeterminado: naranja, sólida.
-- **Mostrar relación de aspecto** — activa o desactiva la etiqueta de relación de aspecto en la superposición. Predeterminado: activado.
-- **Shift para bloquear relación** — activa o desactiva la restricción de relación de aspecto al mantener presionada la tecla Shift durante el redimensionamiento. Predeterminado: activado.
+#### Estado de accesibilidad
 
-Colores de borde disponibles: Naranja, Azul, Verde, Rojo, Morado, Blanco.
-
-### Iniciar sesión automáticamente
-
-Active **"Iniciar sesión automáticamente"** para que Window Resize se inicie automáticamente cuando inicie sesión en macOS.
-
-### Idioma
-
-Seleccione el idioma de la aplicación en el menú desplegable **Idioma**. Puede elegir entre 16 idiomas o **"Idioma del sistema"** para seguir el idioma configurado en macOS. Para que el cambio de idioma surta efecto es necesario reiniciar la aplicación.
-
-### Estado de accesibilidad
-
-En la parte inferior de la ventana de Ajustes, un indicador de estado muestra el estado actual del permiso de accesibilidad:
+Un indicador de estado muestra el estado actual del permiso de accesibilidad:
 
 | Indicador | Significado |
 |-----------|-------------|
-| Verde | El permiso está activo y funciona correctamente. |
-| Naranja | El sistema informa que el permiso fue concedido, pero ya no es válido (consulte [Corregir permisos obsoletos](#corregir-permisos-obsoletos)). Se muestra un botón "Abrir Ajustes". |
-| Rojo | El permiso no ha sido concedido. Se muestra un botón "Abrir Ajustes". |
+| Verde | El permiso esta activo y funciona correctamente. |
+| Naranja | El permiso fue concedido pero ya no es valido (consulte [Corregir permisos obsoletos](#corregir-permisos-obsoletos)). |
+| Rojo | El permiso no ha sido concedido. |
+
+### Pestana Apariencia
+
+Configure el estilo visual de la superposicion de ajuste:
+
+- **Borde de redimensionamiento** — el color y el estilo de linea del borde mostrado al redimensionar. Elija entre 9 colores (rojo, naranja, amarillo, verde, cian, azul, morado, blanco, gris) y 4 estilos (ninguno, solida, discontinua, animada). Predeterminado: blanco, animada.
+- **Borde de ajuste** — el borde mostrado cuando la ventana se ajusta a un tamano predefinido. Predeterminado: blanco, solida.
+- **Mostrar relacion de aspecto** — activa o desactiva la etiqueta de relacion de aspecto en la superposicion. Predeterminado: activado.
+- **Shift para bloquear relacion** — activa o desactiva la restriccion de relacion de aspecto al mantener presionada la tecla Shift. Predeterminado: activado.
+
+### Pestana Atajos
+
+Todos los atajos de teclado se muestran en una cuadricula de 2 columnas y se pueden personalizar individualmente:
+
+1. Haga clic en el campo de atajo junto a cualquier accion.
+2. Pulse la combinacion de teclas deseada (debe incluir al menos una tecla modificadora).
+3. Pulse **Escape** para cancelar la grabacion.
+
+Si registra un atajo que entra en conflicto con otra accion de la aplicacion, aparece un dialogo de alerta con las opciones **Reemplazar** (reasignar el atajo) o **Cancelar**.
+
+Aparece un icono de advertencia junto a los atajos que entran en conflicto con atajos del sistema conocidos (Mission Control, Spotlight, etc.).
+
+Haga clic en **"Restablecer valores predeterminados"** para restaurar todos los atajos a sus asignaciones originales.
+
+### Pestana Presets
+
+La pestana Presets muestra 18 tamanos predefinidos integrados ordenados por area de pixeles (de menor a mayor). Cada preset tiene un interruptor de activar/desactivar:
+
+- **Activado** — el preset se utiliza para la deteccion de ajuste durante el redimensionamiento
+- **Desactivado** — el preset se excluye de la deteccion de ajuste (se muestra con 50% de opacidad)
+
+Los presets integrados no se pueden eliminar, solo desactivar. Por defecto, 6 presets especificos de Mac (tamanos de pantalla de MacBook Air/Pro) estan desactivados, y 12 presets de uso general estan activados.
+
+El encabezado muestra cuantos presets estan habilitados actualmente (por ejemplo, "12 of 18 enabled").
 
 ---
 
-## Solución de problemas
+## Solucion de problemas
 
 ### Corregir permisos obsoletos
 
-Si ve un indicador de estado naranja o el mensaje "Accesibilidad: necesita actualizarse", el permiso se ha vuelto obsoleto. Esto puede ocurrir después de actualizar o recompilar la aplicación.
+Si ve un indicador de estado naranja o el mensaje "Accesibilidad: necesita actualizarse", el permiso se ha vuelto obsoleto. Esto puede ocurrir despues de actualizar o recompilar la aplicacion.
 
 **Para corregirlo:**
 
 1. Abra **Ajustes del Sistema > Privacidad y seguridad > Accesibilidad**.
 2. Busque **"Window Resize"** en la lista.
 3. Desactive el interruptor y vuelva a **activarlo**.
-4. Alternativamente, elimínelo de la lista completamente y vuelva a iniciar la aplicación para agregarlo de nuevo.
+4. Alternativamente, eliminelo de la lista completamente y vuelva a iniciar la aplicacion para agregarlo de nuevo.
 
 ### El ajuste no funciona
 
-Si la superposición no aparece durante el redimensionamiento:
+Si la superposicion no aparece durante el redimensionamiento:
 
-- Compruebe que el permiso de accesibilidad esté activo (indicador verde en Ajustes).
-- Asegúrese de que la ventana que está redimensionando admita el redimensionamiento estándar (algunas aplicaciones restringen el tamaño de sus ventanas).
+- Compruebe que el permiso de accesibilidad este activo (indicador verde en Ajustes).
+- Asegurese de que la ventana que esta redimensionando admita el redimensionamiento estandar (algunas aplicaciones restringen el tamano de sus ventanas).
 - Las ventanas en modo de pantalla completa no se pueden redimensionar — salga del modo de pantalla completa primero.
+- Compruebe la pestana Presets — el tamano de destino puede estar desactivado.
 
 ### Problemas de renderizado tras el ajuste
 
-En casos excepcionales, la ventana de destino puede no redibujarse correctamente después del ajuste. La aplicación fuerza automáticamente un redibujado, pero si los artefactos visuales persisten, intente minimizar y restaurar la ventana.
+En casos excepcionales, la ventana de destino puede no redibujarse correctamente despues del ajuste. La aplicacion fuerza automaticamente un redibujado, pero si los artefactos visuales persisten, intente minimizar y restaurar la ventana.

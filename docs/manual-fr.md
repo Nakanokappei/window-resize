@@ -4,8 +4,9 @@
 
 1. [Configuration initiale](#configuration-initiale)
 2. [Redimensionnement par snap](#redimensionnement-par-snap)
-3. [Parametres](#parametres)
-4. [Depannage](#depannage)
+3. [Raccourcis clavier](#raccourcis-clavier)
+4. [Parametres](#parametres)
+5. [Depannage](#depannage)
 
 ---
 
@@ -35,6 +36,14 @@ Window Resize surveille les operations de redimensionnement des fenetres en temp
 3. **Relachez pour snapper** — lachez le bouton de la souris et la fenetre s'ajuste precisement a la taille predefinie.
 4. **Annuler** — si vous eloignez la taille de la fenetre de la taille predefinie avant de relacher, l'overlay disparait et aucun snap ne se produit.
 
+### Snap par deplacement
+
+Faites glisser une fenetre vers un bord ou un coin de l'ecran pour la positionner automatiquement :
+
+- **Snap de bord** (gauche/droite) — remplit la hauteur, conserve la largeur
+- **Snap de bord** (haut/bas) — remplit la largeur, conserve la hauteur
+- **Snap de coin** — positionne la fenetre dans le coin, conserve les deux dimensions
+
 ### Affichage du rapport d'aspect
 
 Pendant le redimensionnement, le rapport d'aspect actuel est affiche dans l'overlay. Lorsque le rapport correspond a une proportion connue, son nom est indique :
@@ -46,79 +55,146 @@ Pendant le redimensionnement, le rapport d'aspect actuel est affiche dans l'over
 
 Les autres rapports sont affiches sous forme de fractions simplifiees (par ex. "16:9", "4:3").
 
-> Cette fonction peut etre desactivee dans les Parametres (voir [Apparence de l'overlay](#apparence-de-loverlay)).
+> Cette fonction peut etre desactivee dans les Parametres (voir [Onglet Apparence](#onglet-apparence)).
 
 ### Shift pour verrouiller le rapport d'aspect
 
 Maintenez la touche **Shift** enfoncee pendant le redimensionnement pour verrouiller le rapport d'aspect. La fenetre conservera ses proportions actuelles pendant que vous faites glisser.
 
-> Cette fonction peut etre desactivee dans les Parametres (voir [Shift pour verrouiller le rapport](#apparence-de-loverlay)).
+> Cette fonction peut etre desactivee dans les Parametres (voir [Onglet Apparence](#onglet-apparence)).
+
+---
+
+## Raccourcis clavier
+
+Tous les raccourcis clavier sont entierement personnalisables dans l'onglet Raccourcis des Parametres. Valeurs par defaut :
+
+### Preselections rapides
+
+Appuyez sur **Control+Option+1** a **Control+Option+9** pour redimensionner instantanement la fenetre au premier plan selon une preselection nommee. Un HUD centre affiche brievement le nom et la taille de la preselection.
+
+| Raccourci | Preselection par defaut |
+|-----------|------------------------|
+| Control+Option+1 | Writing (1280 x 800) |
+| Control+Option+2 | Reading (900 x 1200) |
+| Control+Option+3 | Browsing (1440 x 900) |
+| Control+Option+4 | Sidebar (720 x 900) |
+| Control+Option+5 | Preview (1920 x 1080) |
+
+Les preselections rapides peuvent etre modifiees (nom, taille et raccourci) dans l'onglet General des Parametres. Jusqu'a 9 preselections sont prises en charge.
+
+### Redimensionnement incremental
+
+Redimensionnez la fenetre au premier plan de 10 pixels par touche, en gardant la fenetre centree :
+
+| Raccourci | Action |
+|-----------|--------|
+| Control+Option+Right | Augmenter la largeur (+10px) |
+| Control+Option+Left | Reduire la largeur (-10px) |
+| Control+Option+Up | Augmenter la hauteur (+10px) |
+| Control+Option+Down | Reduire la hauteur (-10px) |
+
+### Mode precision
+
+Maintenez Shift pour des ajustements de 1 pixel :
+
+| Raccourci | Action |
+|-----------|--------|
+| Control+Option+Shift+Right | Augmenter la largeur (+1px) |
+| Control+Option+Shift+Left | Reduire la largeur (-1px) |
+| Control+Option+Shift+Up | Augmenter la hauteur (+1px) |
+| Control+Option+Shift+Down | Reduire la hauteur (-1px) |
+
+### Annuler / Retablir
+
+| Raccourci | Action |
+|-----------|--------|
+| Control+Option+Z | Annuler le dernier redimensionnement |
+| Control+Option+Shift+Z | Retablir |
+
+Chaque fenetre conserve son propre historique d'annulation/retablissement.
+
+### Retour HUD
+
+Lorsque vous utilisez un raccourci clavier, un HUD centre apparait sur la fenetre cible :
+
+- **Preselection rapide :** affiche le nom de la preselection (par ex. "Writing") avec la taille en dessous (par ex. "1280 x 800")
+- **Redimensionnement incremental :** affiche la taille actuelle (par ex. "1290 x 800")
+- **Annuler :** affiche "Restored" avec la taille restauree
+
+Le HUD s'affiche pendant 0,8 seconde puis disparait progressivement.
 
 ---
 
 ## Parametres
 
-Ouvrez les Parametres depuis la barre des menus : cliquez sur l'icone de Window Resize, puis selectionnez **"Parametres..."** (raccourci : **Cmd+,**).
+Ouvrez les Parametres depuis la barre des menus : cliquez sur l'icone de Window Resize, puis selectionnez **"Parametres..."**.
 
-### Tailles integrees
+Les Parametres sont organises en 4 onglets : **General**, **Apparence**, **Raccourcis** et **Preselections**.
 
-L'application comprend 12 tailles predefinies integrees :
+### Onglet General
 
-| Taille | Etiquette |
-|--------|-----------|
-| 2560 x 1600 | MacBook Pro 16" |
-| 2560 x 1440 | QHD / iMac |
-| 1728 x 1117 | MacBook Pro 14" |
-| 1512 x 982 | MacBook Air 15" |
-| 1470 x 956 | MacBook Air 13" M3 |
-| 1440 x 900 | MacBook Air 13" |
-| 1920 x 1080 | Full HD |
-| 1680 x 1050 | WSXGA+ |
-| 1280 x 800 | WXGA |
-| 1280 x 720 | HD |
-| 1024 x 768 | XGA |
-| 800 x 600 | SVGA |
+#### Preselections rapides
 
-Les tailles integrees ne peuvent etre ni supprimees ni modifiees.
+Configurez jusqu'a 9 preselections rapides applicables via des raccourcis clavier (Control+Option+1-9). Chaque preselection comprend :
 
-### Tailles personnalisees
+- **Raccourci** — cliquez sur le champ de raccourci pour enregistrer une nouvelle combinaison de touches
+- **Nom** — un nom descriptif (par ex. "Writing", "Coding")
+- **Taille** — largeur et hauteur en pixels
 
-Vous pouvez ajouter vos propres tailles a la liste :
+Pour ajouter une preselection, remplissez les champs de nom, largeur et hauteur en bas et cliquez sur **"Ajouter"**. Pour supprimer une preselection, cliquez sur le bouton X a cote.
 
-1. Dans la section **"Personnalisees"**, saisissez la **Largeur** et la **Hauteur** en pixels.
-2. Cliquez sur **"Ajouter"**.
-3. La nouvelle taille est immediatement disponible pour la detection de snap pendant le redimensionnement.
-
-Pour supprimer une taille personnalisee, cliquez sur le bouton rouge **"Supprimer"** a cote.
-
-### Apparence de l'overlay
-
-Configurez le style visuel de l'overlay de snap :
-
-- **Bordure de redimensionnement** — la couleur et le style de ligne (continu ou pointille) de la bordure affichee lorsque la fenetre est proche d'une taille predefinie pendant le redimensionnement. Par defaut : orange, pointille.
-- **Bordure de snap** — la couleur et le style de ligne de la bordure affichee lorsque la fenetre s'ajuste a une taille predefinie. Par defaut : orange, continu.
-- **Afficher le rapport d'aspect** — activer ou desactiver l'affichage du rapport d'aspect dans l'overlay. Par defaut : active.
-- **Shift pour verrouiller le rapport** — activer ou desactiver le verrouillage du rapport d'aspect en maintenant Shift pendant le redimensionnement. Par defaut : active.
-
-Couleurs de bordure disponibles : Orange, Bleu, Vert, Rouge, Violet, Blanc.
-
-### Lancer au demarrage
+#### Lancer au demarrage
 
 Activez **"Lancer au demarrage"** pour que Window Resize se lance automatiquement lorsque vous vous connectez a macOS.
 
-### Langue
+#### Langue
 
-Selectionnez la langue d'affichage de l'application dans le menu deroulant **Langue**. Vous pouvez choisir parmi 16 langues ou selectionner **"Langue du systeme"** pour suivre la langue definie dans macOS. Un redemarrage de l'application est necessaire pour appliquer le changement.
+Selectionnez la langue d'affichage de l'application dans le menu deroulant. Vous pouvez choisir parmi 16 langues ou selectionner **"Langue du systeme"** pour suivre la langue definie dans macOS. Un redemarrage de l'application est necessaire pour appliquer le changement.
 
-### Etat de l'accessibilite
+#### Etat de l'accessibilite
 
-En bas de la fenetre des Parametres, un indicateur d'etat montre l'etat actuel de l'autorisation d'accessibilite :
+Un indicateur d'etat montre l'etat actuel de l'autorisation d'accessibilite :
 
 | Indicateur | Signification |
 |------------|---------------|
 | Vert | L'autorisation est active et fonctionne correctement. |
-| Orange | Le systeme indique que l'autorisation a ete accordee, mais elle n'est plus valide (voir [Corriger les autorisations obsoletes](#corriger-les-autorisations-obsoletes)). Un bouton "Ouvrir les reglages" est affiche. |
-| Rouge | L'autorisation n'a pas ete accordee. Un bouton "Ouvrir les reglages" est affiche. |
+| Orange | L'autorisation a ete accordee mais n'est plus valide (voir [Corriger les autorisations obsoletes](#corriger-les-autorisations-obsoletes)). |
+| Rouge | L'autorisation n'a pas ete accordee. |
+
+### Onglet Apparence
+
+Configurez le style visuel de l'overlay de snap :
+
+- **Bordure de redimensionnement** — la couleur et le style de ligne de la bordure affichee pendant le redimensionnement. Choisissez parmi 9 couleurs (rouge, orange, jaune, vert, cyan, bleu, violet, blanc, gris) et 4 styles (aucun, continu, pointille, anime). Par defaut : blanc, anime.
+- **Bordure de snap** — la bordure affichee lorsque la fenetre s'ajuste a une taille predefinie. Par defaut : blanc, continu.
+- **Afficher le rapport d'aspect** — activer ou desactiver l'affichage du rapport d'aspect dans l'overlay. Par defaut : active.
+- **Shift pour verrouiller le rapport** — activer ou desactiver le verrouillage du rapport d'aspect en maintenant Shift. Par defaut : active.
+
+### Onglet Raccourcis
+
+Tous les raccourcis clavier sont affiches dans une grille a 2 colonnes et peuvent etre personnalises individuellement :
+
+1. Cliquez sur le champ de raccourci a cote d'une action.
+2. Appuyez sur la combinaison de touches souhaitee (doit inclure au moins une touche de modification).
+3. Appuyez sur **Escape** pour annuler l'enregistrement.
+
+Si vous enregistrez un raccourci qui entre en conflit avec une autre action de l'application, une boite de dialogue d'alerte propose de **Remplacer** (reassigner le raccourci) ou **Annuler**.
+
+Une icone d'avertissement apparait a cote des raccourcis qui entrent en conflit avec des raccourcis systeme connus (Mission Control, Spotlight, etc.).
+
+Cliquez sur **"Reinitialiser les valeurs par defaut"** pour restaurer tous les raccourcis a leurs affectations d'origine.
+
+### Onglet Preselections
+
+L'onglet Preselections affiche 18 tailles predefinies integrees triees par surface en pixels (de la plus petite a la plus grande). Chaque preselection dispose d'un interrupteur activer/desactiver :
+
+- **Activee** — la preselection est utilisee pour la detection de snap pendant le redimensionnement
+- **Desactivee** — la preselection est exclue de la detection de snap (affichee a 50% d'opacite)
+
+Les preselections integrees ne peuvent pas etre supprimees, seulement desactivees. Par defaut, 6 preselections specifiques aux Mac (tailles d'ecran MacBook Air/Pro) sont desactivees et 12 preselections a usage general sont activees.
+
+L'en-tete indique le nombre de preselections actuellement activees (par ex. "12 of 18 enabled").
 
 ---
 
@@ -142,6 +218,7 @@ Si l'overlay n'apparait pas pendant le redimensionnement :
 - Verifiez que l'autorisation d'accessibilite est active (indicateur vert dans les Parametres).
 - Assurez-vous que la fenetre que vous redimensionnez prend en charge le redimensionnement standard (certaines applications restreignent la taille des fenetres).
 - Les fenetres en plein ecran ne peuvent pas etre redimensionnees — quittez d'abord le mode plein ecran.
+- Verifiez l'onglet Preselections — la taille cible pourrait etre desactivee.
 
 ### Problemes d'affichage apres un snap
 

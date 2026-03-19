@@ -1,148 +1,225 @@
-# Window Resize — Hướng dẫn sử dụng
+# Window Resize — Huong dan su dung
 
-## Mục lục
+## Muc luc
 
-1. [Thiết lập ban đầu](#thiết-lập-ban-đầu)
+1. [Thiet lap ban dau](#thiet-lap-ban-dau)
 2. [Snap Resize](#snap-resize)
-3. [Cài đặt](#cài-đặt)
-4. [Khắc phục sự cố](#khắc-phục-sự-cố)
+3. [Phim tat](#phim-tat)
+4. [Cai dat](#cai-dat)
+5. [Khac phuc su co](#khac-phuc-su-co)
 
 ---
 
-## Thiết lập ban đầu
+## Thiet lap ban dau
 
-### Cấp quyền Trợ năng
+### Cap quyen Tro nang
 
-Window Resize sử dụng API Trợ năng của macOS để phát hiện và đổi kích thước cửa sổ. Bạn cần cấp quyền khi khởi chạy ứng dụng lần đầu tiên.
+Window Resize su dung API Tro nang cua macOS de phat hien va doi kich thuoc cua so. Ban can cap quyen khi khoi chay ung dung lan dau tien.
 
-1. Khởi chạy **Window Resize**. Hộp thoại hệ thống sẽ xuất hiện yêu cầu bạn cấp quyền truy cập Trợ năng.
-2. Nhấp **"Mở Cài đặt"** (hoặc đi thủ công đến **Cài đặt hệ thống > Quyền riêng tư & Bảo mật > Trợ năng**).
-3. Tìm **"Window Resize"** trong danh sách và bật công tắc.
-4. Quay lại ứng dụng — biểu tượng thanh menu sẽ xuất hiện và ứng dụng đã sẵn sàng sử dụng.
+1. Khoi chay **Window Resize**. Hop thoai he thong se xuat hien yeu cau ban cap quyen truy cap Tro nang.
+2. Nhap **"Open System Settings"** (hoac di thu cong den **System Settings > Privacy & Security > Accessibility**).
+3. Tim **"Window Resize"** trong danh sach va bat cong tac.
+4. Quay lai ung dung — bieu tuong thanh menu se xuat hien va ung dung da san sang su dung.
 
-> **Lưu ý:** Nếu hộp thoại không xuất hiện, bạn có thể mở cài đặt Trợ năng trực tiếp từ cửa sổ Cài đặt của ứng dụng (xem [Trạng thái Trợ năng](#trạng-thái-trợ-năng)).
+> **Luu y:** Neu hop thoai khong xuat hien, ban co the mo cai dat Tro nang truc tiep tu cua so Cai dat cua ung dung (xem [Trang thai Tro nang](#trang-thai-tro-nang)).
 
 ---
 
 ## Snap Resize
 
-### Cách hoạt động
+### Cach hoat dong
 
-Window Resize theo dõi thao tác đổi kích thước cửa sổ theo thời gian thực. Khi bạn kéo cạnh hoặc góc cửa sổ để đổi kích thước, ứng dụng phát hiện mức độ gần của kích thước cửa sổ với bất kỳ kích thước đặt sẵn nào.
+Window Resize theo doi thao tac doi kich thuoc cua so theo thoi gian thuc. Khi ban keo canh hoac goc cua so de doi kich thuoc, ung dung phat hien muc do gan cua kich thuoc cua so voi bat ky kich thuoc dat san nao.
 
-1. **Bắt đầu đổi kích thước** — kéo cạnh hoặc góc của bất kỳ cửa sổ nào như bình thường.
-2. **Lớp phủ xuất hiện** — khi kích thước cửa sổ gần với một kích thước đặt sẵn (trong phạm vi 30 pixel), đường viền màu sẽ xuất hiện xung quanh cửa sổ, hiển thị kích thước đặt sẵn mục tiêu.
-3. **Thả để snap** — thả chuột và cửa sổ sẽ tự động khớp chính xác với kích thước đặt sẵn.
-4. **Hủy bỏ** — nếu bạn di chuyển kích thước cửa sổ ra xa khỏi kích thước đặt sẵn trước khi thả, lớp phủ sẽ biến mất và không có snap nào xảy ra.
+1. **Bat dau doi kich thuoc** — keo canh hoac goc cua bat ky cua so nao nhu binh thuong.
+2. **Lop phu xuat hien** — khi kich thuoc cua so gan voi mot kich thuoc dat san (trong pham vi 30 pixel), duong vien mau se xuat hien xung quanh cua so, hien thi kich thuoc dat san muc tieu.
+3. **Tha de snap** — tha chuot va cua so se tu dong khop chinh xac voi kich thuoc dat san.
+4. **Huy bo** — neu ban di chuyen kich thuoc cua so ra xa khoi kich thuoc dat san truoc khi tha, lop phu se bien mat va khong co snap nao xay ra.
 
-### Hiển thị tỷ lệ khung hình
+### Snap khi di chuyen cua so
 
-Trong quá trình đổi kích thước, tỷ lệ khung hình hiện tại được hiển thị trong lớp phủ. Khi tỷ lệ khớp với một tỷ lệ nổi tiếng, tên của nó sẽ được hiển thị:
+Keo cua so ve phia canh hoac goc man hinh de snap vao vi tri:
 
-- **Tỷ lệ vàng** (1.618:1)
-- **Tỷ lệ bạc** (2.414:1)
-- **Tỷ lệ bạch kim** (1.325:1)
-- **Tỷ lệ đồng** (3.303:1)
+- **Snap canh** (trai/phai) — lap day chieu cao, giu nguyen chieu rong
+- **Snap canh** (tren/duoi) — lap day chieu rong, giu nguyen chieu cao
+- **Snap goc** — dat cua so vao goc, giu nguyen ca hai chieu
 
-Các tỷ lệ khác được hiển thị dưới dạng phân số rút gọn (ví dụ: "16:9", "4:3").
+### Hien thi ty le khung hinh
 
-> Tính năng này có thể tắt trong Cài đặt (xem [Hiển thị tỷ lệ khung hình](#giao-diện-lớp-phủ)).
+Trong qua trinh doi kich thuoc, ty le khung hinh hien tai duoc hien thi trong lop phu. Khi ty le khop voi mot ty le noi tieng, ten cua no se duoc hien thi:
 
-### Giữ Shift để khóa tỷ lệ khung hình
+- **Golden Ratio** (1.618:1)
+- **Silver Ratio** (2.414:1)
+- **Platinum Ratio** (1.325:1)
+- **Bronze Ratio** (3.303:1)
 
-Giữ phím **Shift** trong khi đổi kích thước để khóa tỷ lệ khung hình. Cửa sổ sẽ giữ nguyên tỷ lệ hiện tại khi bạn kéo.
+Cac ty le khac duoc hien thi duoi dang phan so rut gon (vi du: "16:9", "4:3").
 
-> Tính năng này có thể tắt trong Cài đặt (xem [Giữ Shift để khóa tỷ lệ](#giao-diện-lớp-phủ)).
+> Tinh nang nay co the tat trong Cai dat (xem [Giao dien lop phu](#tab-giao-dien)).
+
+### Giu Shift de khoa ty le khung hinh
+
+Giu phim **Shift** trong khi doi kich thuoc de khoa ty le khung hinh. Cua so se giu nguyen ty le hien tai khi ban keo.
+
+> Tinh nang nay co the tat trong Cai dat (xem [Giao dien lop phu](#tab-giao-dien)).
 
 ---
 
-## Cài đặt
+## Phim tat
 
-Mở Cài đặt từ thanh menu: nhấp biểu tượng Window Resize, sau đó chọn **"Cài đặt..."** (phím tắt: **Cmd+,**).
+Tat ca phim tat deu co the tuy chinh trong tab Shortcuts cua Cai dat. Mac dinh:
 
-### Kích thước có sẵn
+### Quick Presets
 
-Ứng dụng bao gồm 12 kích thước đặt sẵn có sẵn:
+Nhan **Control+Option+1** den **Control+Option+9** de doi kich thuoc cua so phia truoc thanh kich thuoc dat san ngay lap tuc. HUD se hien thi ten va kich thuoc cua preset o giua cua so trong choc lat.
 
-| Kích thước | Nhãn |
-|------------|------|
-| 2560 x 1600 | MacBook Pro 16" |
-| 2560 x 1440 | QHD / iMac |
-| 1728 x 1117 | MacBook Pro 14" |
-| 1512 x 982 | MacBook Air 15" |
-| 1470 x 956 | MacBook Air 13" M3 |
-| 1440 x 900 | MacBook Air 13" |
-| 1920 x 1080 | Full HD |
-| 1680 x 1050 | WSXGA+ |
-| 1280 x 800 | WXGA |
-| 1280 x 720 | HD |
-| 1024 x 768 | XGA |
-| 800 x 600 | SVGA |
+| Phim tat | Preset mac dinh |
+|----------|---------------|
+| Control+Option+1 | Writing (1280 x 800) |
+| Control+Option+2 | Reading (900 x 1200) |
+| Control+Option+3 | Browsing (1440 x 900) |
+| Control+Option+4 | Sidebar (720 x 900) |
+| Control+Option+5 | Preview (1920 x 1080) |
 
-Kích thước có sẵn không thể xóa hoặc chỉnh sửa.
+Quick Presets co the chinh sua (ten, kich thuoc va phim tat) trong tab General cua Cai dat. Ho tro toi da 9 presets.
 
-### Kích thước tùy chỉnh
+### Doi kich thuoc tung buoc
 
-Bạn có thể thêm kích thước của riêng mình vào danh sách:
+Doi kich thuoc cua so phia truoc 10 pixel moi lan nhan phim, giu cua so o giua:
 
-1. Trong phần **"Tùy chỉnh"**, nhập **Rộng** và **Cao** tính bằng pixel.
-2. Nhấp **"Thêm"**.
-3. Kích thước mới có sẵn ngay lập tức để phát hiện snap trong quá trình đổi kích thước.
+| Phim tat | Hanh dong |
+|----------|--------|
+| Control+Option+Right | Tang chieu rong (+10px) |
+| Control+Option+Left | Giam chieu rong (-10px) |
+| Control+Option+Up | Tang chieu cao (+10px) |
+| Control+Option+Down | Giam chieu cao (-10px) |
 
-Để xóa một kích thước tùy chỉnh, nhấp nút **"Xóa"** màu đỏ bên cạnh nó.
+### Che do chinh xac
 
-### Giao diện lớp phủ
+Giu Shift de dieu chinh tung 1 pixel:
 
-Cấu hình kiểu hiển thị của lớp phủ snap:
+| Phim tat | Hanh dong |
+|----------|--------|
+| Control+Option+Shift+Right | Tang chieu rong (+1px) |
+| Control+Option+Shift+Left | Giam chieu rong (-1px) |
+| Control+Option+Shift+Up | Tang chieu cao (+1px) |
+| Control+Option+Shift+Down | Giam chieu cao (-1px) |
 
-- **Đường viền đổi kích thước** — màu đường viền và kiểu đường (liền hoặc nét đứt) hiển thị khi đổi kích thước gần với kích thước đặt sẵn. Mặc định: cam, nét đứt.
-- **Đường viền snap** — màu đường viền và kiểu đường hiển thị khi cửa sổ khớp với kích thước đặt sẵn. Mặc định: cam, liền.
-- **Hiển thị tỷ lệ khung hình** — bật/tắt nhãn tỷ lệ khung hình trong lớp phủ. Mặc định: bật.
-- **Giữ Shift để khóa tỷ lệ** — bật/tắt tính năng giữ Shift để cố định tỷ lệ khung hình trong khi đổi kích thước. Mặc định: bật.
+### Hoan tac / Lam lai
 
-Các màu đường viền có sẵn: Cam, Xanh dương, Xanh lá, Đỏ, Tím, Trắng.
+| Phim tat | Hanh dong |
+|----------|--------|
+| Control+Option+Z | Hoan tac doi kich thuoc cuoi |
+| Control+Option+Shift+Z | Lam lai |
 
-### Khởi chạy khi đăng nhập
+Moi cua so co lich su hoan tac/lam lai rieng.
 
-Bật **"Khởi chạy khi đăng nhập"** để Window Resize tự động khởi động khi bạn đăng nhập vào macOS.
+### HUD phan hoi
 
-### Ngôn ngữ
+Khi ban su dung phim tat, HUD hinh vien nang se xuat hien o giua cua so muc tieu:
 
-Chọn ngôn ngữ hiển thị của ứng dụng từ menu thả xuống **Ngôn ngữ**. Bạn có thể chọn từ 16 ngôn ngữ hoặc **"Mặc định hệ thống"** để theo ngôn ngữ hệ thống macOS. Thay đổi ngôn ngữ yêu cầu khởi động lại ứng dụng.
+- **Quick Preset:** hien thi ten preset (vi du "Writing") voi kich thuoc ben duoi (vi du "1280 x 800")
+- **Doi kich thuoc tung buoc:** hien thi kich thuoc hien tai (vi du "1290 x 800")
+- **Hoan tac:** hien thi "Restored" voi kich thuoc da khoi phuc
 
-### Trạng thái Trợ năng
+HUD hien thi trong 0.8 giay, sau do mo dan.
 
-Ở cuối cửa sổ Cài đặt, chỉ báo trạng thái hiển thị tình trạng hiện tại của quyền Trợ năng:
+---
 
-| Chỉ báo | Ý nghĩa |
+## Cai dat
+
+Mo Cai dat tu thanh menu: nhap bieu tuong Window Resize, sau do chon **"Settings..."**.
+
+Cai dat duoc to chuc thanh 4 tab: **General**, **Appearance**, **Shortcuts** va **Presets**.
+
+### Tab General
+
+#### Quick Presets
+
+Cau hinh toi da 9 Quick Presets co the ap dung qua phim tat (Control+Option+1-9). Moi preset bao gom:
+
+- **Phim tat** — nhap vao truong phim tat de ghi to hop phim moi
+- **Ten** — ten mo ta (vi du "Writing", "Coding")
+- **Kich thuoc** — chieu rong va chieu cao tinh bang pixel
+
+De them preset, dien ten, chieu rong va chieu cao vao cac truong o phia duoi va nhap **"Add"**. De xoa preset, nhap nut X ben canh no.
+
+#### Khoi chay khi dang nhap
+
+Bat **"Launch at Login"** de Window Resize tu dong khoi dong khi ban dang nhap vao macOS.
+
+#### Ngon ngu
+
+Chon ngon ngu hien thi cua ung dung tu menu tha xuong. Chon tu 16 ngon ngu hoac **"System Default"** de theo ngon ngu he thong macOS. Thay doi ngon ngu yeu cau khoi dong lai ung dung.
+
+#### Trang thai Tro nang
+
+Chi bao trang thai hien thi tinh trang hien tai cua quyen Tro nang:
+
+| Chi bao | Y nghia |
 |---------|---------|
-| Xanh lá | Quyền đang hoạt động và hoạt động bình thường. |
-| Cam | Hệ thống báo cáo quyền đã được cấp, nhưng không còn hiệu lực (xem [Sửa quyền đã hết hạn](#sửa-quyền-đã-hết-hạn)). Nút **"Mở Cài đặt"** được hiển thị. |
-| Đỏ | Quyền chưa được cấp. Nút **"Mở Cài đặt"** được hiển thị. |
+| Xanh la | Quyen dang hoat dong va hoat dong binh thuong. |
+| Cam | Quyen da duoc cap nhung het han (xem [Sua quyen da het han](#sua-quyen-da-het-han)). |
+| Do | Quyen chua duoc cap. |
+
+### Tab giao dien
+
+Cau hinh kieu hien thi cua lop phu snap:
+
+- **Duong vien doi kich thuoc** — mau duong vien va kieu duong hien thi khi doi kich thuoc. Chon tu 9 mau (do, cam, vang, xanh la, xanh lam nhat, xanh duong, tim, trang, xam) va 4 kieu (khong, lien, net dut, chuyen dong). Mac dinh: trang, chuyen dong.
+- **Duong vien snap** — duong vien hien thi khi cua so snap vao preset. Mac dinh: trang, lien.
+- **Hien thi ty le khung hinh** — bat/tat nhan ty le khung hinh trong lop phu. Mac dinh: bat.
+- **Shift khoa ty le** — bat/tat tinh nang giu Shift de co dinh ty le khung hinh trong khi doi kich thuoc. Mac dinh: bat.
+
+### Tab phim tat
+
+Tat ca phim tat duoc hien thi trong luoi 2 cot va co the tuy chinh rieng le:
+
+1. Nhap vao truong phim tat ben canh bat ky hanh dong nao.
+2. Nhan to hop phim mong muon (phai bao gom it nhat mot phim modifier).
+3. Nhan **Escape** de huy ghi.
+
+Neu ban ghi phim tat trung voi hanh dong khac trong ung dung, hop thoai canh bao se xuat hien de chon **Replace** (gan lai phim tat) hoac **Cancel**.
+
+Bieu tuong canh bao se xuat hien ben canh phim tat trung voi phim tat he thong da biet (Mission Control, Spotlight, v.v.).
+
+Nhap **"Reset to Defaults"** de khoi phuc tat ca phim tat ve mac dinh.
+
+### Tab Presets
+
+Tab Presets hien thi 18 kich thuoc preset co san duoc sap xep theo dien tich pixel (nho nhat den lon nhat). Moi preset co cong tac bat/tat:
+
+- **Bat** — preset duoc su dung de phat hien snap trong qua trinh doi kich thuoc
+- **Tat** — preset bi loai tru khoi phat hien snap (hien thi o do mo 50%)
+
+Preset co san khong the xoa, chi co the tat. Mac dinh, 6 preset danh rieng cho Mac (kich thuoc man hinh MacBook Air/Pro) bi tat, va 12 preset da dung duoc bat.
+
+Phan dau trang hien thi so preset dang duoc bat (vi du "12 of 18 enabled").
 
 ---
 
-## Khắc phục sự cố
+## Khac phuc su co
 
-### Sửa quyền đã hết hạn
+### Sua quyen da het han
 
-Nếu bạn thấy chỉ báo trạng thái màu cam hoặc thông báo "Trợ năng: Cần làm mới", quyền đã hết hạn. Điều này có thể xảy ra sau khi ứng dụng được cập nhật hoặc build lại.
+Neu ban thay chi bao trang thai mau cam hoac thong bao "Accessibility: Needs Refresh", quyen da het han. Dieu nay co the xay ra sau khi ung dung duoc cap nhat hoac build lai.
 
-**Cách sửa:**
+**Cach sua:**
 
-1. Mở **Cài đặt hệ thống > Quyền riêng tư & Bảo mật > Trợ năng**.
-2. Tìm **"Window Resize"** trong danh sách.
-3. **Tắt** công tắc, sau đó **bật** lại.
-4. Hoặc xóa hoàn toàn khỏi danh sách, sau đó khởi chạy lại ứng dụng để thêm lại.
+1. Mo **System Settings > Privacy & Security > Accessibility**.
+2. Tim **"Window Resize"** trong danh sach.
+3. **Tat** cong tac, sau do **bat** lai.
+4. Hoac xoa hoan toan khoi danh sach, sau do khoi chay lai ung dung de them lai.
 
-### Snap không hoạt động
+### Snap khong hoat dong
 
-Nếu lớp phủ không xuất hiện trong quá trình đổi kích thước:
+Neu lop phu khong xuat hien trong qua trinh doi kich thuoc:
 
-- Kiểm tra quyền Trợ năng đang hoạt động (chỉ báo xanh lá trong Cài đặt).
-- Đảm bảo cửa sổ bạn đang đổi kích thước hỗ trợ đổi kích thước tiêu chuẩn (một số ứng dụng hạn chế kích thước cửa sổ).
-- Cửa sổ toàn màn hình không thể đổi kích thước — thoát toàn màn hình trước.
+- Kiem tra quyen Tro nang dang hoat dong (chi bao xanh la trong Cai dat).
+- Dam bao cua so ban dang doi kich thuoc ho tro doi kich thuoc tieu chuan (mot so ung dung han che kich thuoc cua so).
+- Cua so toan man hinh khong the doi kich thuoc — thoat toan man hinh truoc.
+- Kiem tra tab Presets — kich thuoc muc tieu co the bi tat.
 
-### Lỗi hiển thị cửa sổ sau khi snap
+### Loi hien thi cua so sau khi snap
 
-Trong một số trường hợp hiếm, cửa sổ mục tiêu có thể không vẽ lại đúng sau khi snap. Ứng dụng tự động buộc vẽ lại, nhưng nếu lỗi hiển thị vẫn còn, hãy thử thu nhỏ và khôi phục cửa sổ.
+Trong mot so truong hop hiem, cua so muc tieu co the khong ve lai dung sau khi snap. Ung dung tu dong buoc ve lai, nhung neu loi hien thi van con, hay thu thu nho va khoi phuc cua so.
