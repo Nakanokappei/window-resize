@@ -318,12 +318,13 @@ private struct AppearanceTab: View {
 
             GroupBox {
                 VStack(alignment: .leading, spacing: 8) {
-                    // Resize overlay: color + line style (with "none" option).
-                    HStack {
-                        Text(L("settings.overlay.resize"))
-                            .frame(width: 80, alignment: .leading)
-                        colorPicker(selection: $store.resizeBorderColor)
-                        Spacer()
+                    // Resize overlay: color row, then line style row.
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text(L("settings.overlay.resize"))
+                                .frame(width: 80, alignment: .leading)
+                            colorPicker(selection: $store.resizeBorderColor)
+                        }
                         overlayLineStylePicker(
                             colorName: store.resizeBorderColor,
                             isDashed: $store.resizeBorderDashed,
@@ -331,12 +332,15 @@ private struct AppearanceTab: View {
                             isVisible: $store.showResizeOverlay)
                     }
 
-                    // Snap overlay: color + line style (no "none" option).
-                    HStack {
-                        Text(L("settings.overlay.snap"))
-                            .frame(width: 80, alignment: .leading)
-                        colorPicker(selection: $store.snapBorderColor)
-                        Spacer()
+                    Divider()
+
+                    // Snap overlay: color row, then line style row.
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text(L("settings.overlay.snap"))
+                                .frame(width: 80, alignment: .leading)
+                            colorPicker(selection: $store.snapBorderColor)
+                        }
                         overlayLineStylePicker(
                             colorName: store.snapBorderColor,
                             isDashed: $store.snapBorderDashed,
@@ -473,7 +477,6 @@ private struct AppearanceTab: View {
             Text(label)
                 .font(.system(size: 9))
                 .lineLimit(1)
-                .fixedSize(horizontal: true, vertical: false)
                 .foregroundColor(.secondary)
         }
         .padding(.horizontal, 6)
