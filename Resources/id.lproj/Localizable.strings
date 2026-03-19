@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "Atur ulang ke default";
 "settings.shortcuts.conflict-system" = "Bertentangan dengan pintasan sistem";
 "settings.shortcuts.conflict-app" = "Bertentangan dengan tindakan lain di aplikasi ini";
+"settings.shortcuts.conflict-title" = "Konflik Pintasan";
+"settings.shortcuts.conflict-message" = "%@ sudah ditetapkan ke \"%@\". Ganti dengan \"%@\"?";
+"settings.shortcuts.conflict-replace" = "Ganti";
+"settings.shortcuts.conflict-cancel" = "Batal";
 "settings.shortcuts.escape-to-cancel" = "Esc untuk membatalkan";
 "settings.shortcuts.grow-width" = "Perbesar Lebar";
 "settings.shortcuts.shrink-width" = "Perkecil Lebar";

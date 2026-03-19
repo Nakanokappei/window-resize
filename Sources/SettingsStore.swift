@@ -102,13 +102,15 @@ class SettingsStore: ObservableObject {
     }
 
     /// Default quick presets provided on first launch — usage-based labels
-    /// with sizes chosen for common workflows.
+    /// with sizes chosen so that each preset has a visually distinct shape.
+    /// Presets 1–4 maximize aspect-ratio contrast (wide, tall, wider, narrow)
+    /// so that pressing ⌃⌥1–4 produces immediately noticeable changes.
     static let defaultQuickPresets: [PresetSize] = [
-        PresetSize(width: 1280, height: 800,  label: "Writing"),
-        PresetSize(width: 1440, height: 900,  label: "Coding"),
-        PresetSize(width: 1200, height: 900,  label: "Browsing"),
-        PresetSize(width: 900,  height: 1200, label: "Chat"),
-        PresetSize(width: 1920, height: 1080, label: "Preview"),
+        PresetSize(width: 1280, height: 800,  label: "Writing"),     // 16:10 landscape
+        PresetSize(width: 900,  height: 1200, label: "Reading"),     // 3:4 portrait
+        PresetSize(width: 1440, height: 900,  label: "Browsing"),    // 16:10 wide
+        PresetSize(width: 720,  height: 900,  label: "Sidebar"),     // 4:5 narrow portrait
+        PresetSize(width: 1920, height: 1080, label: "Preview"),     // 16:9 full wide
     ]
 
     // MARK: - Keyboard Shortcut Bindings

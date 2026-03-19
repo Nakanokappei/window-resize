@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "Сбросить настройки";
 "settings.shortcuts.conflict-system" = "Конфликтует с системным сочетанием клавиш";
 "settings.shortcuts.conflict-app" = "Конфликтует с другим действием в этом приложении";
+"settings.shortcuts.conflict-title" = "Конфликт сочетания клавиш";
+"settings.shortcuts.conflict-message" = "%@ уже назначено для \"%@\". Заменить на \"%@\"?";
+"settings.shortcuts.conflict-replace" = "Заменить";
+"settings.shortcuts.conflict-cancel" = "Отмена";
 "settings.shortcuts.escape-to-cancel" = "Esc для отмены";
 "settings.shortcuts.grow-width" = "Увеличить ширину";
 "settings.shortcuts.shrink-width" = "Уменьшить ширину";

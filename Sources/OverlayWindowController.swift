@@ -32,6 +32,12 @@ class OverlayWindowController {
     /// Tracked to avoid redundant updates during rapid polling.
     private var currentPrimaryFrame: CGRect = .zero
 
+    /// Separate floating window used for the centered keyboard-feedback HUD.
+    private var hudWindow: NSWindow?
+
+    /// The custom view inside the HUD window that draws the label and size.
+    private var hudView: CenterHUDView?
+
     // MARK: - Show
 
     /// Shows the primary overlay at the specified frame (CG coordinates, top-left origin).
@@ -164,6 +170,78 @@ class OverlayWindowController {
         self.primaryBorderView = borderView
         self.sizeLabelView = sizeLabel
         self.primaryWindow = window
+    }
+
+    // MARK: - Centered Keyboard-Feedback HUD
+
+    /// Shows a centered HUD overlay on the target window with a prominent
+    /// label and a smaller secondary size line. Used for keyboard-triggered
+    /// operations (Quick Preset, Undo, Redo, incremental resize) where the
+    /// feedback should be instantly recognizable at a glance.
+    ///
+    /// - Parameters:
+    ///   - targetFrame: The window frame in CG coordinates (top-left origin).
+    ///   - label: Primary text (e.g. preset name "Writing"). Nil for resize.
+    ///   - subtitle: Secondary text (e.g. "1280 × 800"). Nil to hide.
+    func showHUD(on targetFrame: CGRect, label: String?, subtitle: String?) {
+        let nsFrame = cgRectToNS(targetFrame)
+
+        // Create the HUD window on first use.
+        if hudWindow == nil {
+            createHUDWindow()
+        }
+
+        guard let window = hudWindow, let view = hudView else { return }
+
+        // Update the text content; the view calculates its intrinsic size.
+        view.update(label: label, subtitle: subtitle)
+        let hudSize = view.intrinsicContentSize
+
+        // Center the HUD pill on the target window.
+        let hudX = nsFrame.midX - hudSize.width / 2
+        let hudY = nsFrame.midY - hudSize.height / 2
+        let hudRect = NSRect(x: hudX, y: hudY,
+                             width: hudSize.width, height: hudSize.height)
+
+        window.setFrame(hudRect, display: true)
+        window.alphaValue = 1.0
+        if !window.isVisible {
+            window.orderFrontRegardless()
+        }
+    }
+
+    /// Hides the centered HUD with a fade-out animation.
+    func hideHUD() {
+        guard let window = hudWindow, window.isVisible else { return }
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = 0.2
+            window.animator().alphaValue = 0
+        }, completionHandler: { [weak self] in
+            self?.hudWindow?.orderOut(nil)
+        })
+    }
+
+    /// Creates the floating HUD window with its CenterHUDView content.
+    private func createHUDWindow() {
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 200, height: 60),
+            styleMask: .borderless,
+            backing: .buffered,
+            defer: false
+        )
+        window.level = .floating
+        window.backgroundColor = .clear
+        window.isOpaque = false
+        window.hasShadow = false
+        window.ignoresMouseEvents = true
+        window.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
+
+        let view = CenterHUDView(frame: window.contentView!.bounds)
+        view.autoresizingMask = [.width, .height]
+        window.contentView?.addSubview(view)
+
+        self.hudView = view
+        self.hudWindow = window
     }
 
     // MARK: - Helpers
@@ -571,5 +649,122 @@ private class CornerSizeLabelView: NSView {
         }
 
         return NSPoint(x: x, y: y)
+    }
+}
+
+// MARK: - CenterHUDView
+
+/// A floating pill drawn at the center of the target window, used for
+/// keyboard-triggered feedback (Quick Preset application, Undo, Redo,
+/// incremental resize). Shows a large primary label and an optional
+/// smaller subtitle below it.
+///
+/// Layout:
+///   ┌─────────────────────────┐
+///   │      Writing            │  ← primary label (24pt bold)
+///   │    1280 × 800           │  ← subtitle (13pt, dimmed)
+///   └─────────────────────────┘
+private class CenterHUDView: NSView {
+
+    /// Primary label text (e.g. preset name, "Undo").
+    private var labelText: String?
+
+    /// Secondary text (e.g. "1280 × 800").
+    private var subtitleText: String?
+
+    /// Horizontal padding inside the pill.
+    private let paddingH: CGFloat = 24
+
+    /// Vertical padding inside the pill.
+    private let paddingV: CGFloat = 14
+
+    /// Spacing between label and subtitle lines.
+    private let lineSpacing: CGFloat = 4
+
+    /// Updates the displayed text content and triggers a redraw.
+    func update(label: String?, subtitle: String?) {
+        labelText = label
+        subtitleText = subtitle
+        needsDisplay = true
+    }
+
+    /// Computes the ideal size of the HUD pill based on current text content.
+    override var intrinsicContentSize: NSSize {
+        let labelSize = labelText.map {
+            ($0 as NSString).size(withAttributes: labelAttributes())
+        } ?? .zero
+        let subSize = subtitleText.map {
+            ($0 as NSString).size(withAttributes: subtitleAttributes())
+        } ?? .zero
+
+        let contentWidth = max(labelSize.width, subSize.width)
+        var contentHeight = labelSize.height
+        if subtitleText != nil && !subtitleText!.isEmpty {
+            contentHeight += lineSpacing + subSize.height
+        }
+
+        return NSSize(width: contentWidth + paddingH * 2,
+                      height: contentHeight + paddingV * 2)
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+
+        // Draw the dark pill background with rounded corners.
+        let pillPath = NSBezierPath(roundedRect: bounds,
+                                    xRadius: bounds.height / 2,
+                                    yRadius: bounds.height / 2)
+        NSColor.black.withAlphaComponent(0.75).setFill()
+        pillPath.fill()
+
+        let labelSize = labelText.map {
+            ($0 as NSString).size(withAttributes: labelAttributes())
+        } ?? .zero
+        let subSize = subtitleText.map {
+            ($0 as NSString).size(withAttributes: subtitleAttributes())
+        } ?? .zero
+
+        // Compute total content height to center vertically.
+        var totalHeight = labelSize.height
+        let hasSubtitle = subtitleText != nil && !subtitleText!.isEmpty
+        if hasSubtitle {
+            totalHeight += lineSpacing + subSize.height
+        }
+        let startY = (bounds.height - totalHeight) / 2
+
+        // Draw subtitle (bottom line) first, then label (top line).
+        if hasSubtitle, let sub = subtitleText {
+            let subX = (bounds.width - subSize.width) / 2
+            let subRect = NSRect(x: subX, y: startY,
+                                 width: subSize.width, height: subSize.height)
+            (sub as NSString).draw(in: subRect, withAttributes: subtitleAttributes())
+        }
+
+        // Draw primary label above the subtitle.
+        if let label = labelText {
+            let labelX = (bounds.width - labelSize.width) / 2
+            let labelY = hasSubtitle
+                ? startY + subSize.height + lineSpacing
+                : startY
+            let labelRect = NSRect(x: labelX, y: labelY,
+                                   width: labelSize.width, height: labelSize.height)
+            (label as NSString).draw(in: labelRect, withAttributes: labelAttributes())
+        }
+    }
+
+    /// Large bold text attributes for the primary label.
+    private func labelAttributes() -> [NSAttributedString.Key: Any] {
+        return [
+            .font: NSFont.systemFont(ofSize: 24, weight: .bold),
+            .foregroundColor: NSColor.white
+        ]
+    }
+
+    /// Small dimmed text attributes for the subtitle.
+    private func subtitleAttributes() -> [NSAttributedString.Key: Any] {
+        return [
+            .font: NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular),
+            .foregroundColor: NSColor.white.withAlphaComponent(0.6)
+        ]
     }
 }

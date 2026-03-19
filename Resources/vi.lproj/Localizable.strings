@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "Đặt lại mặc định";
 "settings.shortcuts.conflict-system" = "Xung đột với phím tắt hệ thống";
 "settings.shortcuts.conflict-app" = "Xung đột với thao tác khác trong ứng dụng này";
+"settings.shortcuts.conflict-title" = "Xung đột phím tắt";
+"settings.shortcuts.conflict-message" = "%@ đã được gán cho \"%@\". Thay thế bằng \"%@\"?";
+"settings.shortcuts.conflict-replace" = "Thay thế";
+"settings.shortcuts.conflict-cancel" = "Hủy";
 "settings.shortcuts.escape-to-cancel" = "Esc để hủy";
 "settings.shortcuts.grow-width" = "Tăng chiều rộng";
 "settings.shortcuts.shrink-width" = "Giảm chiều rộng";

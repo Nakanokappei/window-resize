@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "डिफ़ॉल्ट पर रीसेट करें";
 "settings.shortcuts.conflict-system" = "सिस्टम शॉर्टकट से विरोध है";
 "settings.shortcuts.conflict-app" = "इस ऐप में किसी अन्य क्रिया से विरोध है";
+"settings.shortcuts.conflict-title" = "शॉर्टकट विरोध";
+"settings.shortcuts.conflict-message" = "%@ पहले से \"%@\" को सौंपा गया है। इसे \"%@\" से बदलें?";
+"settings.shortcuts.conflict-replace" = "बदलें";
+"settings.shortcuts.conflict-cancel" = "रद्द करें";
 "settings.shortcuts.escape-to-cancel" = "Esc से रद्द करें";
 "settings.shortcuts.grow-width" = "चौड़ाई बढ़ाएं";
 "settings.shortcuts.shrink-width" = "चौड़ाई घटाएं";

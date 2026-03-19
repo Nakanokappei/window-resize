@@ -41,6 +41,13 @@ private struct GeneralTab: View {
     /// Tracks which preset action ID is currently being recorded.
     @State private var recordingPresetActionID: String? = nil
 
+    /// Controls the in-app conflict alert for preset shortcut editing.
+    @State private var showPresetConflictAlert = false
+    @State private var presetConflictMessage = ""
+    @State private var pendingPresetActionID: String?
+    @State private var pendingPresetBinding: SettingsStore.ShortcutBinding?
+    @State private var conflictingPresetActionID: String?
+
     /// Supported languages shown with their native names so users can
     /// identify them regardless of the current app language.
     private let supportedLanguages: [(code: String, name: String)] = [
@@ -230,6 +237,20 @@ private struct GeneralTab: View {
         } message: {
             Text(L("settings.language.restart-body"))
         }
+        .alert(L("settings.shortcuts.conflict-title"), isPresented: $showPresetConflictAlert) {
+            Button(L("settings.shortcuts.conflict-replace")) {
+                if let actionID = pendingPresetActionID,
+                   let newBinding = pendingPresetBinding,
+                   let otherID = conflictingPresetActionID {
+                    store.shortcutBindings[otherID] = SettingsStore.ShortcutBinding(
+                        modifiers: 0, keyCode: 0)
+                    store.shortcutBindings[actionID] = newBinding
+                }
+            }
+            Button(L("settings.shortcuts.conflict-cancel"), role: .cancel) { }
+        } message: {
+            Text(presetConflictMessage)
+        }
     }
 
     // MARK: - Preset Shortcut Recorder
@@ -246,7 +267,21 @@ private struct GeneralTab: View {
                     ?? SettingsStore.ShortcutBinding(modifiers: 0, keyCode: 0)
             },
             set: { newValue in
-                store.shortcutBindings[actionID] = newValue
+                // Check for in-app conflict before applying.
+                if let otherID = findPresetConflict(newValue, excluding: actionID) {
+                    let newName = SettingsStore.localizedActionName(actionID)
+                    let otherName = SettingsStore.localizedActionName(otherID)
+                    let shortcutStr = SettingsStore.displayString(for: newValue)
+                    presetConflictMessage = String(
+                        format: L("settings.shortcuts.conflict-message"),
+                        shortcutStr, otherName, newName)
+                    pendingPresetActionID = actionID
+                    pendingPresetBinding = newValue
+                    conflictingPresetActionID = otherID
+                    showPresetConflictAlert = true
+                } else {
+                    store.shortcutBindings[actionID] = newValue
+                }
             }
         )
 
@@ -258,6 +293,20 @@ private struct GeneralTab: View {
         )
 
         return ShortcutRecorderView(binding: binding, isRecording: isRecording)
+    }
+
+    /// Returns the action ID of another binding that uses the same key
+    /// combination, or nil if there is no conflict.
+    private func findPresetConflict(
+        _ binding: SettingsStore.ShortcutBinding,
+        excluding actionID: String
+    ) -> String? {
+        for (otherID, otherBinding) in store.shortcutBindings {
+            if otherID != actionID && otherBinding == binding {
+                return otherID
+            }
+        }
+        return nil
     }
 }
 
@@ -461,6 +510,21 @@ private struct ShortcutsTab: View {
     /// Tracks which action ID is currently being recorded, if any.
     @State private var recordingActionID: String? = nil
 
+    /// Controls the in-app conflict alert presentation.
+    @State private var showConflictAlert = false
+
+    /// Description of the detected conflict, shown in the alert message.
+    @State private var conflictMessage = ""
+
+    /// The action ID whose binding was just changed (source of the conflict).
+    @State private var pendingActionID: String?
+
+    /// The new binding that caused the conflict.
+    @State private var pendingBinding: SettingsStore.ShortcutBinding?
+
+    /// The other action ID that already uses the same binding.
+    @State private var conflictingActionID: String?
+
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 12) {
@@ -516,6 +580,25 @@ private struct ShortcutsTab: View {
                     .onTapGesture { recordingActionID = nil }
             }
         }
+        .alert(L("settings.shortcuts.conflict-title"), isPresented: $showConflictAlert) {
+            // "Replace" — assign the new binding to the pending action and
+            // clear the conflicting action's binding.
+            Button(L("settings.shortcuts.conflict-replace")) {
+                if let actionID = pendingActionID,
+                   let newBinding = pendingBinding,
+                   let otherID = conflictingActionID {
+                    store.shortcutBindings[otherID] = SettingsStore.ShortcutBinding(
+                        modifiers: 0, keyCode: 0)
+                    store.shortcutBindings[actionID] = newBinding
+                }
+            }
+            // "Cancel" — revert to the previous binding (already stored).
+            Button(L("settings.shortcuts.conflict-cancel"), role: .cancel) {
+                // No action needed; the binding was not changed.
+            }
+        } message: {
+            Text(conflictMessage)
+        }
     }
 
     /// Lays out shortcut rows in a 2-column grid. If the action count is odd,
@@ -537,6 +620,11 @@ private struct ShortcutsTab: View {
     }
 
     /// A single shortcut row: [recorder] action-name [conflict-icon].
+    ///
+    /// When the user records a new binding that conflicts with another
+    /// action in the app, an alert is shown offering to replace the
+    /// conflicting binding or cancel. The binding is only committed
+    /// after the user confirms.
     private func shortcutRow(actionID: String) -> some View {
         let binding = Binding<SettingsStore.ShortcutBinding>(
             get: {
@@ -545,7 +633,23 @@ private struct ShortcutsTab: View {
                     ?? SettingsStore.ShortcutBinding(modifiers: 0, keyCode: 0)
             },
             set: { newValue in
-                store.shortcutBindings[actionID] = newValue
+                // Check for in-app conflict before applying.
+                if let otherID = findConflictingAction(newValue, excluding: actionID) {
+                    // Stash the pending change and show the conflict alert.
+                    let newName = SettingsStore.localizedActionName(actionID)
+                    let otherName = SettingsStore.localizedActionName(otherID)
+                    let shortcutStr = SettingsStore.displayString(for: newValue)
+                    conflictMessage = String(
+                        format: L("settings.shortcuts.conflict-message"),
+                        shortcutStr, otherName, newName)
+                    pendingActionID = actionID
+                    pendingBinding = newValue
+                    conflictingActionID = otherID
+                    showConflictAlert = true
+                } else {
+                    // No conflict — apply immediately.
+                    store.shortcutBindings[actionID] = newValue
+                }
             }
         )
 
@@ -589,6 +693,21 @@ private struct ShortcutsTab: View {
             }
         }
         .padding(.vertical, 2)
+    }
+
+    /// Returns the action ID of another binding that uses the same key
+    /// combination, or nil if there is no conflict. Checks all registered
+    /// shortcut bindings (resize, precision, undo/redo, and presets).
+    private func findConflictingAction(
+        _ binding: SettingsStore.ShortcutBinding,
+        excluding actionID: String
+    ) -> String? {
+        for (otherID, otherBinding) in store.shortcutBindings {
+            if otherID != actionID && otherBinding == binding {
+                return otherID
+            }
+        }
+        return nil
     }
 }
 

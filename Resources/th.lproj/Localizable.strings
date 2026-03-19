@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "รีเซ็ตเป็นค่าเริ่มต้น";
 "settings.shortcuts.conflict-system" = "ขัดแย้งกับปุ่มลัดของระบบ";
 "settings.shortcuts.conflict-app" = "ขัดแย้งกับการทำงานอื่นในแอปนี้";
+"settings.shortcuts.conflict-title" = "ปุ่มลัดขัดแย้ง";
+"settings.shortcuts.conflict-message" = "%@ ถูกกำหนดให้กับ \"%@\" แล้ว ต้องการแทนที่ด้วย \"%@\" หรือไม่?";
+"settings.shortcuts.conflict-replace" = "แทนที่";
+"settings.shortcuts.conflict-cancel" = "ยกเลิก";
 "settings.shortcuts.escape-to-cancel" = "Esc เพื่อยกเลิก";
 "settings.shortcuts.grow-width" = "เพิ่มความกว้าง";
 "settings.shortcuts.shrink-width" = "ลดความกว้าง";

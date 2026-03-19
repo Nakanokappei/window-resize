@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "기본값으로 재설정";
 "settings.shortcuts.conflict-system" = "시스템 단축키와 충돌합니다";
 "settings.shortcuts.conflict-app" = "이 앱의 다른 동작과 충돌합니다";
+"settings.shortcuts.conflict-title" = "단축키 충돌";
+"settings.shortcuts.conflict-message" = "%@이(가) 이미 \"%@\"에 할당되어 있습니다. \"%@\"(으)로 바꾸시겠습니까?";
+"settings.shortcuts.conflict-replace" = "대치";
+"settings.shortcuts.conflict-cancel" = "취소";
 "settings.shortcuts.escape-to-cancel" = "Esc로 취소";
 "settings.shortcuts.grow-width" = "너비 늘리기";
 "settings.shortcuts.shrink-width" = "너비 줄이기";

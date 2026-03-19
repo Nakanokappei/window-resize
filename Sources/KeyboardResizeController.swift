@@ -57,7 +57,7 @@ class KeyboardResizeController {
             keyMonitor = nil
         }
         hideTimer?.invalidate()
-        overlay.hide()
+        overlay.hideHUD()
     }
 
     // MARK: - Event Dispatch (Dynamic Binding Lookup)
@@ -287,20 +287,33 @@ class KeyboardResizeController {
 
     // MARK: - Overlay Feedback
 
-    /// Shows the overlay briefly after a keyboard operation, then fades it
-    /// out after the configured duration.
+    /// Shows a centered HUD on the target window briefly after a keyboard
+    /// operation, then fades it out after the configured duration.
+    ///
+    /// - Parameters:
+    ///   - frame: The window frame in CG coordinates.
+    ///   - label: Primary text (preset name, "Undo", etc.). Nil for resize.
+    ///   - currentSize: The window's dimensions, shown as subtitle.
     private func showOverlayBriefly(frame: CGRect, label: String?,
                                      currentSize: CGSize) {
         // Cancel any pending hide timer from a previous operation.
         hideTimer?.invalidate()
 
-        overlay.show(at: frame, label: label,
-                     dragCorner: .topRight, currentSize: currentSize)
+        let sizeText = "\(Int(currentSize.width)) × \(Int(currentSize.height))"
+
+        // When a named label exists (Quick Preset, Undo), show label as
+        // primary and size as subtitle. For incremental resize (no label),
+        // promote the size text to the primary position for readability.
+        if let label = label {
+            overlay.showHUD(on: frame, label: label, subtitle: sizeText)
+        } else {
+            overlay.showHUD(on: frame, label: sizeText, subtitle: nil)
+        }
 
         // Schedule automatic hide after the brief display period.
         hideTimer = Timer.scheduledTimer(withTimeInterval: Self.overlayDuration,
                                          repeats: false) { [weak self] _ in
-            self?.overlay.hide()
+            self?.overlay.hideHUD()
         }
     }
 }

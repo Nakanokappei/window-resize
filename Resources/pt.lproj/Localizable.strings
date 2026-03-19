@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "Restaurar padrões";
 "settings.shortcuts.conflict-system" = "Conflita com um atalho do sistema";
 "settings.shortcuts.conflict-app" = "Conflita com outra ação neste app";
+"settings.shortcuts.conflict-title" = "Conflito de atalho";
+"settings.shortcuts.conflict-message" = "%@ já está atribuído a \"%@\". Substituir por \"%@\"?";
+"settings.shortcuts.conflict-replace" = "Substituir";
+"settings.shortcuts.conflict-cancel" = "Cancelar";
 "settings.shortcuts.escape-to-cancel" = "Esc para cancelar";
 "settings.shortcuts.grow-width" = "Aumentar largura";
 "settings.shortcuts.shrink-width" = "Reduzir largura";

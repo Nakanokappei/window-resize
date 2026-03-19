@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "Ripristina valori predefiniti";
 "settings.shortcuts.conflict-system" = "In conflitto con una scorciatoia di sistema";
 "settings.shortcuts.conflict-app" = "In conflitto con un'altra azione in questa app";
+"settings.shortcuts.conflict-title" = "Conflitto scorciatoia";
+"settings.shortcuts.conflict-message" = "%@ è già assegnato a \"%@\". Sostituirlo con \"%@\"?";
+"settings.shortcuts.conflict-replace" = "Sostituisci";
+"settings.shortcuts.conflict-cancel" = "Annulla";
 "settings.shortcuts.escape-to-cancel" = "Esc per annullare";
 "settings.shortcuts.grow-width" = "Aumenta larghezza";
 "settings.shortcuts.shrink-width" = "Riduci larghezza";

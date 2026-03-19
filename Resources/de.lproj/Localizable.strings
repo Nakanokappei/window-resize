@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "Auf Standardwerte zurücksetzen";
 "settings.shortcuts.conflict-system" = "Steht in Konflikt mit einem Systemtastenkürzel";
 "settings.shortcuts.conflict-app" = "Steht in Konflikt mit einer anderen Aktion in dieser App";
+"settings.shortcuts.conflict-title" = "Kurzbefehl-Konflikt";
+"settings.shortcuts.conflict-message" = "%@ ist bereits \"%@\" zugewiesen. Durch \"%@\" ersetzen?";
+"settings.shortcuts.conflict-replace" = "Ersetzen";
+"settings.shortcuts.conflict-cancel" = "Abbrechen";
 "settings.shortcuts.escape-to-cancel" = "Esc zum Abbrechen";
 "settings.shortcuts.grow-width" = "Breite vergrößern";
 "settings.shortcuts.shrink-width" = "Breite verkleinern";

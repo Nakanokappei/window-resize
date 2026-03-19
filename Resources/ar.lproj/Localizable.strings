@@ -84,6 +84,10 @@
 "settings.shortcuts.reset" = "إعادة التعيين إلى الإعدادات الافتراضية";
 "settings.shortcuts.conflict-system" = "يتعارض مع اختصار النظام";
 "settings.shortcuts.conflict-app" = "يتعارض مع إجراء آخر في هذا التطبيق";
+"settings.shortcuts.conflict-title" = "تعارض الاختصار";
+"settings.shortcuts.conflict-message" = "%@ مخصص بالفعل لـ \"%@\". هل تريد استبداله بـ \"%@\"؟";
+"settings.shortcuts.conflict-replace" = "استبدال";
+"settings.shortcuts.conflict-cancel" = "إلغاء";
 "settings.shortcuts.escape-to-cancel" = "Esc للإلغاء";
 "settings.shortcuts.grow-width" = "زيادة العرض";
 "settings.shortcuts.shrink-width" = "تقليل العرض";
