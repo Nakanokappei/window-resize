@@ -42,8 +42,10 @@ class WindowTracker {
     /// Whether the current drag is a resize (size changed vs position only).
     private var isResizing = false
 
-    /// Which corner of the window is being dragged (resize only).
-    private var dragCorner: DragCorner = .bottomRight
+    /// Which corner of the window the user is actively dragging during a
+    /// resize operation. Defaults to .bottomRight as the most common case;
+    /// updated by identifyDraggedWindow once edge movement is analyzed.
+    private var activeResizeCorner: DragCorner = .bottomRight
 
     /// The current snap candidate, if any. Set during drag, consumed on release.
     private var currentCandidate: SnapCandidate?
@@ -176,7 +178,7 @@ class WindowTracker {
                 currentFrame: currentInfo.bounds,
                 initialFrame: initialFrames[tracked.windowID] ?? currentInfo.bounds,
                 ratio: initialAspectRatio,
-                corner: dragCorner
+                corner: activeResizeCorner
             )
             // Apply the constrained size to the actual window.
             _ = SnapExecutor.execute(windowInfo: currentInfo, targetFrame: effectiveBounds)
@@ -198,13 +200,13 @@ class WindowTracker {
             if let name = candidate.preset.label, !name.isEmpty { label += "  \(name)" }
 
             overlay.show(at: candidate.targetFrame, label: label,
-                         dragCorner: dragCorner, currentSize: effectiveBounds.size)
+                         dragCorner: activeResizeCorner, currentSize: effectiveBounds.size)
         } else {
             // No snap candidate — show resize overlay only if the user hasn't disabled it.
             currentCandidate = nil
             if SettingsStore.shared.showResizeOverlay {
                 overlay.show(at: effectiveBounds, label: nil,
-                             dragCorner: dragCorner, currentSize: effectiveBounds.size)
+                             dragCorner: activeResizeCorner, currentSize: effectiveBounds.size)
             } else {
                 overlay.hide()
             }
@@ -234,19 +236,24 @@ class WindowTracker {
                 }
 
                 // Determine which corner is being dragged by checking which
-                // edges moved relative to the initial frame.
+                // edges moved relative to the initial frame. In CG coordinates
+                // (top-left origin), minY is the top edge and maxY is the bottom.
                 let topMoved = abs(window.bounds.minY - initialFrame.minY) > 3
                 let leftMoved = abs(window.bounds.minX - initialFrame.minX) > 3
                 let bottomMoved = abs(window.bounds.maxY - initialFrame.maxY) > 3
                 let rightMoved = abs(window.bounds.maxX - initialFrame.maxX) > 3
 
-                if topMoved && leftMoved { dragCorner = .topLeft }
-                else if topMoved && rightMoved { dragCorner = .topRight }
-                else if topMoved { dragCorner = .topRight }
-                else if bottomMoved && leftMoved { dragCorner = .bottomLeft }
-                else if leftMoved { dragCorner = .bottomLeft }
-                else if bottomMoved && rightMoved { dragCorner = .bottomRight }
-                else { dragCorner = .bottomRight }
+                // Two edges moving together → corner drag (e.g. top+left = top-left).
+                // Single edge → infer the corner on that side. When only the top
+                // edge moves, default to topRight (most common resize handle).
+                // Fallback: bottomRight, the standard macOS resize corner.
+                if topMoved && leftMoved { activeResizeCorner = .topLeft }
+                else if topMoved && rightMoved { activeResizeCorner = .topRight }
+                else if topMoved { activeResizeCorner = .topRight }
+                else if bottomMoved && leftMoved { activeResizeCorner = .bottomLeft }
+                else if leftMoved { activeResizeCorner = .bottomLeft }
+                else if bottomMoved && rightMoved { activeResizeCorner = .bottomRight }
+                else { activeResizeCorner = .bottomRight }
 
                 return
             } else if posChanged {

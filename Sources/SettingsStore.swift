@@ -255,17 +255,31 @@ class SettingsStore: ObservableObject {
         Self.knownSystemShortcuts.contains(binding)
     }
 
-    /// Returns the localized display name of another action that uses the same
-    /// binding, or nil if there is no conflict. The `excluding` parameter is
-    /// the action ID being edited (to avoid self-conflict).
-    func conflictsWithOtherAction(_ binding: ShortcutBinding,
-                                   excluding actionID: String) -> String? {
+    /// Returns the action ID of another binding that uses the same key
+    /// combination, or nil if there is no conflict. This is the single source
+    /// of truth for shortcut conflict detection — both the General tab (preset
+    /// shortcuts) and Shortcuts tab use this instead of duplicating the lookup.
+    func findConflictingActionID(
+        for binding: ShortcutBinding,
+        excluding actionID: String
+    ) -> String? {
         for (otherID, otherBinding) in shortcutBindings {
             if otherID != actionID && otherBinding == binding {
-                return Self.localizedActionName(otherID)
+                return otherID
             }
         }
         return nil
+    }
+
+    /// Returns the localized display name of another action that uses the same
+    /// binding, or nil if there is no conflict. Convenience wrapper around
+    /// `findConflictingActionID` for UI display.
+    func conflictsWithOtherAction(_ binding: ShortcutBinding,
+                                   excluding actionID: String) -> String? {
+        guard let otherID = findConflictingActionID(for: binding, excluding: actionID) else {
+            return nil
+        }
+        return Self.localizedActionName(otherID)
     }
 
     /// Human-readable display string for a shortcut binding (e.g. "⌃⌥→").
@@ -313,10 +327,13 @@ class SettingsStore: ObservableObject {
         }
     }
 
-    /// Converts a macOS virtual key code to a human-readable key name.
+    /// Converts a macOS virtual key code (from IOKit's Events.h / Carbon
+    /// kVK_* constants) to a human-readable key name for UI display.
+    /// Key codes are hardware-defined and locale-independent — the same
+    /// physical key always produces the same code regardless of keyboard layout.
     private static func keyName(for keyCode: UInt16) -> String {
         switch keyCode {
-        // Arrow keys
+        // Arrow keys (kVK_LeftArrow=123, kVK_RightArrow=124, etc.)
         case 123: return "←"
         case 124: return "→"
         case 125: return "↓"
@@ -502,19 +519,20 @@ class SettingsStore: ObservableObject {
             appLanguage = lang
         }
 
-        // Load overlay appearance settings (use defaults if not yet stored).
+        // Load overlay appearance settings from UserDefaults.
+        //
+        // Bool properties use `object(forKey:) != nil` guard instead of
+        // `bool(forKey:)` because UserDefaults.bool returns false for both
+        // "key not found" and "stored false". Without the nil-check, a first-
+        // launch user whose default is `true` would get false instead.
         let defaults = UserDefaults.standard
+
+        // --- Resize overlay settings ---
         if let color = defaults.string(forKey: resizeBorderColorKey) {
             resizeBorderColor = color
         }
         if defaults.object(forKey: resizeBorderDashedKey) != nil {
             resizeBorderDashed = defaults.bool(forKey: resizeBorderDashedKey)
-        }
-        if let color = defaults.string(forKey: snapBorderColorKey) {
-            snapBorderColor = color
-        }
-        if defaults.object(forKey: snapBorderDashedKey) != nil {
-            snapBorderDashed = defaults.bool(forKey: snapBorderDashedKey)
         }
         if defaults.object(forKey: showResizeOverlayKey) != nil {
             showResizeOverlay = defaults.bool(forKey: showResizeOverlayKey)
@@ -522,9 +540,19 @@ class SettingsStore: ObservableObject {
         if defaults.object(forKey: resizeBorderAnimatedKey) != nil {
             resizeBorderAnimated = defaults.bool(forKey: resizeBorderAnimatedKey)
         }
+
+        // --- Snap overlay settings ---
+        if let color = defaults.string(forKey: snapBorderColorKey) {
+            snapBorderColor = color
+        }
+        if defaults.object(forKey: snapBorderDashedKey) != nil {
+            snapBorderDashed = defaults.bool(forKey: snapBorderDashedKey)
+        }
         if defaults.object(forKey: snapBorderAnimatedKey) != nil {
             snapBorderAnimated = defaults.bool(forKey: snapBorderAnimatedKey)
         }
+
+        // --- General overlay toggles ---
         if defaults.object(forKey: showRatioLabelKey) != nil {
             showRatioLabel = defaults.bool(forKey: showRatioLabelKey)
         }

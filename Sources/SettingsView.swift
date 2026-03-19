@@ -272,7 +272,7 @@ private struct GeneralTab: View {
             },
             set: { newValue in
                 // Check for in-app conflict before applying.
-                if let otherID = findPresetConflict(newValue, excluding: actionID) {
+                if let otherID = store.findConflictingActionID(for: newValue, excluding: actionID) {
                     let newName = SettingsStore.localizedActionName(actionID)
                     let otherName = SettingsStore.localizedActionName(otherID)
                     let shortcutStr = SettingsStore.displayString(for: newValue)
@@ -299,23 +299,14 @@ private struct GeneralTab: View {
         return ShortcutRecorderView(binding: binding, isRecording: isRecording)
     }
 
-    /// Returns the action ID of another binding that uses the same key
-    /// combination, or nil if there is no conflict.
-    private func findPresetConflict(
-        _ binding: SettingsStore.ShortcutBinding,
-        excluding actionID: String
-    ) -> String? {
-        for (otherID, otherBinding) in store.shortcutBindings {
-            if otherID != actionID && otherBinding == binding {
-                return otherID
-            }
-        }
-        return nil
-    }
 }
 
 // MARK: - Appearance Tab
 
+/// Controls overlay visual preferences: border color, line style (solid /
+/// dashed / animated), visibility toggle for the resize overlay, aspect
+/// ratio label, and Shift-to-lock-ratio behavior. Both resize and snap
+/// overlays are configured here side by side.
 private struct AppearanceTab: View {
     @ObservedObject private var store = SettingsStore.shared
 
@@ -333,7 +324,11 @@ private struct AppearanceTab: View {
                             .frame(width: 80, alignment: .leading)
                         colorPicker(selection: $store.resizeBorderColor)
                         Spacer()
-                        resizeLineStylePicker()
+                        overlayLineStylePicker(
+                            colorName: store.resizeBorderColor,
+                            isDashed: $store.resizeBorderDashed,
+                            isAnimated: $store.resizeBorderAnimated,
+                            isVisible: $store.showResizeOverlay)
                     }
 
                     // Snap overlay: color + line style (no "none" option).
@@ -342,7 +337,10 @@ private struct AppearanceTab: View {
                             .frame(width: 80, alignment: .leading)
                         colorPicker(selection: $store.snapBorderColor)
                         Spacer()
-                        snapLineStylePicker()
+                        overlayLineStylePicker(
+                            colorName: store.snapBorderColor,
+                            isDashed: $store.snapBorderDashed,
+                            isAnimated: $store.snapBorderAnimated)
                     }
                 }
                 .padding(.vertical, 4)
@@ -361,56 +359,78 @@ private struct AppearanceTab: View {
         .padding()
     }
 
-    // MARK: - Resize Line Style Picker (with "None" option)
+    // MARK: - Line Style Picker (shared for resize and snap overlays)
 
-    /// Line style picker for the resize overlay that includes a "None"
-    /// option. Selecting "None" hides the overlay border during non-snap
-    /// resize. Selecting solid or dashed re-enables it.
-    private func resizeLineStylePicker() -> some View {
-        let nsColor = SettingsStore.nsColor(forName: store.resizeBorderColor)
+    /// Builds a line style picker for an overlay type. Both the resize and snap
+    /// overlays share the same UI structure (Solid / Dashed / Animated buttons);
+    /// the only differences are:
+    /// - Resize includes a "None" option that hides the overlay entirely.
+    /// - Each type writes to its own set of SettingsStore properties.
+    ///
+    /// Factored into a single function to eliminate duplication and ensure both
+    /// pickers stay visually and behaviorally consistent.
+    ///
+    /// - Parameters:
+    ///   - colorName: The border color name from SettingsStore.
+    ///   - isDashed: Binding to the dashed property.
+    ///   - isAnimated: Binding to the animated property.
+    ///   - isVisible: Optional binding for the visibility toggle (resize only).
+    ///     When nil, the picker omits the "None" option (snap behavior).
+    private func overlayLineStylePicker(
+        colorName: String,
+        isDashed: Binding<Bool>,
+        isAnimated: Binding<Bool>,
+        isVisible: Binding<Bool>? = nil
+    ) -> some View {
+        let nsColor = SettingsStore.nsColor(forName: colorName)
         let swiftColor = Color(nsColor: nsColor)
 
-        // Derived selection state for the four options.
-        let isNone = !store.showResizeOverlay
-        let isSolid = store.showResizeOverlay && !store.resizeBorderDashed && !store.resizeBorderAnimated
-        let isDashed = store.showResizeOverlay && store.resizeBorderDashed && !store.resizeBorderAnimated
-        let isAnimated = store.showResizeOverlay && store.resizeBorderAnimated
+        // Determine the effective visibility (always true for snap).
+        let visible = isVisible?.wrappedValue ?? true
+
+        // Derive the mutually exclusive selection state from the three booleans.
+        let noneSelected = !visible
+        let solidSelected = visible && !isDashed.wrappedValue && !isAnimated.wrappedValue
+        let dashedSelected = visible && isDashed.wrappedValue && !isAnimated.wrappedValue
+        let animatedSelected = visible && isAnimated.wrappedValue
 
         return HStack(spacing: 8) {
-            // "None" button — disables resize overlay border.
-            lineStyleButton(dashed: false, color: .secondary.opacity(0.3),
-                            isSelected: isNone,
-                            label: L("settings.overlay.none")) {
-                store.showResizeOverlay = false
-                store.resizeBorderAnimated = false
+            // "None" button — only present for overlays that can be hidden.
+            if let isVisible = isVisible {
+                lineStyleButton(dashed: false, color: .secondary.opacity(0.3),
+                                isSelected: noneSelected,
+                                label: L("settings.overlay.none")) {
+                    isVisible.wrappedValue = false
+                    isAnimated.wrappedValue = false
+                }
             }
 
             // Solid line button.
             lineStyleButton(dashed: false, color: swiftColor,
-                            isSelected: isSolid,
+                            isSelected: solidSelected,
                             label: L("settings.overlay.solid")) {
-                store.showResizeOverlay = true
-                store.resizeBorderDashed = false
-                store.resizeBorderAnimated = false
+                isVisible?.wrappedValue = true
+                isDashed.wrappedValue = false
+                isAnimated.wrappedValue = false
             }
 
             // Static dashed line button.
             lineStyleButton(dashed: true, color: swiftColor,
-                            isSelected: isDashed,
+                            isSelected: dashedSelected,
                             label: L("settings.overlay.dashed")) {
-                store.showResizeOverlay = true
-                store.resizeBorderDashed = true
-                store.resizeBorderAnimated = false
+                isVisible?.wrappedValue = true
+                isDashed.wrappedValue = true
+                isAnimated.wrappedValue = false
             }
 
             // Animated dashed line button (marching ants).
             lineStyleButton(dashed: true, color: swiftColor,
-                            isSelected: isAnimated,
+                            isSelected: animatedSelected,
                             label: L("settings.overlay.animated"),
                             animated: true) {
-                store.showResizeOverlay = true
-                store.resizeBorderDashed = true
-                store.resizeBorderAnimated = true
+                isVisible?.wrappedValue = true
+                isDashed.wrappedValue = true
+                isAnimated.wrappedValue = true
             }
         }
     }
@@ -432,46 +452,6 @@ private struct AppearanceTab: View {
                     )
                     .help(L(opt.locKey))
                     .onTapGesture { selection.wrappedValue = opt.name }
-            }
-        }
-    }
-
-    // MARK: - Line Style Picker with Inline Preview
-
-    /// A horizontal row of line style previews (solid and dashed) drawn in the
-    /// selected overlay color. Tapping toggles the style.
-    private func snapLineStylePicker() -> some View {
-        let nsColor = SettingsStore.nsColor(forName: store.snapBorderColor)
-        let swiftColor = Color(nsColor: nsColor)
-
-        let isSolid = !store.snapBorderDashed && !store.snapBorderAnimated
-        let isDashed = store.snapBorderDashed && !store.snapBorderAnimated
-        let isAnimated = store.snapBorderAnimated
-
-        return HStack(spacing: 8) {
-            // Solid line button.
-            lineStyleButton(dashed: false, color: swiftColor,
-                            isSelected: isSolid,
-                            label: L("settings.overlay.solid")) {
-                store.snapBorderDashed = false
-                store.snapBorderAnimated = false
-            }
-
-            // Static dashed line button.
-            lineStyleButton(dashed: true, color: swiftColor,
-                            isSelected: isDashed,
-                            label: L("settings.overlay.dashed")) {
-                store.snapBorderDashed = true
-                store.snapBorderAnimated = false
-            }
-
-            // Animated dashed line button (marching ants).
-            lineStyleButton(dashed: true, color: swiftColor,
-                            isSelected: isAnimated,
-                            label: L("settings.overlay.animated"),
-                            animated: true) {
-                store.snapBorderDashed = true
-                store.snapBorderAnimated = true
             }
         }
     }
@@ -638,7 +618,7 @@ private struct ShortcutsTab: View {
             },
             set: { newValue in
                 // Check for in-app conflict before applying.
-                if let otherID = findConflictingAction(newValue, excluding: actionID) {
+                if let otherID = store.findConflictingActionID(for: newValue, excluding: actionID) {
                     // Stash the pending change and show the conflict alert.
                     let newName = SettingsStore.localizedActionName(actionID)
                     let otherName = SettingsStore.localizedActionName(otherID)
@@ -699,24 +679,15 @@ private struct ShortcutsTab: View {
         .padding(.vertical, 2)
     }
 
-    /// Returns the action ID of another binding that uses the same key
-    /// combination, or nil if there is no conflict. Checks all registered
-    /// shortcut bindings (resize, precision, undo/redo, and presets).
-    private func findConflictingAction(
-        _ binding: SettingsStore.ShortcutBinding,
-        excluding actionID: String
-    ) -> String? {
-        for (otherID, otherBinding) in store.shortcutBindings {
-            if otherID != actionID && otherBinding == binding {
-                return otherID
-            }
-        }
-        return nil
-    }
 }
 
 // MARK: - Presets Tab
 
+/// Displays the full list of built-in preset sizes with enable/disable toggles.
+/// Disabled presets are excluded from drag-snap detection but remain visible
+/// here so the user can re-enable them. Mac-specific Retina resolutions are
+/// disabled by default since they match specific display sizes and are rarely
+/// useful as general-purpose snap targets.
 private struct PresetsTab: View {
     @ObservedObject private var store = SettingsStore.shared
 

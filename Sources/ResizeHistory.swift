@@ -56,6 +56,8 @@ class ResizeHistory {
         guard var stack = undoStacks[windowID], !stack.isEmpty else {
             return nil
         }
+        // Pop the most recent frame. `removeLast()` mutates the local copy;
+        // we must write it back to the dictionary to persist the change.
         let frame = stack.removeLast()
         undoStacks[windowID] = stack
         return frame

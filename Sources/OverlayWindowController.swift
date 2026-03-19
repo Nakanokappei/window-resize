@@ -586,6 +586,8 @@ private class CornerSizeLabelView: NSView {
         pillPath.fill()
 
         // Draw snap target size (line 1, top) when a snap candidate is active.
+        // In NSView coordinates (bottom-up), the snap text sits above the
+        // current-size text, so its Y = pill bottom + padding + current-size height.
         if hasSnap {
             let snapY = pillOrigin.y + paddingV
                 + (currentSize != nil ? currentSize!.height + lineSpacing : 0)
@@ -598,7 +600,8 @@ private class CornerSizeLabelView: NSView {
             (snapText as NSString).draw(in: snapRect, withAttributes: largeAttrs)
         }
 
-        // Draw current window size (line 2 when snap exists, sole line otherwise).
+        // Draw current window size — appears as line 2 below the snap text
+        // when a snap is active, or as the sole compact line otherwise.
         if let currentSizeText = currentSizeText, let csSize = currentSize {
             let csRect = NSRect(
                 x: pillOrigin.x + paddingH,
@@ -688,18 +691,37 @@ private class CenterHUDView: NSView {
         needsDisplay = true
     }
 
-    /// Computes the ideal size of the HUD pill based on current text content.
-    override var intrinsicContentSize: NSSize {
-        let labelSize = labelText.map {
+    // MARK: - Computed Text Metrics
+
+    /// Measured size of the primary label text. Computed once and reused by
+    /// both intrinsicContentSize and draw(_:) to avoid duplicate calculation.
+    private var computedLabelSize: NSSize {
+        labelText.map {
             ($0 as NSString).size(withAttributes: labelAttributes())
         } ?? .zero
-        let subSize = subtitleText.map {
+    }
+
+    /// Measured size of the subtitle text. Computed once and reused by both
+    /// intrinsicContentSize and draw(_:) to avoid duplicate calculation.
+    private var computedSubtitleSize: NSSize {
+        subtitleText.map {
             ($0 as NSString).size(withAttributes: subtitleAttributes())
         } ?? .zero
+    }
+
+    /// Whether the HUD has a non-empty subtitle to display.
+    private var hasSubtitle: Bool {
+        subtitleText != nil && !subtitleText!.isEmpty
+    }
+
+    /// Computes the ideal size of the HUD pill based on current text content.
+    override var intrinsicContentSize: NSSize {
+        let labelSize = computedLabelSize
+        let subSize = computedSubtitleSize
 
         let contentWidth = max(labelSize.width, subSize.width)
         var contentHeight = labelSize.height
-        if subtitleText != nil && !subtitleText!.isEmpty {
+        if hasSubtitle {
             contentHeight += lineSpacing + subSize.height
         }
 
@@ -717,22 +739,18 @@ private class CenterHUDView: NSView {
         NSColor.black.withAlphaComponent(0.75).setFill()
         pillPath.fill()
 
-        let labelSize = labelText.map {
-            ($0 as NSString).size(withAttributes: labelAttributes())
-        } ?? .zero
-        let subSize = subtitleText.map {
-            ($0 as NSString).size(withAttributes: subtitleAttributes())
-        } ?? .zero
+        let labelSize = computedLabelSize
+        let subSize = computedSubtitleSize
 
-        // Compute total content height to center vertically.
+        // Compute total content height to center the text block vertically.
         var totalHeight = labelSize.height
-        let hasSubtitle = subtitleText != nil && !subtitleText!.isEmpty
         if hasSubtitle {
             totalHeight += lineSpacing + subSize.height
         }
         let startY = (bounds.height - totalHeight) / 2
 
-        // Draw subtitle (bottom line) first, then label (top line).
+        // Draw subtitle (bottom line) first, then label (top line) above it.
+        // NSView coordinates are bottom-up, so the subtitle sits at startY.
         if hasSubtitle, let sub = subtitleText {
             let subX = (bounds.width - subSize.width) / 2
             let subRect = NSRect(x: subX, y: startY,

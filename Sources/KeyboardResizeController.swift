@@ -34,11 +34,11 @@ class KeyboardResizeController {
     /// Duration the overlay stays visible after a keyboard resize (seconds).
     private static let overlayDuration: TimeInterval = 0.8
 
-    /// Step size for normal resize operations (pixels).
-    private static let normalStep: CGFloat = 10
+    /// Step size for normal resize operations, in pixels.
+    private static let normalStepPx: CGFloat = 10
 
-    /// Step size for precision resize operations (Shift held, pixels).
-    private static let precisionStep: CGFloat = 1
+    /// Step size for precision resize operations (Shift held), in pixels.
+    private static let precisionStepPx: CGFloat = 1
 
     // MARK: - Lifecycle
 
@@ -87,23 +87,23 @@ class KeyboardResizeController {
         switch actionID {
         // Normal resize (±10px)
         case "shrinkWidth":
-            resizeFrontWindow(dw: -Self.normalStep, dh: 0)
+            resizeFrontWindow(dw: -Self.normalStepPx, dh: 0)
         case "growWidth":
-            resizeFrontWindow(dw: Self.normalStep, dh: 0)
+            resizeFrontWindow(dw: Self.normalStepPx, dh: 0)
         case "shrinkHeight":
-            resizeFrontWindow(dw: 0, dh: -Self.normalStep)
+            resizeFrontWindow(dw: 0, dh: -Self.normalStepPx)
         case "growHeight":
-            resizeFrontWindow(dw: 0, dh: Self.normalStep)
+            resizeFrontWindow(dw: 0, dh: Self.normalStepPx)
 
         // Precision resize (±1px)
         case "precisionShrinkWidth":
-            resizeFrontWindow(dw: -Self.precisionStep, dh: 0)
+            resizeFrontWindow(dw: -Self.precisionStepPx, dh: 0)
         case "precisionGrowWidth":
-            resizeFrontWindow(dw: Self.precisionStep, dh: 0)
+            resizeFrontWindow(dw: Self.precisionStepPx, dh: 0)
         case "precisionShrinkHeight":
-            resizeFrontWindow(dw: 0, dh: -Self.precisionStep)
+            resizeFrontWindow(dw: 0, dh: -Self.precisionStepPx)
         case "precisionGrowHeight":
-            resizeFrontWindow(dw: 0, dh: Self.precisionStep)
+            resizeFrontWindow(dw: 0, dh: Self.precisionStepPx)
 
         // Undo / Redo
         case "undo":
@@ -137,8 +137,10 @@ class KeyboardResizeController {
         let newWidth = max(oldFrame.width + dw, 50)
         let newHeight = max(oldFrame.height + dh, 50)
 
-        // Center-anchored: the midpoint stays fixed, so the origin shifts
-        // by half the delta in each dimension.
+        // Center-anchored resize: keep the window's visual center (midpoint)
+        // fixed while the edges expand or contract symmetrically. The origin
+        // shifts by half the size delta in each axis so that the midpoint
+        // remains at (oldFrame.midX, oldFrame.midY).
         let newX = oldFrame.origin.x - (newWidth - oldFrame.width) / 2
         let newY = oldFrame.origin.y - (newHeight - oldFrame.height) / 2
 
@@ -258,21 +260,25 @@ class KeyboardResizeController {
         let visible = ScreenGeometry.visibleFrameInCG(for: screen)
         var result = frame
 
-        // Clamp position so the window stays inside the visible area.
-        if result.origin.x < visible.origin.x {
+        // Clamp each edge so the window stays inside the visible area.
+        // Order matters: clamp left/top first, then right/bottom, so that
+        // if the window fits it stays put; if it doesn't, size clamping below
+        // pins it to the origin.
+        if result.origin.x < visible.origin.x {     // Left edge overflows left
             result.origin.x = visible.origin.x
         }
-        if result.origin.y < visible.origin.y {
+        if result.origin.y < visible.origin.y {     // Top edge overflows top (CG coords)
             result.origin.y = visible.origin.y
         }
-        if result.maxX > visible.maxX {
+        if result.maxX > visible.maxX {              // Right edge overflows right
             result.origin.x = visible.maxX - result.width
         }
-        if result.maxY > visible.maxY {
+        if result.maxY > visible.maxY {              // Bottom edge overflows bottom
             result.origin.y = visible.maxY - result.height
         }
 
-        // If the window is wider or taller than the screen, clamp size too.
+        // If the window is larger than the visible area in either dimension,
+        // shrink it to fit and pin to the visible origin.
         if result.width > visible.width {
             result.size.width = visible.width
             result.origin.x = visible.origin.x

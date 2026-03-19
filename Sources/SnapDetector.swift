@@ -5,7 +5,7 @@
 import AppKit
 
 /// Represents a snap candidate: a preset size match found during resize.
-/// When the user's window dimensions fall within `presetThreshold` of a preset,
+/// When the user's window dimensions fall within `presetProximityThresholdPt` of a preset,
 /// a candidate is created with the target frame the window will snap to.
 struct SnapCandidate: Equatable {
     /// The preset to snap to.
@@ -18,9 +18,10 @@ struct SnapCandidate: Equatable {
 
 struct SnapDetector {
 
-    /// Proximity threshold for preset size snapping (points).
-    /// Both width and height must be within this distance to trigger a snap.
-    static let presetThreshold: CGFloat = 30.0
+    /// Maximum distance in points that a window dimension may differ from a
+    /// preset dimension and still trigger a snap. Both width and height must
+    /// independently satisfy this threshold for a candidate to be considered.
+    static let presetProximityThresholdPt: CGFloat = 30.0
 
     /// Detects the best snap candidate during a resize operation.
     ///
@@ -42,13 +43,19 @@ struct SnapDetector {
             let dw = abs(currentFrame.width - presetW)
             let dh = abs(currentFrame.height - presetH)
 
-            // Both dimensions must be within threshold.
-            guard dw <= presetThreshold && dh <= presetThreshold else { continue }
+            // Both dimensions must independently be within threshold to avoid
+            // false positives (e.g. matching width but wildly different height).
+            guard dw <= presetProximityThresholdPt && dh <= presetProximityThresholdPt else { continue }
 
-            // Use Euclidean distance to rank candidates.
+            // Rank candidates by Euclidean distance in (width, height) space.
+            // This naturally favors presets that match both dimensions closely
+            // over those that match one dimension well but the other poorly.
             let distance = sqrt(dw * dw + dh * dh)
             if distance < bestDistance {
                 bestDistance = distance
+
+                // Preserve the window's current top-left position; only adjust
+                // the size to the matched preset.
                 let targetFrame = CGRect(
                     x: currentFrame.origin.x,
                     y: currentFrame.origin.y,
