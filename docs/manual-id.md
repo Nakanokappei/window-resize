@@ -3,10 +3,9 @@
 ## Daftar Isi
 
 1. [Pengaturan Awal](#pengaturan-awal)
-2. [Mengubah Ukuran Jendela](#mengubah-ukuran-jendela)
+2. [Snap Resize](#snap-resize)
 3. [Pengaturan](#pengaturan)
-4. [Fitur Aksesibilitas](#fitur-aksesibilitas)
-5. [Pemecahan Masalah](#pemecahan-masalah)
+4. [Pemecahan Masalah](#pemecahan-masalah)
 
 ---
 
@@ -14,10 +13,10 @@
 
 ### Memberikan Izin Aksesibilitas
 
-Window Resize menggunakan API Aksesibilitas macOS untuk mengubah ukuran jendela. Anda harus memberikan izin saat pertama kali meluncurkan aplikasi.
+Window Resize menggunakan API Aksesibilitas macOS untuk mendeteksi dan mengubah ukuran jendela. Anda harus memberikan izin saat pertama kali meluncurkan aplikasi.
 
 1. Jalankan **Window Resize**. Dialog sistem akan muncul meminta Anda untuk memberikan akses Aksesibilitas.
-2. Klik **"Buka Pengaturan"** (atau buka secara manual ke **Pengaturan Sistem > Privasi & Keamanan > Aksesibilitas**).
+2. Klik **"Buka Pengaturan Sistem"** (atau buka secara manual ke **Pengaturan Sistem > Privasi & Keamanan > Aksesibilitas**).
 3. Temukan **"Window Resize"** di daftar dan aktifkan sakelarnya.
 4. Kembali ke aplikasi — ikon bilah menu akan muncul dan aplikasi siap digunakan.
 
@@ -25,39 +24,41 @@ Window Resize menggunakan API Aksesibilitas macOS untuk mengubah ukuran jendela.
 
 ---
 
-## Mengubah Ukuran Jendela
+## Snap Resize
 
-### Langkah demi Langkah
+### Cara Kerja
 
-1. Klik **ikon Window Resize** di bilah menu.
-2. Arahkan kursor ke **"Ubah Ukuran"** untuk membuka daftar jendela.
-3. Semua jendela yang sedang terbuka ditampilkan dengan **ikon aplikasi** dan namanya sebagai **[Nama Aplikasi] Judul Jendela**. Judul yang panjang secara otomatis dipotong agar menu tetap mudah dibaca.
-4. Jika suatu aplikasi memiliki **3 jendela atau lebih**, jendela-jendela tersebut secara otomatis dikelompokkan di bawah nama aplikasinya (contoh: **"Safari (4)"**). Arahkan kursor ke nama aplikasi untuk melihat daftar jendela, lalu arahkan kursor ke jendela untuk melihat ukuran yang tersedia.
-5. Arahkan kursor ke suatu jendela untuk melihat ukuran preset yang tersedia.
-6. Klik sebuah ukuran untuk langsung mengubah ukuran jendela.
+Window Resize memantau operasi pengubahan ukuran jendela secara waktu nyata. Saat Anda menarik tepi atau sudut jendela untuk mengubah ukurannya, aplikasi mendeteksi seberapa dekat dimensi jendela dengan ukuran preset yang tersedia.
 
-### Cara Ukuran Ditampilkan
+1. **Mulai mengubah ukuran** — tarik tepi atau sudut jendela mana pun seperti biasa.
+2. **Overlay muncul** — saat ukuran jendela mendekati sebuah preset (dalam jarak 30 piksel), overlay berbatas berwarna akan muncul di sekeliling jendela yang menunjukkan ukuran preset target.
+3. **Lepaskan untuk snap** — lepaskan mouse dan jendela akan langsung menyesuaikan ke ukuran preset tersebut secara presisi.
+4. **Batalkan** — jika Anda menggerakkan ukuran jendela menjauhi preset sebelum melepaskan, overlay menghilang dan tidak ada snap yang terjadi.
 
-Setiap entri ukuran di menu menampilkan:
+### Tampilan Rasio Aspek
 
-```
-1920 x 1080          Full HD
-```
+Selama mengubah ukuran, rasio aspek saat ini ditampilkan di overlay. Jika rasio tersebut sesuai dengan proporsi yang dikenal, namanya akan ditampilkan:
 
-- **Kiri:** Lebar x Tinggi (dalam piksel)
-- **Kanan:** Label (nama perangkat atau nama standar), ditampilkan dalam warna abu-abu
+- **Rasio Emas** (1,618:1)
+- **Rasio Perak** (2,414:1)
+- **Rasio Platinum** (1,325:1)
+- **Rasio Perunggu** (3,303:1)
 
-### Ukuran yang Melebihi Layar
+Rasio lainnya ditampilkan sebagai pecahan sederhana (misalnya, "16:9", "4:3").
 
-Jika ukuran preset lebih besar dari layar tempat jendela berada, ukuran tersebut akan **berwarna abu-abu dan tidak dapat dipilih**. Ini mencegah Anda mengubah ukuran jendela melampaui batas layar.
+> Fitur ini dapat dinonaktifkan di Pengaturan (lihat [Tampilan Overlay](#tampilan-overlay)).
 
-> **Multi-display:** Aplikasi mendeteksi layar mana yang digunakan setiap jendela dan menyesuaikan ukuran yang tersedia secara otomatis.
+### Shift untuk Mengunci Rasio Aspek
+
+Tahan tombol **Shift** saat mengubah ukuran untuk mengunci rasio aspek. Jendela akan mempertahankan proporsinya saat Anda menarik.
+
+> Fitur ini dapat dinonaktifkan di Pengaturan (lihat [Tampilan Overlay](#tampilan-overlay)).
 
 ---
 
 ## Pengaturan
 
-Buka Pengaturan dari bilah menu: klik ikon Window Resize, lalu pilih **"Pengaturan..."** (pintasan: **⌘,**).
+Buka Pengaturan dari bilah menu: klik ikon Window Resize, lalu pilih **"Pengaturan..."** (pintasan: **Cmd+,**).
 
 ### Ukuran Bawaan
 
@@ -86,57 +87,24 @@ Anda dapat menambahkan ukuran sendiri ke daftar:
 
 1. Di bagian **"Kustom"**, masukkan **Lebar** dan **Tinggi** dalam piksel.
 2. Klik **"Tambah"**.
-3. Ukuran baru muncul di daftar kustom dan langsung tersedia di menu ubah ukuran.
+3. Ukuran baru langsung tersedia untuk deteksi snap saat mengubah ukuran.
 
 Untuk menghapus ukuran kustom, klik tombol **"Hapus"** berwarna merah di sebelahnya.
 
-> Ukuran kustom muncul di menu ubah ukuran setelah ukuran bawaan.
+### Tampilan Overlay
+
+Atur gaya visual overlay snap:
+
+- **Batas resize** — warna dan gaya garis batas (solid atau putus-putus) yang ditampilkan saat mengubah ukuran mendekati sebuah preset. Default: oranye, putus-putus.
+- **Batas snap** — warna dan gaya garis batas yang ditampilkan saat jendela di-snap ke sebuah preset. Default: oranye, solid.
+- **Tampilkan rasio aspek** — aktifkan/nonaktifkan label rasio aspek di overlay. Default: aktif.
+- **Shift untuk mengunci rasio** — aktifkan/nonaktifkan penguncian rasio aspek saat menahan Shift saat mengubah ukuran. Default: aktif.
+
+Warna batas yang tersedia: Oranye, Biru, Hijau, Merah, Ungu, Putih.
 
 ### Jalankan Saat Login
 
 Aktifkan **"Jalankan Saat Login"** agar Window Resize otomatis berjalan saat Anda masuk ke macOS.
-
----
-
-## Fitur Aksesibilitas
-
-Fitur-fitur berikut meningkatkan aksesibilitas pengelolaan jendela. Jika salah satu fitur ini diaktifkan, menu ubah ukuran akan menampilkan opsi **"Ukuran Saat Ini"** di bagian atas, sehingga Anda dapat memindahkan posisi atau membawa jendela ke depan tanpa mengubah ukurannya.
-
-### Bawa ke Depan
-
-Aktifkan **"Bawa jendela ke depan setelah mengubah ukuran"** untuk secara otomatis menampilkan jendela yang diubah ukurannya di atas semua jendela lain. Fitur ini berguna saat jendela target sebagian tersembunyi di balik jendela lain.
-
-### Pindahkan ke Layar Utama
-
-Aktifkan **"Pindahkan ke layar utama"** untuk memindahkan jendela ke layar utama saat mengubah ukuran. Fitur ini membantu pada pengaturan multi-monitor saat Anda ingin memindahkan jendela dari layar sekunder dengan cepat.
-
-### Posisi Jendela
-
-Pilih di mana jendela akan ditempatkan di layar setelah mengubah ukuran. Satu baris berisi 9 tombol menunjukkan pilihan posisi:
-
-- **Sudut:** Kiri atas, Kanan atas, Kiri bawah, Kanan bawah
-- **Tepi:** Tengah atas, Tengah kiri, Tengah kanan, Tengah bawah
-- **Tengah:** Tengah layar
-
-Klik tombol posisi untuk memilihnya. Klik tombol yang sama lagi (atau klik **"Jangan pindahkan"**) untuk membatalkan pilihan. Jika tidak ada posisi yang dipilih, jendela tetap di tempatnya setelah diubah ukurannya.
-
-> **Catatan:** Penempatan jendela memperhitungkan bilah menu dan Dock, sehingga jendela tetap berada dalam area layar yang dapat digunakan.
-
----
-
-### Tangkapan Layar
-
-Aktifkan **"Ambil tangkapan layar setelah mengubah ukuran"** untuk secara otomatis menangkap jendela setelah diubah ukurannya.
-
-Saat diaktifkan, opsi berikut tersedia:
-
-- **Simpan ke file** — Simpan tangkapan layar sebagai file PNG. Klik **"Pilih..."** untuk memilih folder penyimpanan.
-  > **Format nama file:** `MMddHHmmss_NamaAplikasi_JudulJendela.png` (contoh: `0227193012_Safari_Apple.png`). Simbol dihapus; hanya huruf, angka, dan garis bawah yang digunakan.
-- **Salin ke papan klip** — Salin tangkapan layar ke papan klip untuk ditempelkan ke aplikasi lain.
-
-Kedua opsi dapat diaktifkan secara independen. Misalnya, Anda dapat menyalin ke papan klip tanpa menyimpan ke file.
-
-> **Catatan:** Fitur tangkapan layar memerlukan izin **Perekaman Layar**. Saat pertama kali menggunakan fitur ini, macOS akan meminta Anda untuk memberikan izin di **Pengaturan Sistem > Privasi & Keamanan > Perekaman Layar**.
 
 ### Bahasa
 
@@ -148,9 +116,9 @@ Di bagian bawah jendela Pengaturan, indikator status menunjukkan kondisi terkini
 
 | Indikator | Arti |
 |-----------|------|
-| 🟢 **Aksesibilitas: Aktif** | Izin aktif dan berfungsi dengan benar. |
-| 🟠 **Aksesibilitas: Perlu Diperbarui** | Sistem melaporkan izin telah diberikan, tetapi tidak lagi berlaku (lihat [Memperbaiki Izin yang Kedaluwarsa](#memperbaiki-izin-yang-kedaluwarsa)). Tombol **"Buka Pengaturan"** ditampilkan. |
-| 🔴 **Aksesibilitas: Tidak Aktif** | Izin belum diberikan. Tombol **"Buka Pengaturan"** ditampilkan. |
+| Hijau | Izin aktif dan berfungsi dengan benar. |
+| Oranye | Sistem melaporkan izin telah diberikan, tetapi tidak lagi berlaku (lihat [Memperbaiki Izin yang Kedaluwarsa](#memperbaiki-izin-yang-kedaluwarsa)). Tombol "Buka Pengaturan" ditampilkan. |
+| Merah | Izin belum diberikan. Tombol "Buka Pengaturan" ditampilkan. |
 
 ---
 
@@ -167,27 +135,14 @@ Jika Anda melihat indikator status berwarna oranye atau pesan "Aksesibilitas: Pe
 3. Matikan sakelarnya, lalu nyalakan kembali.
 4. Alternatif lain, hapus sepenuhnya dari daftar, lalu luncurkan ulang aplikasi untuk menambahkannya kembali.
 
-### Gagal Mengubah Ukuran
+### Snap Tidak Berfungsi
 
-Jika Anda melihat peringatan "Gagal Mengubah Ukuran", kemungkinan penyebabnya meliputi:
+Jika overlay tidak muncul saat mengubah ukuran:
 
-- Aplikasi target tidak mendukung pengubahan ukuran berbasis Aksesibilitas.
-- Jendela sedang dalam **mode layar penuh** (keluar dari layar penuh terlebih dahulu).
-- Izin Aksesibilitas tidak aktif (periksa status di Pengaturan).
+- Periksa apakah izin Aksesibilitas aktif (indikator hijau di Pengaturan).
+- Pastikan jendela yang Anda ubah ukurannya mendukung pengubahan ukuran standar (beberapa aplikasi membatasi pengubahan ukuran jendela).
+- Jendela dalam mode layar penuh tidak dapat diubah ukurannya — keluar dari layar penuh terlebih dahulu.
 
-### Jendela Tidak Muncul di Daftar
+### Masalah Tampilan Jendela Setelah Snap
 
-Menu ubah ukuran hanya menampilkan jendela yang:
-
-- Saat ini terlihat di layar
-- Bukan bagian dari desktop (misalnya, desktop Finder dikecualikan)
-- Bukan jendela milik aplikasi Window Resize itu sendiri
-
-Jika jendela diminimalkan ke Dock, jendela tersebut tidak akan muncul di daftar.
-
-### Tangkapan Layar Tidak Berfungsi
-
-Jika tangkapan layar tidak tertangkap:
-
-- Berikan izin **Perekaman Layar** di **Pengaturan Sistem > Privasi & Keamanan > Perekaman Layar**.
-- Pastikan setidaknya salah satu dari **"Simpan ke file"** atau **"Salin ke papan klip"** diaktifkan.
+Dalam kasus yang jarang terjadi, jendela target mungkin tidak digambar ulang dengan benar setelah snap. Aplikasi secara otomatis memaksa penggambaran ulang, tetapi jika artefak visual tetap ada, coba minimalkan dan pulihkan jendela tersebut.

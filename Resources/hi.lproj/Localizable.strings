@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "आकार बदलें";
 "menu.settings" = "सेटिंग्स...";
 "menu.quit" = "Window Resize बंद करें";
-"menu.loading" = "लोड हो रहा है...";
-"menu.no-windows" = "(कोई विंडो नहीं मिली)";
-"menu.untitled" = "(बिना शीर्षक)";
 
 /* Alerts */
 "alert.resize-failed.title" = "आकार बदलना विफल";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "जोड़ें";
 "settings.remove" = "हटाएँ";
+"settings.label" = "नाम";
 "settings.launch-at-login" = "लॉगिन पर शुरू करें";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "वर्तमान आकार";
 
-/* Accessibility features */
-"settings.bring-to-front" = "आकार बदलने के बाद विंडो को सामने लाएं";
-"settings.window-position" = "आकार बदलने के बाद स्थिति";
-"settings.window-position.none" = "स्थानांतरित न करें";
-"settings.move-to-main-screen" = "मुख्य स्क्रीन पर ले जाएं";
+/* Overlay appearance */
+"settings.overlay" = "ओवरले स्वरूप";
+"settings.overlay.resize" = "आकार बदलते समय";
+"settings.overlay.snap" = "स्नैप करते समय";
+"settings.overlay.dashed" = "डैश्ड";
+"settings.overlay.solid" = "सॉलिड";
+"settings.overlay.show-resize-overlay" = "आकार बदलते समय ओवरले दिखाएं";
+"settings.overlay.show-ratio" = "पक्षानुपात दिखाएं";
+"settings.overlay.shift-lock-ratio" = "पक्षानुपात लॉक करने के लिए Shift दबाए रखें";
+
+/* Color names */
+"settings.color.orange" = "नारंगी";
+"settings.color.blue" = "नीला";
+"settings.color.green" = "हरा";
+"settings.color.red" = "लाल";
+"settings.color.purple" = "बैंगनी";
+"settings.color.white" = "सफ़ेद";
 
 /* Language */
 "settings.language" = "भाषा";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "नई भाषा लागू करने के लिए ऐप को पुनः आरंभ करना आवश्यक है।";
 "settings.language.restart-button" = "अभी पुनः आरंभ करें";
 "settings.language.restart-later" = "बाद में";
+
+/* Quick Presets */
+"settings.quick-presets" = "त्वरित प्रीसेट";
+"settings.quick-presets.usage-label" = "लेबल";
+
+/* Overlay feedback */
+"overlay.restored" = "पुनर्स्थापित";
+"settings.overlay.none" = "कोई नहीं";
+
+/* Tab names */
+"settings.tab.general" = "सामान्य";
+"settings.tab.appearance" = "दिखावट";
+"settings.tab.shortcuts" = "शॉर्टकट";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "आकार बदलें";
+"settings.shortcuts.precision" = "सटीक समायोजन (±1px)";
+"settings.shortcuts.undo-redo" = "पूर्ववत करें / फिर से करें";
+"settings.shortcuts.press-shortcut" = "शॉर्टकट दबाएं...";
+"settings.shortcuts.reset" = "डिफ़ॉल्ट पर रीसेट करें";
+"settings.shortcuts.conflict-system" = "सिस्टम शॉर्टकट से विरोध है";
+"settings.shortcuts.conflict-app" = "इस ऐप में किसी अन्य क्रिया से विरोध है";
+"settings.shortcuts.grow-width" = "चौड़ाई बढ़ाएं";
+"settings.shortcuts.shrink-width" = "चौड़ाई घटाएं";
+"settings.shortcuts.grow-height" = "ऊंचाई बढ़ाएं";
+"settings.shortcuts.shrink-height" = "ऊंचाई घटाएं";
+"settings.shortcuts.undo" = "पूर्ववत करें";
+"settings.shortcuts.redo" = "फिर से करें";

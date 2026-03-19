@@ -1,23 +1,23 @@
 # Window Resize for macOS
 
-A menu bar application that resizes windows to preset sizes.
+A menu bar application that snaps windows to preset sizes as you resize them.
 
 Also available for Windows: [Window Resize for Windows](https://github.com/Nakanokappei/window-resize-windows)
 
 ## Features
 
-- **Menu bar resident** — click the icon to open the menu
+- **Snap-to-preset resize** — drag to resize any window and it snaps to the nearest preset size automatically
+- **Overlay preview** — a border overlay shows the target preset before you release the mouse
+- **Aspect ratio display** — the current aspect ratio is shown during resize (with named ratios: Golden Ratio, Silver Ratio, etc.)
+- **Shift to lock aspect ratio** — hold Shift while resizing to constrain the aspect ratio
 - **12 built-in preset sizes** — Mac Retina displays + standard resolutions
 - **Custom sizes** — add your own width x height presets
-- **Bring to front** — automatically bring the window to the foreground after resize
-- **9-position placement** — snap windows to corners, edges, or center of the screen
-- **Move to main screen** — relocate windows to the primary display on resize
-- **Automatic grouping** — apps with 3+ windows are grouped into submenus
-- **Screenshot after resize** — save to file and/or copy to clipboard
+- **Configurable overlay** — choose border color (6 options) and line style (solid/dashed) for resize and snap overlays independently
+- **Menu bar resident** — runs quietly in the menu bar
 - **Launch at login** — optional auto-start via SMAppService
 - **In-app language selection** — switch between 16 languages without changing system settings
 - **Accessibility permission detection** — detects stale permissions after rebuild
-- **16 languages** — English, Simplified Chinese, Spanish, Hindi, Arabic, Indonesian, Portuguese, French, Japanese, Russian, German, Vietnamese, Thai, Korean, Italian, Traditional Chinese
+- **16 languages** — English, Japanese, Simplified Chinese, Traditional Chinese, Korean, Spanish, French, German, Italian, Portuguese, Russian, Arabic, Hindi, Indonesian, Vietnamese, Thai
 
 ## Download
 
@@ -29,9 +29,9 @@ Download the latest release from [Releases](https://github.com/Nakanokappei/wind
 
 1. Open `Window Resize.app`
 2. Grant Accessibility permission when prompted (System Settings > Privacy & Security > Accessibility)
-3. Click the menu bar icon
-4. Select **Resize** > choose a window > select a preset size
-5. Open **Settings** to add custom sizes, configure window positioning, enable screenshots, or change the language
+3. Drag to resize any window — when the size approaches a preset, an overlay border appears
+4. Release the mouse to snap to the preset size
+5. Open **Settings** from the menu bar to add custom sizes, configure overlay appearance, or change the language
 
 ## System Requirements
 
@@ -49,6 +49,7 @@ Download the latest release from [Releases](https://github.com/Nakanokappei/wind
 | 1470 x 956 | MacBook Air 13" M3 |
 | 1440 x 900 | MacBook Air 13" |
 | 1920 x 1080 | Full HD |
+| 1680 x 1050 | WSXGA+ |
 | 1280 x 800 | WXGA |
 | 1280 x 720 | HD |
 | 1024 x 768 | XGA |

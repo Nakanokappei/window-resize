@@ -3,10 +3,9 @@
 ## Inhaltsverzeichnis
 
 1. [Ersteinrichtung](#ersteinrichtung)
-2. [Fenstergröße ändern](#fenstergröße-ändern)
+2. [Snap-Resize](#snap-resize)
 3. [Einstellungen](#einstellungen)
-4. [Barrierefreiheitsfunktionen](#barrierefreiheitsfunktionen)
-5. [Fehlerbehebung](#fehlerbehebung)
+4. [Fehlerbehebung](#fehlerbehebung)
 
 ---
 
@@ -14,7 +13,7 @@
 
 ### Berechtigung für Bedienungshilfen erteilen
 
-Window Resize verwendet die Bedienungshilfen-API von macOS, um Fenstergrößen zu ändern. Sie müssen die Berechtigung beim ersten Start der App erteilen.
+Window Resize verwendet die Bedienungshilfen-API von macOS, um Fenster zu erkennen und ihre Größe zu ändern. Sie müssen die Berechtigung beim ersten Start der App erteilen.
 
 1. Starten Sie **Window Resize**. Ein Systemdialog erscheint und bittet Sie, den Zugriff auf die Bedienungshilfen zu gewähren.
 2. Klicken Sie auf **"Einstellungen öffnen"** (oder navigieren Sie manuell zu **Systemeinstellungen > Datenschutz & Sicherheit > Bedienungshilfen**).
@@ -25,33 +24,35 @@ Window Resize verwendet die Bedienungshilfen-API von macOS, um Fenstergrößen z
 
 ---
 
-## Fenstergröße ändern
+## Snap-Resize
 
-### Schritt für Schritt
+### So funktioniert es
 
-1. Klicken Sie auf das **Window Resize-Symbol** in der Menüleiste.
-2. Bewegen Sie den Mauszeiger über **"Größe ändern"**, um die Fensterliste zu öffnen.
-3. Alle derzeit geöffneten Fenster werden mit ihrem **Anwendungssymbol** und Namen als **[App-Name] Fenstertitel** angezeigt. Lange Titel werden automatisch gekürzt, um das Menü übersichtlich zu halten.
-4. Wenn eine Anwendung **3 oder mehr Fenster** hat, werden diese automatisch unter dem Anwendungsnamen gruppiert (z. B. **"Safari (4)"**). Bewegen Sie den Mauszeiger über die App, um die einzelnen Fenster anzuzeigen, und dann über ein Fenster, um die verfügbaren Größen zu sehen.
-5. Bewegen Sie den Mauszeiger über ein Fenster, um die verfügbaren voreingestellten Größen zu sehen.
-6. Klicken Sie auf eine Größe, um das Fenster sofort zu ändern.
+Window Resize überwacht Fenstergrößenänderungen in Echtzeit. Wenn Sie eine Fensterkante oder -ecke ziehen, um die Größe zu ändern, erkennt die App, wie nah die Fensterabmessungen an einer voreingestellten Größe sind.
 
-### Darstellung der Größen
+1. **Größenänderung starten** — ziehen Sie wie gewohnt an einer beliebigen Fensterkante oder -ecke.
+2. **Overlay erscheint** — wenn die Fenstergröße sich einer Voreinstellung nähert (innerhalb von 30 Pixeln), erscheint ein farbiger Rahmen um das Fenster, der die voreingestellte Zielgröße anzeigt.
+3. **Loslassen zum Einrasten** — lassen Sie die Maustaste los und das Fenster rastet präzise auf die voreingestellte Größe ein.
+4. **Abbrechen** — wenn Sie die Fenstergröße vor dem Loslassen wieder von der Voreinstellung wegbewegen, verschwindet das Overlay und es wird nicht eingerastet.
 
-Jeder Größeneintrag im Menü zeigt:
+### Seitenverhältnis-Anzeige
 
-```
-1920 x 1080          Full HD
-```
+Während der Größenänderung wird das aktuelle Seitenverhältnis im Overlay angezeigt. Wenn das Verhältnis einer bekannten Proportion entspricht, wird dessen Name angezeigt:
 
-- **Links:** Breite x Höhe (in Pixeln)
-- **Rechts:** Bezeichnung (Gerätename oder Standardname), in Grau angezeigt
+- **Goldener Schnitt** (1,618:1)
+- **Silberner Schnitt** (2,414:1)
+- **Platin-Verhältnis** (1,325:1)
+- **Bronze-Verhältnis** (3,303:1)
 
-### Größen, die den Bildschirm überschreiten
+Andere Verhältnisse werden als vereinfachte Brüche angezeigt (z. B. „16:9", „4:3").
 
-Wenn eine voreingestellte Größe größer als der Bildschirm ist, auf dem sich das Fenster befindet, wird diese Größe **ausgegraut und ist nicht auswählbar**. Dies verhindert, dass Sie ein Fenster über die Bildschirmgrenzen hinaus vergrößern.
+> Diese Funktion kann in den Einstellungen deaktiviert werden (siehe [Seitenverhältnis anzeigen](#Overlay-Darstellung)).
 
-> **Mehrere Bildschirme:** Die App erkennt, auf welchem Bildschirm sich jedes Fenster befindet, und passt die verfügbaren Größen entsprechend an.
+### Shift zum Sperren des Seitenverhältnisses
+
+Halten Sie die **Shift**-Taste während der Größenänderung gedrückt, um das Seitenverhältnis zu sperren. Das Fenster behält seine aktuellen Proportionen bei, während Sie ziehen.
+
+> Diese Funktion kann in den Einstellungen deaktiviert werden (siehe [Shift-Verhältnissperre](#Overlay-Darstellung)).
 
 ---
 
@@ -86,57 +87,24 @@ Sie können eigene Größen zur Liste hinzufügen:
 
 1. Geben Sie im Bereich **"Benutzerdefiniert"** die **Breite** und **Höhe** in Pixeln ein.
 2. Klicken Sie auf **"Hinzufügen"**.
-3. Die neue Größe erscheint in der benutzerdefinierten Liste und ist sofort im Menü zur Größenänderung verfügbar.
+3. Die neue Größe ist sofort für die Snap-Erkennung während der Größenänderung verfügbar.
 
 Um eine benutzerdefinierte Größe zu entfernen, klicken Sie auf die rote Schaltfläche **"Entfernen"** daneben.
 
-> Benutzerdefinierte Größen erscheinen im Menü zur Größenänderung nach den integrierten Größen.
+### Overlay-Darstellung
+
+Konfigurieren Sie den visuellen Stil des Snap-Overlays:
+
+- **Resize-Rahmen** — Rahmenfarbe und Linienstil (durchgezogen oder gestrichelt), der angezeigt wird, wenn die Größe in der Nähe einer Voreinstellung geändert wird. Standard: Orange, gestrichelt.
+- **Snap-Rahmen** — Rahmenfarbe und Linienstil, der beim Einrasten des Fensters auf eine Voreinstellung angezeigt wird. Standard: Orange, durchgezogen.
+- **Seitenverhältnis anzeigen** — Seitenverhältnis-Anzeige im Overlay ein- oder ausschalten. Standard: Ein.
+- **Shift-Verhältnissperre** — Steuert, ob das Halten der Shift-Taste das Seitenverhältnis während der Größenänderung sperrt. Standard: Ein.
+
+Verfügbare Rahmenfarben: Orange, Blau, Grün, Rot, Lila, Weiß.
 
 ### Beim Anmelden starten
 
 Aktivieren Sie **"Beim Anmelden starten"**, damit Window Resize automatisch gestartet wird, wenn Sie sich bei macOS anmelden.
-
----
-
-## Barrierefreiheitsfunktionen
-
-Die folgenden Funktionen verbessern die Barrierefreiheit bei der Fensterverwaltung. Wenn eine dieser Funktionen aktiviert ist, wird im Größenmenü oben die Option **"Aktuelle Größe"** angezeigt, mit der Sie ein Fenster neu positionieren oder in den Vordergrund bringen können, ohne seine Größe zu ändern.
-
-### In den Vordergrund bringen
-
-Aktivieren Sie **"Fenster nach Größenänderung in den Vordergrund bringen"**, um das geänderte Fenster automatisch über alle anderen Fenster zu heben. Dies ist nützlich, wenn das Zielfenster teilweise von anderen Fenstern verdeckt wird.
-
-### Auf den Hauptbildschirm verschieben
-
-Aktivieren Sie **"Auf den Hauptbildschirm verschieben"**, um das Fenster beim Ändern der Größe auf den primären Bildschirm zu verschieben. Dies ist bei Konfigurationen mit mehreren Bildschirmen hilfreich, wenn Sie ein Fenster schnell von einem sekundären Bildschirm verschieben möchten.
-
-### Fensterposition
-
-Wählen Sie, wo das Fenster nach der Größenänderung auf dem Bildschirm platziert werden soll. Eine Reihe von 9 Schaltflächen stellt die Positionierungsoptionen dar:
-
-- **Ecken:** Oben links, Oben rechts, Unten links, Unten rechts
-- **Kanten:** Oben Mitte, Links Mitte, Rechts Mitte, Unten Mitte
-- **Mitte:** Bildschirmmitte
-
-Klicken Sie auf eine Positionsschaltfläche, um sie auszuwählen. Klicken Sie erneut auf dieselbe Schaltfläche (oder auf **"Nicht verschieben"**), um die Auswahl aufzuheben. Wenn keine Position ausgewählt ist, bleibt das Fenster nach der Größenänderung an seiner aktuellen Position.
-
-> **Hinweis:** Die Fensterpositionierung berücksichtigt die Menüleiste und das Dock, sodass das Fenster innerhalb des nutzbaren Bildschirmbereichs bleibt.
-
----
-
-### Bildschirmfoto
-
-Aktivieren Sie **"Nach Größenänderung fotografieren"**, um das Fenster nach der Größenänderung automatisch aufzunehmen.
-
-Wenn diese Option aktiviert ist, stehen folgende Optionen zur Verfügung:
-
-- **In Datei speichern** — Speichert das Bildschirmfoto als PNG-Datei. Klicken Sie auf **"Auswählen ..."**, um den Speicherordner festzulegen.
-  > **Dateinamenformat:** `MMddHHmmss_AppName_Fenstertitel.png` (z. B. `0227193012_Safari_Apple.png`). Sonderzeichen werden entfernt; es werden nur Buchstaben, Ziffern und Unterstriche verwendet.
-- **In die Zwischenablage kopieren** — Kopiert das Bildschirmfoto in die Zwischenablage zum Einfügen in andere Apps.
-
-Beide Optionen können unabhängig voneinander aktiviert werden. Sie können beispielsweise in die Zwischenablage kopieren, ohne in eine Datei zu speichern.
-
-> **Hinweis:** Die Bildschirmfoto-Funktion erfordert die Berechtigung für **Bildschirmaufnahme**. Wenn Sie diese Funktion zum ersten Mal verwenden, fordert macOS Sie auf, die Berechtigung unter **Systemeinstellungen > Datenschutz & Sicherheit > Bildschirmaufnahme** zu erteilen.
 
 ### Sprache
 
@@ -148,9 +116,9 @@ Am unteren Rand des Einstellungsfensters zeigt ein Statusindikator den aktuellen
 
 | Indikator | Bedeutung |
 |-----------|-----------|
-| 🟢 **Bedienungshilfen: Aktiviert** | Die Berechtigung ist aktiv und funktioniert ordnungsgemäß. |
-| 🟠 **Bedienungshilfen: Aktualisierung nötig** | Das System meldet, dass die Berechtigung erteilt wurde, aber sie ist nicht mehr gültig (siehe [Veraltete Berechtigungen korrigieren](#veraltete-berechtigungen-korrigieren)). Eine Schaltfläche **"Einstellungen öffnen"** wird angezeigt. |
-| 🔴 **Bedienungshilfen: Deaktiviert** | Die Berechtigung wurde nicht erteilt. Eine Schaltfläche **"Einstellungen öffnen"** wird angezeigt. |
+| Grün | Die Berechtigung ist aktiv und funktioniert ordnungsgemäß. |
+| Orange | Das System meldet, dass die Berechtigung erteilt wurde, aber sie ist nicht mehr gültig (siehe [Veraltete Berechtigungen korrigieren](#veraltete-berechtigungen-korrigieren)). Eine Schaltfläche „Einstellungen öffnen" wird angezeigt. |
+| Rot | Die Berechtigung wurde nicht erteilt. Eine Schaltfläche „Einstellungen öffnen" wird angezeigt. |
 
 ---
 
@@ -167,27 +135,14 @@ Wenn Sie einen orangefarbenen Statusindikator oder die Meldung „Bedienungshilf
 3. Schalten Sie den Schalter **AUS** und dann wieder **EIN**.
 4. Alternativ können Sie den Eintrag vollständig aus der Liste entfernen und die App erneut starten, um ihn wieder hinzuzufügen.
 
-### Größenänderung fehlgeschlagen
+### Snap funktioniert nicht
 
-Wenn Sie die Meldung „Größenänderung fehlgeschlagen" sehen, können folgende Ursachen vorliegen:
+Wenn das Overlay während der Größenänderung nicht erscheint:
 
-- Die Zielanwendung unterstützt keine Größenänderung über Bedienungshilfen.
-- Das Fenster befindet sich im **Vollbildmodus** (verlassen Sie zuerst den Vollbildmodus).
-- Die Berechtigung für Bedienungshilfen ist nicht aktiv (überprüfen Sie den Status in den Einstellungen).
+- Überprüfen Sie, ob die Berechtigung für Bedienungshilfen aktiv ist (grüner Indikator in den Einstellungen).
+- Stellen Sie sicher, dass das Fenster, dessen Größe Sie ändern, die Standard-Größenänderung unterstützt (einige Apps schränken die Fenstergrößenänderung ein).
+- Fenster im Vollbildmodus können nicht in der Größe geändert werden — verlassen Sie zuerst den Vollbildmodus.
 
-### Fenster erscheint nicht in der Liste
+### Darstellungsprobleme nach dem Einrasten
 
-Das Menü zur Größenänderung zeigt nur Fenster an, die:
-
-- Derzeit auf dem Bildschirm sichtbar sind
-- Nicht zum Schreibtisch gehören (z. B. wird der Finder-Schreibtisch ausgeschlossen)
-- Nicht die eigenen Fenster von Window Resize sind
-
-Wenn ein Fenster im Dock minimiert ist, wird es nicht in der Liste angezeigt.
-
-### Bildschirmfoto funktioniert nicht
-
-Wenn Bildschirmfotos nicht aufgenommen werden:
-
-- Erteilen Sie die Berechtigung für **Bildschirmaufnahme** unter **Systemeinstellungen > Datenschutz & Sicherheit > Bildschirmaufnahme**.
-- Stellen Sie sicher, dass mindestens eine der Optionen **"In Datei speichern"** oder **"In die Zwischenablage kopieren"** aktiviert ist.
+In seltenen Fällen wird das Zielfenster nach dem Einrasten möglicherweise nicht korrekt neu gezeichnet. Die App erzwingt automatisch ein Neuzeichnen, aber wenn visuelle Artefakte bestehen bleiben, minimieren Sie das Fenster und stellen Sie es wieder her.

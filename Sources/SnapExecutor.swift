@@ -1,6 +1,10 @@
 // SnapExecutor.swift — Executes the actual window snap by setting the window's
 // size and position via the AXUIElement accessibility API.
-// Separated from detection logic so snap execution can be tested independently.
+//
+// After applying the target frame, a brief size nudge (+1px then back) is
+// performed to force the target application to fully redraw its content.
+// Some apps don't repaint correctly when resized purely via AXUIElement
+// because they miss the normal NSWindowDidResize notification path.
 
 import AppKit
 import ApplicationServices
@@ -8,8 +12,8 @@ import ApplicationServices
 struct SnapExecutor {
 
     /// Snaps a window to the specified target frame using AXUIElement.
-    /// Locates the target window by PID + title matching (same strategy as
-    /// WindowManager.resizeWindow), then sets both position and size.
+    /// Locates the target window by PID + title matching, then sets both
+    /// position and size, followed by a redraw nudge.
     ///
     /// Returns true if the snap was applied successfully.
     static func execute(windowInfo: WindowInfo, targetFrame: CGRect) -> Bool {
@@ -52,9 +56,33 @@ struct SnapExecutor {
         var size = targetFrame.size
         if let sizeValue = AXValueCreate(.cgSize, &size) {
             let sizeResult = AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, sizeValue)
-            return sizeResult == .success
+            guard sizeResult == .success else { return false }
+        } else {
+            return false
         }
 
-        return false
+        // Force the target app to redraw by nudging the size (+1px then back).
+        // This triggers the app's layout engine to recalculate, fixing cases
+        // where AXUIElement-based resize leaves stale content artifacts.
+        forceRedraw(window: window, targetSize: targetFrame.size)
+
+        return true
+    }
+
+    /// Nudges the window size by 1px and immediately restores it.
+    /// The brief size change forces the target app to perform a full
+    /// layout pass and redraw, clearing any rendering artifacts.
+    private static func forceRedraw(window: AXUIElement, targetSize: CGSize) {
+        // Nudge: expand by 1px in both dimensions.
+        var nudgedSize = CGSize(width: targetSize.width + 1, height: targetSize.height + 1)
+        if let nudgeValue = AXValueCreate(.cgSize, &nudgedSize) {
+            AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, nudgeValue)
+        }
+
+        // Restore: set back to the exact target size.
+        var restoreSize = targetSize
+        if let restoreValue = AXValueCreate(.cgSize, &restoreSize) {
+            AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, restoreValue)
+        }
     }
 }

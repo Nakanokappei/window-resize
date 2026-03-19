@@ -3,10 +3,9 @@
 ## Table of Contents
 
 1. [Initial Setup](#initial-setup)
-2. [Resizing a Window](#resizing-a-window)
+2. [Snap Resize](#snap-resize)
 3. [Settings](#settings)
-4. [Accessibility Features](#accessibility-features)
-5. [Troubleshooting](#troubleshooting)
+4. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -14,7 +13,7 @@
 
 ### Granting Accessibility Permission
 
-Window Resize uses the macOS Accessibility API to resize windows. You must grant permission the first time you launch the app.
+Window Resize uses the macOS Accessibility API to detect and resize windows. You must grant permission the first time you launch the app.
 
 1. Launch **Window Resize**. A system dialog will appear asking you to grant Accessibility access.
 2. Click **"Open System Settings"** (or go manually to **System Settings > Privacy & Security > Accessibility**).
@@ -25,39 +24,41 @@ Window Resize uses the macOS Accessibility API to resize windows. You must grant
 
 ---
 
-## Resizing a Window
+## Snap Resize
 
-### Step-by-Step
+### How It Works
 
-1. Click the **Window Resize icon** in the menu bar.
-2. Hover over **"Resize"** to open the window list.
-3. All currently open windows are listed with their **application icon** and name as **[App Name] Window Title**. Long titles are automatically truncated to keep the menu readable.
-4. When an application has **3 or more windows**, they are automatically grouped under the application name (e.g., **"Safari (4)"**). Hover over the app to see individual windows, then hover over a window to see sizes.
-5. Hover over a window to see the available preset sizes.
-6. Click a size to resize the window immediately.
+Window Resize monitors window resize operations in real time. When you drag a window edge or corner to resize it, the app detects how close the window dimensions are to any preset size.
 
-### How Sizes Are Displayed
+1. **Start resizing** — drag any window's edge or corner as you normally would.
+2. **Overlay appears** — when the window size approaches a preset (within 30 pixels), a colored border overlay appears around the window showing the target preset size.
+3. **Release to snap** — let go of the mouse and the window snaps precisely to the preset size.
+4. **Cancel** — if you move the window size away from the preset before releasing, the overlay disappears and no snap occurs.
 
-Each size entry in the menu shows:
+### Aspect Ratio Display
 
-```
-1920 x 1080          Full HD
-```
+During resize, the current aspect ratio is displayed in the overlay. When the ratio matches a well-known proportion, its name is shown:
 
-- **Left:** Width x Height (in pixels)
-- **Right:** Label (device name or standard name), displayed in gray
+- **Golden Ratio** (1.618:1)
+- **Silver Ratio** (2.414:1)
+- **Platinum Ratio** (1.325:1)
+- **Bronze Ratio** (3.303:1)
 
-### Sizes That Exceed the Screen
+Other ratios are displayed as simplified fractions (e.g., "16:9", "4:3").
 
-If a preset size is larger than the display where the window is located, that size will be **grayed out and unselectable**. This prevents you from resizing a window beyond the screen boundaries.
+> This feature can be turned off in Settings (see [Show Aspect Ratio](#overlay-appearance)).
 
-> **Multi-display:** The app detects which display each window is on and adjusts the available sizes accordingly.
+### Shift to Lock Aspect Ratio
+
+Hold the **Shift** key while resizing to lock the aspect ratio. The window will maintain its current proportions as you drag.
+
+> This feature can be turned off in Settings (see [Shift to Lock Ratio](#overlay-appearance)).
 
 ---
 
 ## Settings
 
-Open Settings from the menu bar: click the Window Resize icon, then select **"Settings..."** (shortcut: **⌘,**).
+Open Settings from the menu bar: click the Window Resize icon, then select **"Settings..."** (shortcut: **Cmd+,**).
 
 ### Built-in Sizes
 
@@ -86,57 +87,24 @@ You can add your own sizes to the list:
 
 1. In the **"Custom"** section, enter the **Width** and **Height** in pixels.
 2. Click **"Add"**.
-3. The new size appears in the custom list and is immediately available in the resize menu.
+3. The new size is immediately available for snap detection during resize.
 
 To remove a custom size, click the red **"Remove"** button next to it.
 
-> Custom sizes appear in the resize menu after the built-in sizes.
+### Overlay Appearance
+
+Configure the visual style of the snap overlay:
+
+- **Resize border** — the border color and line style (solid or dashed) shown when resizing near a preset. Default: orange, dashed.
+- **Snap border** — the border color and line style shown when the window snaps to a preset. Default: orange, solid.
+- **Show aspect ratio** — toggle the aspect ratio label in the overlay. Default: on.
+- **Shift to lock ratio** — toggle whether holding Shift constrains the aspect ratio during resize. Default: on.
+
+Available border colors: Orange, Blue, Green, Red, Purple, White.
 
 ### Launch at Login
 
 Toggle **"Launch at Login"** to have Window Resize start automatically when you log in to macOS.
-
----
-
-## Accessibility Features
-
-The following features enhance window management accessibility. When any of these features is enabled, the resize menu includes a **"Current Size"** option at the top, allowing you to reposition or bring a window to the front without changing its size.
-
-### Bring to Front
-
-Toggle **"Bring window to front after resize"** to automatically raise the resized window above all other windows. This is useful when the target window is partially hidden behind others.
-
-### Move to Main Screen
-
-Toggle **"Move to main screen"** to relocate the window to the primary display when resizing. This is helpful in multi-monitor setups where you want to quickly move a window from a secondary display.
-
-### Window Position
-
-Choose where to place the window on screen after resizing. A row of 9 buttons represents the placement options:
-
-- **Corners:** Top-left, Top-right, Bottom-left, Bottom-right
-- **Edges:** Top center, Left center, Right center, Bottom center
-- **Center:** Center of the screen
-
-Click a position button to select it. Click the same button again (or click **"Don't move"**) to deselect. When no position is selected, the window stays where it is after resizing.
-
-> **Note:** Window positioning accounts for the menu bar and Dock, keeping the window within the usable screen area.
-
----
-
-### Screenshot
-
-Toggle **"Take screenshot after resize"** to automatically capture the window after resizing.
-
-When enabled, the following options are available:
-
-- **Save to file** — Save the screenshot as a PNG file. Click **"Choose..."** to select the save folder.
-  > **Filename format:** `MMddHHmmss_AppName_WindowTitle.png` (e.g. `0227193012_Safari_Apple.png`). Symbols are removed; only letters, digits, and underscores are used.
-- **Copy to clipboard** — Copy the screenshot to the clipboard for pasting into other apps.
-
-Both options can be enabled independently. For example, you can copy to the clipboard without saving to a file.
-
-> **Note:** The screenshot feature requires **Screen Recording** permission. When you first use this feature, macOS will prompt you to grant permission in **System Settings > Privacy & Security > Screen Recording**.
 
 ### Language
 
@@ -148,9 +116,9 @@ At the bottom of the Settings window, a status indicator shows the current state
 
 | Indicator | Meaning |
 |-----------|---------|
-| 🟢 **Accessibility: Enabled** | Permission is active and working correctly. |
-| 🟠 **Accessibility: Needs Refresh** | The system reports permission as granted, but it is no longer valid (see [Fixing Stale Permissions](#fixing-stale-permissions)). An **"Open Settings"** button is shown. |
-| 🔴 **Accessibility: Not Enabled** | Permission has not been granted. An **"Open Settings"** button is shown. |
+| Green | Permission is active and working correctly. |
+| Orange | The system reports permission as granted, but it is no longer valid (see [Fixing Stale Permissions](#fixing-stale-permissions)). An "Open Settings" button is shown. |
+| Red | Permission has not been granted. An "Open Settings" button is shown. |
 
 ---
 
@@ -167,27 +135,14 @@ If you see an orange status indicator or the message "Accessibility: Needs Refre
 3. Toggle it **OFF**, then toggle it back **ON**.
 4. Alternatively, remove it from the list entirely, then re-launch the app to re-add it.
 
-### Resize Failed
+### Snap Not Working
 
-If you see a "Resize Failed" alert, possible causes include:
+If the overlay does not appear during resize:
 
-- The target application does not support Accessibility-based resizing.
-- The window is in **full-screen mode** (exit full-screen first).
-- The Accessibility permission is not active (check the status in Settings).
+- Check that Accessibility permission is active (green indicator in Settings).
+- Make sure the window you are resizing supports standard resize (some apps restrict window sizing).
+- Full-screen windows cannot be resized — exit full-screen first.
 
-### Window Not Appearing in the List
+### Window Rendering Issues After Snap
 
-The resize menu only shows windows that are:
-
-- Currently visible on screen
-- Not part of the desktop (e.g., Finder desktop is excluded)
-- Not the Window Resize app's own windows
-
-If a window is minimized to the Dock, it will not appear in the list.
-
-### Screenshot Not Working
-
-If screenshots are not being captured:
-
-- Grant **Screen Recording** permission in **System Settings > Privacy & Security > Screen Recording**.
-- Ensure at least one of **"Save to file"** or **"Copy to clipboard"** is enabled.
+In rare cases, the target window may not redraw properly after snapping. The app automatically forces a redraw, but if visual artifacts persist, try minimizing and restoring the window.

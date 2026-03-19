@@ -3,61 +3,62 @@
 ## Indice
 
 1. [Configurazione iniziale](#configurazione-iniziale)
-2. [Ridimensionare una finestra](#ridimensionare-una-finestra)
+2. [Ridimensionamento con snap](#ridimensionamento-con-snap)
 3. [Impostazioni](#impostazioni)
-4. [Funzioni di accessibilità](#funzioni-di-accessibilità)
-5. [Risoluzione dei problemi](#risoluzione-dei-problemi)
+4. [Risoluzione dei problemi](#risoluzione-dei-problemi)
 
 ---
 
 ## Configurazione iniziale
 
-### Concedere il permesso di accessibilità
+### Concedere il permesso di accessibilita
 
-Window Resize utilizza l'API di accessibilità di macOS per ridimensionare le finestre. È necessario concedere il permesso al primo avvio dell'applicazione.
+Window Resize utilizza l'API di accessibilita di macOS per rilevare e ridimensionare le finestre. E necessario concedere il permesso al primo avvio dell'applicazione.
 
-1. Avviare **Window Resize**. Apparirà una finestra di dialogo del sistema che chiede di concedere l'accesso all'accessibilità.
-2. Fare clic su **"Apri Impostazioni"** (oppure andare manualmente in **Impostazioni di Sistema > Privacy e sicurezza > Accessibilità**).
+1. Avviare **Window Resize**. Apparira una finestra di dialogo del sistema che chiede di concedere l'accesso all'accessibilita.
+2. Fare clic su **"Apri Impostazioni di Sistema"** (oppure andare manualmente in **Impostazioni di Sistema > Privacy e sicurezza > Accessibilita**).
 3. Trovare **"Window Resize"** nell'elenco e attivare l'interruttore.
-4. Tornare all'applicazione — l'icona nella barra dei menu apparirà e l'app sarà pronta all'uso.
+4. Tornare all'applicazione — l'icona nella barra dei menu apparira e l'app sara pronta all'uso.
 
-> **Nota:** Se la finestra di dialogo non appare, è possibile aprire le impostazioni di accessibilità direttamente dalla finestra Impostazioni dell'app (vedere [Stato dell'accessibilità](#stato-dellaccessibilità)).
+> **Nota:** Se la finestra di dialogo non appare, e possibile aprire le impostazioni di accessibilita direttamente dalla finestra Impostazioni dell'app (vedere [Stato dell'accessibilita](#stato-dellaccessibilità)).
 
 ---
 
-## Ridimensionare una finestra
+## Ridimensionamento con snap
 
-### Passo per passo
+### Come funziona
 
-1. Fare clic sull'**icona di Window Resize** nella barra dei menu.
-2. Passare il cursore su **"Ridimensiona"** per aprire l'elenco delle finestre.
-3. Tutte le finestre attualmente aperte sono visualizzate con la propria **icona dell'applicazione** e il nome come **[Nome dell'app] Titolo della finestra**. I titoli lunghi vengono automaticamente troncati per mantenere il menu leggibile.
-4. Quando un'applicazione ha **3 o più finestre**, queste vengono raggruppate automaticamente sotto il nome dell'applicazione (es. **"Safari (4)"**). Passare il cursore sull'app per visualizzare le singole finestre, quindi passare su una finestra per vedere le dimensioni.
-5. Passare il cursore su una finestra per visualizzare le dimensioni predefinite disponibili.
-6. Fare clic su una dimensione per ridimensionare la finestra immediatamente.
+Window Resize monitora le operazioni di ridimensionamento delle finestre in tempo reale. Quando si trascina il bordo o l'angolo di una finestra per ridimensionarla, l'app rileva quanto le dimensioni della finestra siano vicine a una dimensione predefinita.
 
-### Come vengono visualizzate le dimensioni
+1. **Iniziare a ridimensionare** — trascinare un bordo o un angolo di qualsiasi finestra come di consueto.
+2. **Appare l'overlay** — quando le dimensioni della finestra si avvicinano a una dimensione predefinita (entro 30 pixel), un bordo colorato appare intorno alla finestra mostrando la dimensione predefinita di destinazione.
+3. **Rilasciare per eseguire lo snap** — rilasciare il mouse e la finestra si adattera precisamente alla dimensione predefinita.
+4. **Annullare** — se si allontanano le dimensioni della finestra dalla dimensione predefinita prima di rilasciare, l'overlay scompare e lo snap non viene eseguito.
 
-Ogni voce di dimensione nel menu mostra:
+### Visualizzazione del rapporto d'aspetto
 
-```
-1920 x 1080          Full HD
-```
+Durante il ridimensionamento, il rapporto d'aspetto corrente viene visualizzato nell'overlay. Quando il rapporto corrisponde a una proporzione nota, ne viene mostrato il nome:
 
-- **Sinistra:** Larghezza x Altezza (in pixel)
-- **Destra:** Etichetta (nome del dispositivo o nome standard), visualizzata in grigio
+- **Sezione aurea** (1,618:1)
+- **Rapporto d'argento** (2,414:1)
+- **Rapporto di platino** (1,325:1)
+- **Rapporto di bronzo** (3,303:1)
 
-### Dimensioni che superano lo schermo
+Gli altri rapporti vengono visualizzati come frazioni semplificate (ad esempio "16:9", "4:3").
 
-Se una dimensione predefinita è più grande dello schermo in cui si trova la finestra, quella dimensione sarà **disattivata e non selezionabile**. Questo impedisce di ridimensionare una finestra oltre i confini dello schermo.
+> Questa funzione puo essere disattivata nelle Impostazioni (vedere [Aspetto dell'overlay](#aspetto-delloverlay)).
 
-> **Multi-display:** L'app rileva su quale schermo si trova ogni finestra e regola le dimensioni disponibili di conseguenza.
+### Shift per bloccare il rapporto d'aspetto
+
+Tenere premuto il tasto **Shift** durante il ridimensionamento per bloccare il rapporto d'aspetto. La finestra manterra le proporzioni correnti durante il trascinamento.
+
+> Questa funzione puo essere disattivata nelle Impostazioni (vedere [Shift per bloccare il rapporto](#aspetto-delloverlay)).
 
 ---
 
 ## Impostazioni
 
-Aprire le Impostazioni dalla barra dei menu: fare clic sull'icona di Window Resize, quindi selezionare **"Impostazioni..."** (scorciatoia: **⌘,**).
+Aprire le Impostazioni dalla barra dei menu: fare clic sull'icona di Window Resize, quindi selezionare **"Impostazioni..."** (scorciatoia: **Cmd+,**).
 
 ### Dimensioni integrate
 
@@ -82,75 +83,42 @@ Le dimensioni integrate non possono essere rimosse o modificate.
 
 ### Dimensioni personalizzate
 
-È possibile aggiungere le proprie dimensioni all'elenco:
+E possibile aggiungere le proprie dimensioni all'elenco:
 
 1. Nella sezione **"Personalizzate"**, inserire la **Larghezza** e l'**Altezza** in pixel.
 2. Fare clic su **"Aggiungi"**.
-3. La nuova dimensione appare nell'elenco personalizzato ed è immediatamente disponibile nel menu di ridimensionamento.
+3. La nuova dimensione e immediatamente disponibile per il rilevamento dello snap durante il ridimensionamento.
 
 Per rimuovere una dimensione personalizzata, fare clic sul pulsante rosso **"Rimuovi"** accanto ad essa.
 
-> Le dimensioni personalizzate appaiono nel menu di ridimensionamento dopo le dimensioni integrate.
+### Aspetto dell'overlay
+
+Configurare lo stile visivo dell'overlay di snap:
+
+- **Bordo di ridimensionamento** — il colore e lo stile della linea (continua o tratteggiata) del bordo mostrato durante il ridimensionamento vicino a una dimensione predefinita. Predefinito: arancione, tratteggiata.
+- **Bordo di snap** — il colore e lo stile della linea del bordo mostrato quando la finestra si adatta a una dimensione predefinita. Predefinito: arancione, continua.
+- **Mostra rapporto d'aspetto** — attivare o disattivare l'etichetta del rapporto d'aspetto nell'overlay. Predefinito: attivato.
+- **Shift per bloccare il rapporto** — attivare o disattivare il blocco del rapporto d'aspetto tenendo premuto Shift durante il ridimensionamento. Predefinito: attivato.
+
+Colori del bordo disponibili: arancione, blu, verde, rosso, viola, bianco.
 
 ### Avvia al login
 
 Attivare **"Avvia al login"** per far avviare Window Resize automaticamente quando si accede a macOS.
 
----
-
-## Funzioni di accessibilità
-
-Le seguenti funzioni migliorano l'accessibilità nella gestione delle finestre. Quando una qualsiasi di queste funzioni è attivata, nel menu di ridimensionamento compare un'opzione **"Dimensione attuale"**, che consente di riposizionare o portare in primo piano una finestra senza modificarne le dimensioni.
-
-### Porta in primo piano
-
-Attivare **"Porta la finestra in primo piano dopo il ridimensionamento"** per sollevare automaticamente la finestra ridimensionata sopra tutte le altre. È utile quando la finestra di destinazione è parzialmente nascosta dietro ad altre.
-
-### Sposta sullo schermo principale
-
-Attivare **"Sposta sullo schermo principale"** per spostare la finestra sul display principale al momento del ridimensionamento. È comodo nelle configurazioni multi-monitor quando si desidera spostare rapidamente una finestra da un display secondario.
-
-### Posizione della finestra
-
-Scegliere dove posizionare la finestra sullo schermo dopo il ridimensionamento. Una riga di 9 pulsanti rappresenta le opzioni di posizionamento:
-
-- **Angoli:** In alto a sinistra, In alto a destra, In basso a sinistra, In basso a destra
-- **Lati:** Centro superiore, Centro sinistro, Centro destro, Centro inferiore
-- **Centro:** Centro dello schermo
-
-Fare clic su un pulsante per selezionare la posizione. Fare clic di nuovo sullo stesso pulsante (oppure fare clic su **"Non spostare"**) per deselezionare. Quando nessuna posizione è selezionata, la finestra resta nella posizione corrente dopo il ridimensionamento.
-
-> **Nota:** Il posizionamento della finestra tiene conto della barra dei menu e del Dock, mantenendo la finestra nell'area utilizzabile dello schermo.
-
----
-
-### Istantanea dello schermo
-
-Attivare **"Scatta istantanea dopo il ridimensionamento"** per catturare automaticamente la finestra dopo il ridimensionamento.
-
-Quando è attivata, sono disponibili le seguenti opzioni:
-
-- **Salva su file** — Salva l'istantanea come file PNG. Fare clic su **"Scegli..."** per selezionare la cartella di salvataggio.
-  > **Formato del nome file:** `MMddHHmmss_NomeApp_TitoloFinestra.png` (es. `0227193012_Safari_Apple.png`). I simboli vengono rimossi; vengono utilizzati solo lettere, cifre e trattini bassi.
-- **Copia negli appunti** — Copia l'istantanea negli appunti per incollarla in altre applicazioni.
-
-Entrambe le opzioni possono essere attivate in modo indipendente. Ad esempio, è possibile copiare negli appunti senza salvare su file.
-
-> **Nota:** La funzione di istantanea richiede il permesso di **Registrazione schermo**. Quando si utilizza questa funzione per la prima volta, macOS chiederà di concedere il permesso in **Impostazioni di Sistema > Privacy e Sicurezza > Registrazione schermo**.
-
 ### Lingua
 
 Selezionare la lingua di visualizzazione dell'app dal menu a discesa **Lingua**. Sono disponibili 16 lingue oppure **"Predefinita di sistema"** per utilizzare la lingua di macOS. La modifica della lingua richiede il riavvio dell'app.
 
-### Stato dell'accessibilità
+### Stato dell'accessibilita
 
-Nella parte inferiore della finestra delle Impostazioni, un indicatore di stato mostra lo stato attuale del permesso di accessibilità:
+Nella parte inferiore della finestra delle Impostazioni, un indicatore di stato mostra lo stato attuale del permesso di accessibilita:
 
 | Indicatore | Significato |
 |------------|-------------|
-| 🟢 **Accessibilità: abilitata** | Il permesso è attivo e funziona correttamente. |
-| 🟠 **Accessibilità: aggiornamento necessario** | Il sistema indica che il permesso è stato concesso, ma non è più valido (vedere [Correggere i permessi obsoleti](#correggere-i-permessi-obsoleti)). Viene mostrato un pulsante **"Apri Impostazioni"**. |
-| 🔴 **Accessibilità: non abilitata** | Il permesso non è stato concesso. Viene mostrato un pulsante **"Apri Impostazioni"**. |
+| Verde | Il permesso e attivo e funziona correttamente. |
+| Arancione | Il sistema indica che il permesso e stato concesso, ma non e piu valido (vedere [Correggere i permessi obsoleti](#correggere-i-permessi-obsoleti)). Viene mostrato un pulsante "Apri Impostazioni". |
+| Rosso | Il permesso non e stato concesso. Viene mostrato un pulsante "Apri Impostazioni". |
 
 ---
 
@@ -158,36 +126,23 @@ Nella parte inferiore della finestra delle Impostazioni, un indicatore di stato 
 
 ### Correggere i permessi obsoleti
 
-Se si vede un indicatore di stato arancione o il messaggio "Accessibilità: aggiornamento necessario", il permesso è diventato obsoleto. Questo può accadere dopo un aggiornamento o una ricompilazione dell'app.
+Se si vede un indicatore di stato arancione o il messaggio "Accessibilita: aggiornamento necessario", il permesso e diventato obsoleto. Questo puo accadere dopo un aggiornamento o una ricompilazione dell'app.
 
 **Per correggere:**
 
-1. Aprire **Impostazioni di Sistema > Privacy e sicurezza > Accessibilità**.
+1. Aprire **Impostazioni di Sistema > Privacy e sicurezza > Accessibilita**.
 2. Trovare **"Window Resize"** nell'elenco.
 3. Disattivare l'interruttore, quindi **riattivarlo**.
 4. In alternativa, rimuoverlo completamente dall'elenco, quindi riavviare l'app per aggiungerlo di nuovo.
 
-### Ridimensionamento non riuscito
+### Lo snap non funziona
 
-Se si vede un avviso "Ridimensionamento non riuscito", le possibili cause includono:
+Se l'overlay non appare durante il ridimensionamento:
 
-- L'applicazione di destinazione non supporta il ridimensionamento tramite accessibilità.
-- La finestra è in **modalità a schermo intero** (uscire prima dalla modalità a schermo intero).
-- Il permesso di accessibilità non è attivo (verificare lo stato nelle Impostazioni).
+- Verificare che il permesso di accessibilita sia attivo (indicatore verde nelle Impostazioni).
+- Assicurarsi che la finestra che si sta ridimensionando supporti il ridimensionamento standard (alcune applicazioni limitano le dimensioni della finestra).
+- Le finestre a schermo intero non possono essere ridimensionate — uscire prima dalla modalita a schermo intero.
 
-### La finestra non appare nell'elenco
+### Problemi di rendering della finestra dopo lo snap
 
-Il menu di ridimensionamento mostra solo le finestre che:
-
-- Sono attualmente visibili sullo schermo
-- Non fanno parte della Scrivania (ad esempio, la Scrivania del Finder è esclusa)
-- Non sono le finestre stesse di Window Resize
-
-Se una finestra è minimizzata nel Dock, non apparirà nell'elenco.
-
-### L'istantanea dello schermo non funziona
-
-Se le istantanee non vengono catturate:
-
-- Concedere il permesso di **Registrazione schermo** in **Impostazioni di Sistema > Privacy e Sicurezza > Registrazione schermo**.
-- Assicurarsi che almeno una delle opzioni **"Salva su file"** o **"Copia negli appunti"** sia attivata.
+In rari casi, la finestra di destinazione potrebbe non essere ridisegnata correttamente dopo lo snap. L'app forza automaticamente un aggiornamento della visualizzazione, ma se persistono artefatti visivi, provare a ridurre a icona e ripristinare la finestra.

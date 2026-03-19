@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "Ubah Ukuran";
 "menu.settings" = "Pengaturan...";
 "menu.quit" = "Keluar Window Resize";
-"menu.loading" = "Memuat...";
-"menu.no-windows" = "(Tidak ada jendela ditemukan)";
-"menu.untitled" = "(Tanpa Judul)";
 
 /* Alerts */
 "alert.resize-failed.title" = "Gagal Mengubah Ukuran";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "Tambah";
 "settings.remove" = "Hapus";
+"settings.label" = "Nama";
 "settings.launch-at-login" = "Jalankan Saat Login";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "Ukuran saat ini";
 
-/* Accessibility features */
-"settings.bring-to-front" = "Bawa jendela ke depan setelah mengubah ukuran";
-"settings.window-position" = "Posisi setelah mengubah ukuran";
-"settings.window-position.none" = "Jangan pindahkan";
-"settings.move-to-main-screen" = "Pindahkan ke layar utama";
+/* Overlay appearance */
+"settings.overlay" = "Tampilan Overlay";
+"settings.overlay.resize" = "Saat Mengubah Ukuran";
+"settings.overlay.snap" = "Saat Snap";
+"settings.overlay.dashed" = "Putus-putus";
+"settings.overlay.solid" = "Solid";
+"settings.overlay.show-resize-overlay" = "Tampilkan overlay saat mengubah ukuran";
+"settings.overlay.show-ratio" = "Tampilkan rasio aspek";
+"settings.overlay.shift-lock-ratio" = "Tahan Shift untuk mengunci rasio aspek";
+
+/* Color names */
+"settings.color.orange" = "Oranye";
+"settings.color.blue" = "Biru";
+"settings.color.green" = "Hijau";
+"settings.color.red" = "Merah";
+"settings.color.purple" = "Ungu";
+"settings.color.white" = "Putih";
 
 /* Language */
 "settings.language" = "Bahasa";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "Aplikasi perlu dimulai ulang untuk menerapkan bahasa baru.";
 "settings.language.restart-button" = "Mulai Ulang Sekarang";
 "settings.language.restart-later" = "Nanti";
+
+/* Quick Presets */
+"settings.quick-presets" = "Preset Cepat";
+"settings.quick-presets.usage-label" = "Label";
+
+/* Overlay feedback */
+"overlay.restored" = "Dipulihkan";
+"settings.overlay.none" = "Tidak ada";
+
+/* Tab names */
+"settings.tab.general" = "Umum";
+"settings.tab.appearance" = "Tampilan";
+"settings.tab.shortcuts" = "Pintasan";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "Ubah Ukuran";
+"settings.shortcuts.precision" = "Presisi (±1px)";
+"settings.shortcuts.undo-redo" = "Urungkan / Ulangi";
+"settings.shortcuts.press-shortcut" = "Tekan pintasan...";
+"settings.shortcuts.reset" = "Atur ulang ke default";
+"settings.shortcuts.conflict-system" = "Bertentangan dengan pintasan sistem";
+"settings.shortcuts.conflict-app" = "Bertentangan dengan tindakan lain di aplikasi ini";
+"settings.shortcuts.grow-width" = "Perbesar Lebar";
+"settings.shortcuts.shrink-width" = "Perkecil Lebar";
+"settings.shortcuts.grow-height" = "Perbesar Tinggi";
+"settings.shortcuts.shrink-height" = "Perkecil Tinggi";
+"settings.shortcuts.undo" = "Urungkan";
+"settings.shortcuts.redo" = "Ulangi";

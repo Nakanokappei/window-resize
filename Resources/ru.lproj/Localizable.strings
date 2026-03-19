@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "Изменить размер";
 "menu.settings" = "Настройки...";
 "menu.quit" = "Завершить Window Resize";
-"menu.loading" = "Загрузка...";
-"menu.no-windows" = "(Окна не найдены)";
-"menu.untitled" = "(Без названия)";
 
 /* Alerts */
 "alert.resize-failed.title" = "Не удалось изменить размер";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "Добавить";
 "settings.remove" = "Удалить";
+"settings.label" = "Название";
 "settings.launch-at-login" = "Запускать при входе";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "Текущий размер";
 
-/* Accessibility features */
-"settings.bring-to-front" = "Вывести окно на передний план после изменения размера";
-"settings.window-position" = "Положение после изменения размера";
-"settings.window-position.none" = "Не перемещать";
-"settings.move-to-main-screen" = "Переместить на основной экран";
+/* Overlay appearance */
+"settings.overlay" = "Внешний вид наложения";
+"settings.overlay.resize" = "При изменении размера";
+"settings.overlay.snap" = "При привязке";
+"settings.overlay.dashed" = "Пунктирная";
+"settings.overlay.solid" = "Сплошная";
+"settings.overlay.show-resize-overlay" = "Показывать наложение при изменении размера";
+"settings.overlay.show-ratio" = "Показывать соотношение сторон";
+"settings.overlay.shift-lock-ratio" = "Удерживайте Shift для фиксации соотношения сторон";
+
+/* Color names */
+"settings.color.orange" = "Оранжевый";
+"settings.color.blue" = "Синий";
+"settings.color.green" = "Зеленый";
+"settings.color.red" = "Красный";
+"settings.color.purple" = "Фиолетовый";
+"settings.color.white" = "Белый";
 
 /* Language */
 "settings.language" = "Язык";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "Для применения нового языка необходимо перезапустить приложение.";
 "settings.language.restart-button" = "Перезапустить сейчас";
 "settings.language.restart-later" = "Позже";
+
+/* Quick Presets */
+"settings.quick-presets" = "Быстрые пресеты";
+"settings.quick-presets.usage-label" = "Название";
+
+/* Overlay feedback */
+"overlay.restored" = "Восстановлено";
+"settings.overlay.none" = "Нет";
+
+/* Tab names */
+"settings.tab.general" = "Основные";
+"settings.tab.appearance" = "Внешний вид";
+"settings.tab.shortcuts" = "Горячие клавиши";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "Изменение размера";
+"settings.shortcuts.precision" = "Точная настройка (±1px)";
+"settings.shortcuts.undo-redo" = "Отменить / Повторить";
+"settings.shortcuts.press-shortcut" = "Нажмите сочетание клавиш...";
+"settings.shortcuts.reset" = "Сбросить настройки";
+"settings.shortcuts.conflict-system" = "Конфликтует с системным сочетанием клавиш";
+"settings.shortcuts.conflict-app" = "Конфликтует с другим действием в этом приложении";
+"settings.shortcuts.grow-width" = "Увеличить ширину";
+"settings.shortcuts.shrink-width" = "Уменьшить ширину";
+"settings.shortcuts.grow-height" = "Увеличить высоту";
+"settings.shortcuts.shrink-height" = "Уменьшить высоту";
+"settings.shortcuts.undo" = "Отменить";
+"settings.shortcuts.redo" = "Повторить";

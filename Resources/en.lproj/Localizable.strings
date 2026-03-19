@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "Resize";
 "menu.settings" = "Settings...";
 "menu.quit" = "Quit Window Resize";
-"menu.loading" = "Loading...";
-"menu.no-windows" = "(No windows found)";
-"menu.untitled" = "(Untitled)";
 
 /* Alerts */
 "alert.resize-failed.title" = "Resize Failed";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "Add";
 "settings.remove" = "Remove";
+"settings.label" = "Label";
 "settings.launch-at-login" = "Launch at Login";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "Current";
 
-/* Accessibility features */
-"settings.bring-to-front" = "Bring window to front after resize";
-"settings.window-position" = "Position after resize";
-"settings.window-position.none" = "Don't reposition";
-"settings.move-to-main-screen" = "Move to main screen";
+/* Overlay appearance */
+"settings.overlay" = "Overlay Appearance";
+"settings.overlay.resize" = "During Resize";
+"settings.overlay.snap" = "During Snap";
+"settings.overlay.dashed" = "Dashed";
+"settings.overlay.solid" = "Solid";
+"settings.overlay.show-resize-overlay" = "Show Overlay During Resize";
+"settings.overlay.show-ratio" = "Show Aspect Ratio";
+"settings.overlay.shift-lock-ratio" = "Hold Shift to Lock Aspect Ratio";
+
+/* Color names */
+"settings.color.orange" = "Orange";
+"settings.color.blue" = "Blue";
+"settings.color.green" = "Green";
+"settings.color.red" = "Red";
+"settings.color.purple" = "Purple";
+"settings.color.white" = "White";
 
 /* Language */
 "settings.language" = "Language";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "The app needs to restart to apply the new language.";
 "settings.language.restart-button" = "Restart Now";
 "settings.language.restart-later" = "Later";
+
+/* Quick Presets */
+"settings.quick-presets" = "Quick Presets";
+"settings.quick-presets.usage-label" = "Label";
+
+/* Overlay feedback */
+"overlay.restored" = "Restored";
+"settings.overlay.none" = "None";
+
+/* Tab names */
+"settings.tab.general" = "General";
+"settings.tab.appearance" = "Appearance";
+"settings.tab.shortcuts" = "Shortcuts";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "Resize";
+"settings.shortcuts.precision" = "Precision (±1px)";
+"settings.shortcuts.undo-redo" = "Undo / Redo";
+"settings.shortcuts.press-shortcut" = "Press shortcut...";
+"settings.shortcuts.reset" = "Reset to Defaults";
+"settings.shortcuts.conflict-system" = "Conflicts with a system shortcut";
+"settings.shortcuts.conflict-app" = "Conflicts with another action in this app";
+"settings.shortcuts.grow-width" = "Grow Width";
+"settings.shortcuts.shrink-width" = "Shrink Width";
+"settings.shortcuts.grow-height" = "Grow Height";
+"settings.shortcuts.shrink-height" = "Shrink Height";
+"settings.shortcuts.undo" = "Undo";
+"settings.shortcuts.redo" = "Redo";

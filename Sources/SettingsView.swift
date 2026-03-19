@@ -1,15 +1,42 @@
-// SettingsView.swift — SwiftUI settings panel displayed in a standalone
-// NSWindow (via SettingsWindowController). Provides UI for viewing built-in
-// presets, managing custom presets, configuring launch-at-login, accessibility
-// features, and Accessibility permission status.
+// SettingsView.swift — SwiftUI settings panel with three tabs:
+//   General    — Quick Presets, Launch at Login, Language, Accessibility
+//   Appearance — Overlay border color/style, ratio label, Shift-lock
+//   Shortcuts  — Customizable keyboard shortcut bindings with conflict detection
 
 import SwiftUI
 
+// MARK: - Root View (TabView)
+
 struct SettingsView: View {
+    var body: some View {
+        TabView {
+            GeneralTab()
+                .tabItem {
+                    Label(L("settings.tab.general"), systemImage: "gearshape")
+                }
+            AppearanceTab()
+                .tabItem {
+                    Label(L("settings.tab.appearance"), systemImage: "paintbrush")
+                }
+            ShortcutsTab()
+                .tabItem {
+                    Label(L("settings.tab.shortcuts"), systemImage: "keyboard")
+                }
+        }
+        .frame(width: 480)
+    }
+}
+
+// MARK: - General Tab
+
+private struct GeneralTab: View {
     @ObservedObject private var store = SettingsStore.shared
-    @State private var newWidth: String = ""
-    @State private var newHeight: String = ""
     @State private var showRestartAlert = false
+
+    // Quick preset editing state.
+    @State private var newQPLabel: String = ""
+    @State private var newQPWidth: String = ""
+    @State private var newQPHeight: String = ""
 
     /// Supported languages shown with their native names so users can
     /// identify them regardless of the current app language.
@@ -34,79 +61,80 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(L("settings.preset-sizes"))
+            // Quick Presets: keyboard-activated presets.
+            // Usage-based labels are shown prominently; sizes are secondary info.
+            // Also used as snap candidates during drag resize.
+            Text(L("settings.quick-presets"))
                 .font(.headline)
 
-            // Built-in presets: read-only list of the 12 default sizes.
-            GroupBox(label: Text(L("settings.built-in")).font(.subheadline)) {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 4) {
-                        ForEach(SettingsStore.builtInSizes) { size in
-                            HStack {
-                                Text(size.displayName)
-                                Spacer()
-                                if let label = size.label {
-                                    Text(label)
-                                        .foregroundColor(.secondary)
-                                        .font(.caption)
-                                        .frame(width: 150, alignment: .trailing)
-                                }
-                            }
-                            .padding(.vertical, 2)
-                        }
-                    }
-                    .padding(.vertical, 4)
-                }
-                .frame(maxHeight: 130)
-            }
-
-            // Custom presets: user-defined sizes with add/remove controls.
-            GroupBox(label: Text(L("settings.custom")).font(.subheadline)) {
+            GroupBox {
                 VStack(alignment: .leading, spacing: 4) {
-                    if store.customSizes.isEmpty {
-                        Text(L("settings.no-custom-sizes"))
-                            .foregroundColor(.secondary)
-                            .font(.caption)
-                            .padding(.vertical, 4)
-                    } else {
-                        ForEach(store.customSizes) { size in
-                            HStack {
-                                Text(size.displayName)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Button(L("settings.remove")) {
-                                    if let idx = store.customSizes.firstIndex(where: { $0.id == size.id }) {
-                                        store.removeSize(at: IndexSet(integer: idx))
-                                    }
+                    ForEach(Array(store.quickPresets.enumerated()), id: \.element.id) { index, preset in
+                        HStack(spacing: 6) {
+                            // Shortcut badge (dynamic from bindings).
+                            Text(store.shortcutDisplayString(for: "preset\(index + 1)"))
+                                .font(.system(size: 10, weight: .medium, design: .monospaced))
+                                .foregroundColor(.secondary)
+                                .frame(width: 38)
+
+                            // Editable usage label (primary info).
+                            TextField(L("settings.quick-presets.usage-label"), text: Binding(
+                                get: { preset.label ?? "" },
+                                set: { newLabel in
+                                    var updated = preset
+                                    updated.label = newLabel.isEmpty ? nil : newLabel
+                                    store.updateQuickPreset(at: index, preset: updated)
                                 }
-                                .foregroundColor(.red)
-                                .buttonStyle(.borderless)
+                            ))
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 100)
+
+                            // Size display (secondary info).
+                            Text("\(preset.width) × \(preset.height)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+
+                            Spacer()
+
+                            // Remove button.
+                            Button(action: { store.removeQuickPreset(at: index) }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
                             }
-                            .padding(.vertical, 2)
+                            .buttonStyle(.borderless)
                         }
+                        .padding(.vertical, 2)
                     }
 
-                    Divider()
-
-                    // Input fields for adding a new custom size.
-                    // Validates that both width and height are positive integers.
-                    HStack {
-                        TextField(L("settings.width"), text: $newWidth)
-                            .frame(width: 80)
-                            .textFieldStyle(.roundedBorder)
-                        Text(L("settings.dimension-separator"))
-                        TextField(L("settings.height"), text: $newHeight)
-                            .frame(width: 80)
-                            .textFieldStyle(.roundedBorder)
-                        Button(L("settings.add")) {
-                            guard let w = Int(newWidth), let h = Int(newHeight),
-                                  w > 0, h > 0 else { return }
-                            store.addSize(PresetSize(width: w, height: h))
-                            newWidth = ""
-                            newHeight = ""
+                    // Add new quick preset form (when fewer than 9 exist).
+                    if store.quickPresets.count < 9 {
+                        Divider()
+                        HStack(spacing: 4) {
+                            TextField(L("settings.quick-presets.usage-label"), text: $newQPLabel)
+                                .frame(width: 90)
+                                .textFieldStyle(.roundedBorder)
+                            TextField(L("settings.width"), text: $newQPWidth)
+                                .frame(width: 50)
+                                .textFieldStyle(.roundedBorder)
+                            Text("×")
+                            TextField(L("settings.height"), text: $newQPHeight)
+                                .frame(width: 50)
+                                .textFieldStyle(.roundedBorder)
+                            Button(L("settings.add")) {
+                                guard let w = Int(newQPWidth), let h = Int(newQPHeight),
+                                      w > 0, h > 0 else { return }
+                                let label = newQPLabel.trimmingCharacters(in: .whitespaces)
+                                store.addQuickPreset(PresetSize(
+                                    width: w, height: h,
+                                    label: label.isEmpty ? nil : label))
+                                newQPLabel = ""
+                                newQPWidth = ""
+                                newQPHeight = ""
+                            }
+                            .disabled(Int(newQPWidth) == nil || Int(newQPHeight) == nil)
                         }
-                        .disabled(Int(newWidth) == nil || Int(newHeight) == nil)
+                        .padding(.vertical, 4)
                     }
-                    .padding(.vertical, 4)
                 }
                 .padding(.vertical, 4)
             }
@@ -116,30 +144,6 @@ struct SettingsView: View {
             // Launch at Login toggle — uses SMAppService under the hood.
             Toggle(L("settings.launch-at-login"), isOn: $store.launchAtLogin)
                 .toggleStyle(.switch)
-
-            Divider()
-
-            // Accessibility features: bring-to-front, move-to-main-screen, positioning.
-            Toggle(L("settings.bring-to-front"), isOn: $store.bringToFront)
-                .toggleStyle(.switch)
-
-            Toggle(L("settings.move-to-main-screen"), isOn: $store.moveToMainScreen)
-                .toggleStyle(.switch)
-
-            // Window position: horizontal row of 9 buttons using inset-rectangle
-            // SF Symbols, grouped visually as top / middle / bottom rows.
-            HStack {
-                Text(L("settings.window-position"))
-                Spacer()
-                if store.windowPosition != nil {
-                    Button(L("settings.window-position.none")) {
-                        store.windowPosition = nil
-                    }
-                    .font(.caption)
-                    .buttonStyle(.borderless)
-                }
-            }
-            positionRow
 
             Divider()
 
@@ -196,7 +200,6 @@ struct SettingsView: View {
             }
         }
         .padding()
-        .frame(width: 400)
         .alert(L("settings.language.restart-title"), isPresented: $showRestartAlert) {
             Button(L("settings.language.restart-button")) {
                 store.relaunchApp()
@@ -206,53 +209,290 @@ struct SettingsView: View {
             Text(L("settings.language.restart-body"))
         }
     }
+}
 
-    // MARK: - Position Row
+// MARK: - Appearance Tab
 
-    /// A horizontal row of 9 buttons representing the window anchor positions.
-    /// Uses inset-rectangle SF Symbols to show where the window will be placed.
-    /// Grouped visually as top-row / middle-row / bottom-row with wider gaps.
-    private var positionRow: some View {
-        HStack(spacing: 2) {
-            // Top row: top-left, top, top-right
-            positionButton(.topLeft, symbol: "inset.filled.topleft.rectangle")
-            positionButton(.top, symbol: "inset.filled.tophalf.rectangle")
-            positionButton(.topRight, symbol: "inset.filled.topright.rectangle")
+private struct AppearanceTab: View {
+    @ObservedObject private var store = SettingsStore.shared
 
-            Spacer().frame(width: 6)
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Overlay appearance settings.
+            Text(L("settings.overlay"))
+                .font(.headline)
 
-            // Middle row: left, center, right
-            positionButton(.left, symbol: "inset.filled.leadinghalf.rectangle")
-            positionButton(.center, symbol: "inset.filled.center.rectangle")
-            positionButton(.right, symbol: "inset.filled.trailinghalf.rectangle")
+            GroupBox {
+                VStack(alignment: .leading, spacing: 8) {
+                    // Resize overlay: color + line style (with "none" option).
+                    HStack {
+                        Text(L("settings.overlay.resize"))
+                            .frame(width: 120, alignment: .leading)
+                        colorPicker(selection: $store.resizeBorderColor)
+                        resizeLineStylePicker()
+                    }
 
-            Spacer().frame(width: 6)
+                    // Snap overlay: color + line style (no "none" option).
+                    HStack {
+                        Text(L("settings.overlay.snap"))
+                            .frame(width: 120, alignment: .leading)
+                        colorPicker(selection: $store.snapBorderColor)
+                        lineStylePicker(selection: $store.snapBorderDashed,
+                                        colorName: store.snapBorderColor)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
 
-            // Bottom row: bottom-left, bottom, bottom-right
-            positionButton(.bottomLeft, symbol: "inset.filled.bottomleft.rectangle")
-            positionButton(.bottom, symbol: "inset.filled.bottomhalf.rectangle")
-            positionButton(.bottomRight, symbol: "inset.filled.bottomright.rectangle")
+            // Show ratio label toggle.
+            Toggle(L("settings.overlay.show-ratio"), isOn: $store.showRatioLabel)
+                .toggleStyle(.switch)
+
+            // Shift to lock aspect ratio toggle.
+            Toggle(L("settings.overlay.shift-lock-ratio"), isOn: $store.shiftToLockRatio)
+                .toggleStyle(.switch)
+        }
+        .padding()
+    }
+
+    // MARK: - Resize Line Style Picker (with "None" option)
+
+    /// Line style picker for the resize overlay that includes a "None"
+    /// option. Selecting "None" hides the overlay border during non-snap
+    /// resize. Selecting solid or dashed re-enables it.
+    private func resizeLineStylePicker() -> some View {
+        let nsColor = SettingsStore.nsColor(forName: store.resizeBorderColor)
+        let swiftColor = Color(nsColor: nsColor)
+
+        return HStack(spacing: 8) {
+            // "None" button — disables resize overlay border.
+            lineStyleButton(dashed: false, color: .secondary.opacity(0.3),
+                            isSelected: !store.showResizeOverlay,
+                            label: L("settings.overlay.none")) {
+                store.showResizeOverlay = false
+            }
+
+            // Solid line button — enables resize overlay with solid border.
+            lineStyleButton(dashed: false, color: swiftColor,
+                            isSelected: store.showResizeOverlay && !store.resizeBorderDashed,
+                            label: L("settings.overlay.solid")) {
+                store.showResizeOverlay = true
+                store.resizeBorderDashed = false
+            }
+
+            // Dashed line button — enables resize overlay with dashed border.
+            lineStyleButton(dashed: true, color: swiftColor,
+                            isSelected: store.showResizeOverlay && store.resizeBorderDashed,
+                            label: L("settings.overlay.dashed")) {
+                store.showResizeOverlay = true
+                store.resizeBorderDashed = true
+            }
         }
     }
 
-    /// A single position button with toggle behavior.
-    private func positionButton(_ position: WindowPosition, symbol: String) -> some View {
-        let isSelected = store.windowPosition == position
-        return Button(action: {
-            store.windowPosition = isSelected ? nil : position
-        }) {
-            Image(systemName: symbol)
-                .font(.system(size: 14))
-                .frame(width: 28, height: 28)
-                .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(isSelected ? Color.accentColor.opacity(0.3) : Color.secondary.opacity(0.1))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 1)
-                )
+    // MARK: - Color Picker with Inline Swatches
+
+    /// A horizontal row of color swatch circles. Tapping selects the color.
+    /// The selected swatch gets a highlight ring.
+    private func colorPicker(selection: Binding<String>) -> some View {
+        HStack(spacing: 6) {
+            ForEach(SettingsStore.borderColorOptions, id: \.name) { opt in
+                Circle()
+                    .fill(Color(nsColor: opt.color))
+                    .frame(width: 16, height: 16)
+                    .overlay(
+                        Circle()
+                            .strokeBorder(Color.primary, lineWidth: selection.wrappedValue == opt.name ? 2 : 0)
+                            .frame(width: 20, height: 20)
+                    )
+                    .help(L(opt.locKey))
+                    .onTapGesture { selection.wrappedValue = opt.name }
+            }
         }
-        .buttonStyle(.borderless)
+    }
+
+    // MARK: - Line Style Picker with Inline Preview
+
+    /// A horizontal row of line style previews (solid and dashed) drawn in the
+    /// selected overlay color. Tapping toggles the style.
+    private func lineStylePicker(selection: Binding<Bool>, colorName: String) -> some View {
+        let nsColor = SettingsStore.nsColor(forName: colorName)
+        let swiftColor = Color(nsColor: nsColor)
+
+        return HStack(spacing: 8) {
+            // Solid line button.
+            lineStyleButton(dashed: false, color: swiftColor,
+                            isSelected: !selection.wrappedValue,
+                            label: L("settings.overlay.solid")) {
+                selection.wrappedValue = false
+            }
+
+            // Dashed line button.
+            lineStyleButton(dashed: true, color: swiftColor,
+                            isSelected: selection.wrappedValue,
+                            label: L("settings.overlay.dashed")) {
+                selection.wrappedValue = true
+            }
+        }
+    }
+
+    /// A single line-style option button with a visual preview and selection ring.
+    private func lineStyleButton(dashed: Bool, color: Color,
+                                 isSelected: Bool, label: String,
+                                 action: @escaping () -> Void) -> some View {
+        VStack(spacing: 2) {
+            LinePreview(dashed: dashed, color: color)
+                .frame(width: 30, height: 12)
+            Text(label)
+                .font(.system(size: 9))
+                .foregroundColor(.secondary)
+        }
+        .padding(.horizontal, 6)
+        .padding(.vertical, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .strokeBorder(Color.primary.opacity(isSelected ? 0.5 : 0),
+                              lineWidth: 1)
+        )
+        .contentShape(Rectangle())
+        .onTapGesture(perform: action)
+    }
+}
+
+// MARK: - Shortcuts Tab
+
+private struct ShortcutsTab: View {
+    @ObservedObject private var store = SettingsStore.shared
+
+    /// Tracks which action ID is currently being recorded, if any.
+    @State private var recordingActionID: String? = nil
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+
+            // Resize group (±10px).
+            Text(L("settings.shortcuts.resize"))
+                .font(.headline)
+            GroupBox {
+                VStack(spacing: 4) {
+                    ForEach(SettingsStore.resizeActionIDs, id: \.self) { actionID in
+                        shortcutRow(actionID: actionID)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+
+            // Precision group (±1px).
+            Text(L("settings.shortcuts.precision"))
+                .font(.headline)
+            GroupBox {
+                VStack(spacing: 4) {
+                    ForEach(SettingsStore.precisionActionIDs, id: \.self) { actionID in
+                        shortcutRow(actionID: actionID)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+
+            // Undo / Redo group.
+            Text(L("settings.shortcuts.undo-redo"))
+                .font(.headline)
+            GroupBox {
+                VStack(spacing: 4) {
+                    ForEach(SettingsStore.undoRedoActionIDs, id: \.self) { actionID in
+                        shortcutRow(actionID: actionID)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+
+            // Reset to defaults button.
+            HStack {
+                Spacer()
+                Button(L("settings.shortcuts.reset")) {
+                    store.resetShortcutsToDefaults()
+                }
+                .font(.caption)
+            }
+        }
+        .padding()
+    }
+
+    /// A single shortcut row: [recorder] action-name [conflict-icon].
+    private func shortcutRow(actionID: String) -> some View {
+        let binding = Binding<SettingsStore.ShortcutBinding>(
+            get: {
+                store.shortcutBindings[actionID]
+                    ?? SettingsStore.defaultShortcutBindings[actionID]
+                    ?? SettingsStore.ShortcutBinding(modifiers: 0, keyCode: 0)
+            },
+            set: { newValue in
+                store.shortcutBindings[actionID] = newValue
+            }
+        )
+
+        let isRecording = Binding<Bool>(
+            get: { recordingActionID == actionID },
+            set: { newValue in
+                recordingActionID = newValue ? actionID : nil
+            }
+        )
+
+        // Check for conflicts.
+        let currentBinding = binding.wrappedValue
+        let systemConflict = store.conflictsWithSystem(currentBinding)
+        let appConflict = store.conflictsWithOtherAction(currentBinding, excluding: actionID)
+        let hasConflict = systemConflict || appConflict != nil
+
+        return HStack(spacing: 8) {
+            // Shortcut recorder button.
+            ShortcutRecorderView(binding: binding, isRecording: isRecording)
+                .frame(width: 90, height: 24)
+
+            // Action name.
+            Text(SettingsStore.localizedActionName(actionID))
+                .font(.system(size: 12))
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Conflict warning icon.
+            if hasConflict {
+                let tooltip: String = {
+                    if systemConflict {
+                        return L("settings.shortcuts.conflict-system")
+                    } else if let otherName = appConflict {
+                        return L("settings.shortcuts.conflict-app") + ": " + otherName
+                    }
+                    return ""
+                }()
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundColor(.orange)
+                    .font(.system(size: 12))
+                    .help(tooltip)
+            }
+        }
+        .padding(.vertical, 2)
+    }
+}
+
+// MARK: - LinePreview
+
+/// A small view that draws a horizontal line sample (dashed or solid)
+/// in the specified color. Used in the inline line style picker buttons.
+private struct LinePreview: View {
+    let dashed: Bool
+    let color: Color
+
+    var body: some View {
+        GeometryReader { geo in
+            Path { path in
+                let midY = geo.size.height / 2
+                path.move(to: CGPoint(x: 0, y: midY))
+                path.addLine(to: CGPoint(x: geo.size.width, y: midY))
+            }
+            .stroke(color, style: StrokeStyle(
+                lineWidth: 3,
+                dash: dashed ? [5, 3] : []
+            ))
+        }
     }
 }

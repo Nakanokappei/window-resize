@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "Ridimensiona";
 "menu.settings" = "Impostazioni...";
 "menu.quit" = "Esci da Window Resize";
-"menu.loading" = "Caricamento...";
-"menu.no-windows" = "(Nessuna finestra trovata)";
-"menu.untitled" = "(Senza titolo)";
 
 /* Alerts */
 "alert.resize-failed.title" = "Ridimensionamento non riuscito";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "Aggiungi";
 "settings.remove" = "Rimuovi";
+"settings.label" = "Nome";
 "settings.launch-at-login" = "Avvia al login";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "Dimensione attuale";
 
-/* Accessibility features */
-"settings.bring-to-front" = "Porta la finestra in primo piano dopo il ridimensionamento";
-"settings.window-position" = "Posizione dopo il ridimensionamento";
-"settings.window-position.none" = "Non riposizionare";
-"settings.move-to-main-screen" = "Sposta sullo schermo principale";
+/* Overlay appearance */
+"settings.overlay" = "Aspetto sovrapposizione";
+"settings.overlay.resize" = "Durante il ridimensionamento";
+"settings.overlay.snap" = "Durante lo snap";
+"settings.overlay.dashed" = "Tratteggiato";
+"settings.overlay.solid" = "Continuo";
+"settings.overlay.show-resize-overlay" = "Mostra sovrapposizione durante il ridimensionamento";
+"settings.overlay.show-ratio" = "Mostra rapporto d'aspetto";
+"settings.overlay.shift-lock-ratio" = "Tieni premuto Shift per bloccare il rapporto d'aspetto";
+
+/* Color names */
+"settings.color.orange" = "Arancione";
+"settings.color.blue" = "Blu";
+"settings.color.green" = "Verde";
+"settings.color.red" = "Rosso";
+"settings.color.purple" = "Viola";
+"settings.color.white" = "Bianco";
 
 /* Language */
 "settings.language" = "Lingua";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "L'app deve essere riavviata per applicare la nuova lingua.";
 "settings.language.restart-button" = "Riavvia ora";
 "settings.language.restart-later" = "Più tardi";
+
+/* Quick Presets */
+"settings.quick-presets" = "Preset rapidi";
+"settings.quick-presets.usage-label" = "Etichetta";
+
+/* Overlay feedback */
+"overlay.restored" = "Ripristinato";
+"settings.overlay.none" = "Nessuno";
+
+/* Tab names */
+"settings.tab.general" = "Generale";
+"settings.tab.appearance" = "Aspetto";
+"settings.tab.shortcuts" = "Scorciatoie";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "Ridimensiona";
+"settings.shortcuts.precision" = "Precisione (±1px)";
+"settings.shortcuts.undo-redo" = "Annulla / Ripristina";
+"settings.shortcuts.press-shortcut" = "Premi una scorciatoia...";
+"settings.shortcuts.reset" = "Ripristina valori predefiniti";
+"settings.shortcuts.conflict-system" = "In conflitto con una scorciatoia di sistema";
+"settings.shortcuts.conflict-app" = "In conflitto con un'altra azione in questa app";
+"settings.shortcuts.grow-width" = "Aumenta larghezza";
+"settings.shortcuts.shrink-width" = "Riduci larghezza";
+"settings.shortcuts.grow-height" = "Aumenta altezza";
+"settings.shortcuts.shrink-height" = "Riduci altezza";
+"settings.shortcuts.undo" = "Annulla";
+"settings.shortcuts.redo" = "Ripristina";

@@ -3,10 +3,9 @@
 ## Tabla de contenidos
 
 1. [Configuración inicial](#configuración-inicial)
-2. [Redimensionar una ventana](#redimensionar-una-ventana)
+2. [Redimensionamiento por ajuste automático](#redimensionamiento-por-ajuste-automático)
 3. [Ajustes](#ajustes)
-4. [Funciones de accesibilidad](#funciones-de-accesibilidad)
-5. [Solución de problemas](#solución-de-problemas)
+4. [Solución de problemas](#solución-de-problemas)
 
 ---
 
@@ -14,10 +13,10 @@
 
 ### Conceder permiso de accesibilidad
 
-Window Resize utiliza la API de accesibilidad de macOS para redimensionar ventanas. Debe conceder el permiso la primera vez que inicie la aplicación.
+Window Resize utiliza la API de accesibilidad de macOS para detectar y redimensionar ventanas. Debe conceder el permiso la primera vez que inicie la aplicación.
 
 1. Inicie **Window Resize**. Aparecerá un diálogo del sistema solicitando acceso de accesibilidad.
-2. Haga clic en **"Abrir Ajustes"** (o vaya manualmente a **Ajustes del Sistema > Privacidad y seguridad > Accesibilidad**).
+2. Haga clic en **"Abrir Ajustes del Sistema"** (o vaya manualmente a **Ajustes del Sistema > Privacidad y seguridad > Accesibilidad**).
 3. Busque **"Window Resize"** en la lista y active el interruptor.
 4. Vuelva a la aplicación: el icono de la barra de menús aparecerá y la aplicación estará lista para usar.
 
@@ -25,39 +24,41 @@ Window Resize utiliza la API de accesibilidad de macOS para redimensionar ventan
 
 ---
 
-## Redimensionar una ventana
+## Redimensionamiento por ajuste automático
 
-### Paso a paso
+### Cómo funciona
 
-1. Haga clic en el **icono de Window Resize** en la barra de menús.
-2. Pase el cursor sobre **"Redimensionar"** para abrir la lista de ventanas.
-3. Todas las ventanas abiertas se muestran con su **icono de aplicación** y nombre como **[Nombre de la app] Título de la ventana**. Los títulos largos se truncan automáticamente para mantener el menú legible.
-4. Cuando una aplicación tiene **3 o más ventanas**, estas se agrupan automáticamente bajo el nombre de la aplicación (por ejemplo, **"Safari (4)"**). Pase el cursor sobre la aplicación para ver las ventanas individuales y luego sobre una ventana para ver los tamaños disponibles.
-5. Pase el cursor sobre una ventana para ver los tamaños predefinidos disponibles.
-6. Haga clic en un tamaño para redimensionar la ventana inmediatamente.
+Window Resize monitoriza las operaciones de redimensionamiento de ventanas en tiempo real. Cuando arrastra el borde o la esquina de una ventana para redimensionarla, la aplicación detecta la proximidad de las dimensiones de la ventana a cualquier tamaño predefinido.
 
-### Cómo se muestran los tamaños
+1. **Comience a redimensionar** — arrastre el borde o la esquina de cualquier ventana como lo haría normalmente.
+2. **Aparece la superposición** — cuando el tamaño de la ventana se aproxima a un tamaño predefinido (a menos de 30 píxeles de distancia), aparece una superposición con un borde de color alrededor de la ventana que muestra el tamaño de destino.
+3. **Suelte para ajustar** — suelte el ratón y la ventana se ajustará con precisión al tamaño predefinido.
+4. **Cancelar** — si aleja el tamaño de la ventana del valor predefinido antes de soltar, la superposición desaparece y no se realiza ningún ajuste.
 
-Cada entrada de tamaño en el menú muestra:
+### Visualización de la relación de aspecto
 
-```
-1920 x 1080          Full HD
-```
+Durante el redimensionamiento, la relación de aspecto actual se muestra en la superposición. Cuando la relación coincide con una proporción conocida, se muestra su nombre:
 
-- **Izquierda:** Ancho x Alto (en píxeles)
-- **Derecha:** Etiqueta (nombre del dispositivo o nombre estándar), mostrada en gris
+- **Proporción áurea** (1,618:1)
+- **Proporción de plata** (2,414:1)
+- **Proporción de platino** (1,325:1)
+- **Proporción de bronce** (3,303:1)
 
-### Tamaños que exceden la pantalla
+Otras relaciones se muestran como fracciones simplificadas (por ejemplo, "16:9", "4:3").
 
-Si un tamaño predefinido es mayor que la pantalla donde se encuentra la ventana, ese tamaño aparecerá **atenuado y no será seleccionable**. Esto evita que redimensione una ventana más allá de los límites de la pantalla.
+> Esta función se puede desactivar en Ajustes (consulte [Mostrar relación de aspecto](#apariencia-de-la-superposición)).
 
-> **Múltiples pantallas:** La aplicación detecta en qué pantalla se encuentra cada ventana y ajusta los tamaños disponibles en consecuencia.
+### Shift para bloquear la relación de aspecto
+
+Mantenga presionada la tecla **Shift** mientras redimensiona para bloquear la relación de aspecto. La ventana mantendrá sus proporciones actuales mientras arrastra.
+
+> Esta función se puede desactivar en Ajustes (consulte [Shift para bloquear relación](#apariencia-de-la-superposición)).
 
 ---
 
 ## Ajustes
 
-Abra los Ajustes desde la barra de menús: haga clic en el icono de Window Resize y seleccione **"Ajustes..."** (atajo: **⌘,**).
+Abra los Ajustes desde la barra de menús: haga clic en el icono de Window Resize y seleccione **"Ajustes..."** (atajo: **Cmd+,**).
 
 ### Tamaños integrados
 
@@ -86,57 +87,24 @@ Puede agregar sus propios tamaños a la lista:
 
 1. En la sección **"Personalizados"**, introduzca el **Ancho** y el **Alto** en píxeles.
 2. Haga clic en **"Añadir"**.
-3. El nuevo tamaño aparecerá en la lista personalizada y estará disponible de inmediato en el menú de redimensionamiento.
+3. El nuevo tamaño estará disponible de inmediato para la detección de ajuste durante el redimensionamiento.
 
 Para eliminar un tamaño personalizado, haga clic en el botón rojo **"Eliminar"** junto a él.
 
-> Los tamaños personalizados aparecen en el menú de redimensionamiento después de los tamaños integrados.
+### Apariencia de la superposición
+
+Configure el estilo visual de la superposición de ajuste:
+
+- **Borde de redimensionamiento** — el color y el estilo de línea (sólida o discontinua) del borde que se muestra al redimensionar cerca de un tamaño predefinido. Predeterminado: naranja, discontinua.
+- **Borde de ajuste** — el color y el estilo de línea del borde que se muestra cuando la ventana se ajusta a un tamaño predefinido. Predeterminado: naranja, sólida.
+- **Mostrar relación de aspecto** — activa o desactiva la etiqueta de relación de aspecto en la superposición. Predeterminado: activado.
+- **Shift para bloquear relación** — activa o desactiva la restricción de relación de aspecto al mantener presionada la tecla Shift durante el redimensionamiento. Predeterminado: activado.
+
+Colores de borde disponibles: Naranja, Azul, Verde, Rojo, Morado, Blanco.
 
 ### Iniciar sesión automáticamente
 
 Active **"Iniciar sesión automáticamente"** para que Window Resize se inicie automáticamente cuando inicie sesión en macOS.
-
----
-
-## Funciones de accesibilidad
-
-Las siguientes funciones mejoran la accesibilidad en la gestión de ventanas. Cuando cualquiera de estas funciones está activada, el menú de redimensionamiento incluye una opción **"Tamaño actual"** en la parte superior, que permite reposicionar o traer una ventana al frente sin cambiar su tamaño.
-
-### Traer al frente
-
-Active **"Traer ventana al frente tras redimensionar"** para que la ventana redimensionada se coloque automáticamente por encima de las demás ventanas. Esto resulta útil cuando la ventana de destino está parcialmente oculta detrás de otras.
-
-### Mover a la pantalla principal
-
-Active **"Mover a la pantalla principal"** para trasladar la ventana a la pantalla principal al redimensionarla. Esto es especialmente práctico en configuraciones con varios monitores, cuando desea mover rápidamente una ventana desde una pantalla secundaria.
-
-### Posición de la ventana
-
-Elija dónde colocar la ventana en la pantalla después de redimensionarla. Una fila de 9 botones representa las opciones de ubicación:
-
-- **Esquinas:** Superior izquierda, Superior derecha, Inferior izquierda, Inferior derecha
-- **Bordes:** Centro superior, Centro izquierdo, Centro derecho, Centro inferior
-- **Centro:** Centro de la pantalla
-
-Haga clic en un botón de posición para seleccionarlo. Haga clic de nuevo en el mismo botón (o en **"No mover"**) para deseleccionarlo. Cuando no hay ninguna posición seleccionada, la ventana permanece en su lugar tras el redimensionamiento.
-
-> **Nota:** El posicionamiento de las ventanas tiene en cuenta la barra de menús y el Dock, manteniendo la ventana dentro del área útil de la pantalla.
-
----
-
-### Captura de pantalla
-
-Active **"Tomar captura después de redimensionar"** para capturar automáticamente la ventana después de redimensionarla.
-
-Cuando está activada, las siguientes opciones están disponibles:
-
-- **Guardar en archivo** — Guarda la captura como un archivo PNG. Haga clic en **"Seleccionar..."** para elegir la carpeta de destino.
-  > **Formato del nombre de archivo:** `MMddHHmmss_NombreApp_TítuloVentana.png` (ej. `0227193012_Safari_Apple.png`). Los símbolos se eliminan; solo se utilizan letras, dígitos y guiones bajos.
-- **Copiar al portapapeles** — Copia la captura al portapapeles para pegarla en otras aplicaciones.
-
-Ambas opciones se pueden activar de forma independiente. Por ejemplo, puede copiar al portapapeles sin guardar en un archivo.
-
-> **Nota:** La función de captura de pantalla requiere el permiso de **Grabación de pantalla**. Cuando utilice esta función por primera vez, macOS le pedirá que conceda el permiso en **Ajustes del Sistema > Privacidad y Seguridad > Grabación de pantalla**.
 
 ### Idioma
 
@@ -148,9 +116,9 @@ En la parte inferior de la ventana de Ajustes, un indicador de estado muestra el
 
 | Indicador | Significado |
 |-----------|-------------|
-| 🟢 **Accesibilidad: activada** | El permiso está activo y funciona correctamente. |
-| 🟠 **Accesibilidad: necesita actualizarse** | El sistema informa que el permiso fue concedido, pero ya no es válido (consulte [Corregir permisos obsoletos](#corregir-permisos-obsoletos)). Se muestra un botón **"Abrir Ajustes"**. |
-| 🔴 **Accesibilidad: no activada** | El permiso no ha sido concedido. Se muestra un botón **"Abrir Ajustes"**. |
+| Verde | El permiso está activo y funciona correctamente. |
+| Naranja | El sistema informa que el permiso fue concedido, pero ya no es válido (consulte [Corregir permisos obsoletos](#corregir-permisos-obsoletos)). Se muestra un botón "Abrir Ajustes". |
+| Rojo | El permiso no ha sido concedido. Se muestra un botón "Abrir Ajustes". |
 
 ---
 
@@ -167,27 +135,14 @@ Si ve un indicador de estado naranja o el mensaje "Accesibilidad: necesita actua
 3. Desactive el interruptor y vuelva a **activarlo**.
 4. Alternativamente, elimínelo de la lista completamente y vuelva a iniciar la aplicación para agregarlo de nuevo.
 
-### Error al redimensionar
+### El ajuste no funciona
 
-Si ve una alerta de "Error al redimensionar", las posibles causas incluyen:
+Si la superposición no aparece durante el redimensionamiento:
 
-- La aplicación de destino no admite el redimensionamiento basado en accesibilidad.
-- La ventana está en **modo de pantalla completa** (salga del modo de pantalla completa primero).
-- El permiso de accesibilidad no está activo (compruebe el estado en Ajustes).
+- Compruebe que el permiso de accesibilidad esté activo (indicador verde en Ajustes).
+- Asegúrese de que la ventana que está redimensionando admita el redimensionamiento estándar (algunas aplicaciones restringen el tamaño de sus ventanas).
+- Las ventanas en modo de pantalla completa no se pueden redimensionar — salga del modo de pantalla completa primero.
 
-### La ventana no aparece en la lista
+### Problemas de renderizado tras el ajuste
 
-El menú de redimensionamiento solo muestra ventanas que:
-
-- Están actualmente visibles en la pantalla
-- No forman parte del escritorio (por ejemplo, el escritorio del Finder se excluye)
-- No son las propias ventanas de Window Resize
-
-Si una ventana está minimizada en el Dock, no aparecerá en la lista.
-
-### La captura de pantalla no funciona
-
-Si las capturas de pantalla no se están realizando:
-
-- Conceda el permiso de **Grabación de pantalla** en **Ajustes del Sistema > Privacidad y Seguridad > Grabación de pantalla**.
-- Asegúrese de que al menos una de las opciones **"Guardar en archivo"** o **"Copiar al portapapeles"** esté activada.
+En casos excepcionales, la ventana de destino puede no redibujarse correctamente después del ajuste. La aplicación fuerza automáticamente un redibujado, pero si los artefactos visuales persisten, intente minimizar y restaurar la ventana.

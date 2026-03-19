@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "ปรับขนาด";
 "menu.settings" = "การตั้งค่า...";
 "menu.quit" = "ออกจาก Window Resize";
-"menu.loading" = "กำลังโหลด...";
-"menu.no-windows" = "(ไม่พบหน้าต่าง)";
-"menu.untitled" = "(ไม่มีชื่อ)";
 
 /* Alerts */
 "alert.resize-failed.title" = "ปรับขนาดไม่สำเร็จ";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "เพิ่ม";
 "settings.remove" = "ลบ";
+"settings.label" = "ชื่อ";
 "settings.launch-at-login" = "เปิดเมื่อเข้าสู่ระบบ";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "ขนาดปัจจุบัน";
 
-/* Accessibility features */
-"settings.bring-to-front" = "นำหน้าต่างมาด้านหน้าหลังปรับขนาด";
-"settings.window-position" = "ตำแหน่งหลังปรับขนาด";
-"settings.window-position.none" = "ไม่เปลี่ยนตำแหน่ง";
-"settings.move-to-main-screen" = "ย้ายไปหน้าจอหลัก";
+/* Overlay appearance */
+"settings.overlay" = "รูปลักษณ์โอเวอร์เลย์";
+"settings.overlay.resize" = "ขณะปรับขนาด";
+"settings.overlay.snap" = "ขณะสแนป";
+"settings.overlay.dashed" = "เส้นประ";
+"settings.overlay.solid" = "เส้นทึบ";
+"settings.overlay.show-resize-overlay" = "แสดงโอเวอร์เลย์ขณะปรับขนาด";
+"settings.overlay.show-ratio" = "แสดงอัตราส่วนภาพ";
+"settings.overlay.shift-lock-ratio" = "กด Shift ค้างเพื่อล็อกอัตราส่วนภาพ";
+
+/* Color names */
+"settings.color.orange" = "ส้ม";
+"settings.color.blue" = "น้ำเงิน";
+"settings.color.green" = "เขียว";
+"settings.color.red" = "แดง";
+"settings.color.purple" = "ม่วง";
+"settings.color.white" = "ขาว";
 
 /* Language */
 "settings.language" = "ภาษา";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "แอปจำเป็นต้องเริ่มต้นใหม่เพื่อใช้ภาษาใหม่";
 "settings.language.restart-button" = "เริ่มใหม่ตอนนี้";
 "settings.language.restart-later" = "ภายหลัง";
+
+/* Quick Presets */
+"settings.quick-presets" = "พรีเซ็ตด่วน";
+"settings.quick-presets.usage-label" = "ป้ายกำกับ";
+
+/* Overlay feedback */
+"overlay.restored" = "กู้คืนแล้ว";
+"settings.overlay.none" = "ไม่มี";
+
+/* Tab names */
+"settings.tab.general" = "ทั่วไป";
+"settings.tab.appearance" = "ลักษณะ";
+"settings.tab.shortcuts" = "ปุ่มลัด";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "ปรับขนาด";
+"settings.shortcuts.precision" = "ปรับละเอียด (±1px)";
+"settings.shortcuts.undo-redo" = "เลิกทำ / ทำซ้ำ";
+"settings.shortcuts.press-shortcut" = "กดปุ่มลัด...";
+"settings.shortcuts.reset" = "รีเซ็ตเป็นค่าเริ่มต้น";
+"settings.shortcuts.conflict-system" = "ขัดแย้งกับปุ่มลัดของระบบ";
+"settings.shortcuts.conflict-app" = "ขัดแย้งกับการทำงานอื่นในแอปนี้";
+"settings.shortcuts.grow-width" = "เพิ่มความกว้าง";
+"settings.shortcuts.shrink-width" = "ลดความกว้าง";
+"settings.shortcuts.grow-height" = "เพิ่มความสูง";
+"settings.shortcuts.shrink-height" = "ลดความสูง";
+"settings.shortcuts.undo" = "เลิกทำ";
+"settings.shortcuts.redo" = "ทำซ้ำ";

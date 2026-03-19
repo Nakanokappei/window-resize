@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "調整大小";
 "menu.settings" = "設定⋯";
 "menu.quit" = "結束 Window Resize";
-"menu.loading" = "載入中⋯";
-"menu.no-windows" = "（找不到視窗）";
-"menu.untitled" = "（未命名）";
 
 /* Alerts */
 "alert.resize-failed.title" = "調整大小失敗";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "加入";
 "settings.remove" = "移除";
+"settings.label" = "名稱";
 "settings.launch-at-login" = "登入時啟動";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "目前大小";
 
-/* Accessibility features */
-"settings.bring-to-front" = "調整後將視窗移至最前";
-"settings.window-position" = "調整後的位置";
-"settings.window-position.none" = "不移動";
-"settings.move-to-main-screen" = "移至主螢幕";
+/* Overlay appearance */
+"settings.overlay" = "疊加層外觀";
+"settings.overlay.resize" = "調整大小時";
+"settings.overlay.snap" = "貼靠時";
+"settings.overlay.dashed" = "虛線";
+"settings.overlay.solid" = "實線";
+"settings.overlay.show-resize-overlay" = "調整大小時顯示疊加層";
+"settings.overlay.show-ratio" = "顯示寬高比";
+"settings.overlay.shift-lock-ratio" = "按住 Shift 鎖定寬高比";
+
+/* Color names */
+"settings.color.orange" = "橙色";
+"settings.color.blue" = "藍色";
+"settings.color.green" = "綠色";
+"settings.color.red" = "紅色";
+"settings.color.purple" = "紫色";
+"settings.color.white" = "白色";
 
 /* Language */
 "settings.language" = "語言";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "需要重新啟動應用程式以套用新語言。";
 "settings.language.restart-button" = "立即重新啟動";
 "settings.language.restart-later" = "稍後";
+
+/* Quick Presets */
+"settings.quick-presets" = "快捷預設";
+"settings.quick-presets.usage-label" = "標籤";
+
+/* Overlay feedback */
+"overlay.restored" = "已還原";
+"settings.overlay.none" = "無";
+
+/* Tab names */
+"settings.tab.general" = "一般";
+"settings.tab.appearance" = "外觀";
+"settings.tab.shortcuts" = "快捷鍵";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "調整大小";
+"settings.shortcuts.precision" = "精確調整 (±1px)";
+"settings.shortcuts.undo-redo" = "還原 / 重做";
+"settings.shortcuts.press-shortcut" = "請按快捷鍵...";
+"settings.shortcuts.reset" = "重置為預設值";
+"settings.shortcuts.conflict-system" = "與系統快捷鍵衝突";
+"settings.shortcuts.conflict-app" = "與此應用程式中的其他操作衝突";
+"settings.shortcuts.grow-width" = "增加寬度";
+"settings.shortcuts.shrink-width" = "減少寬度";
+"settings.shortcuts.grow-height" = "增加高度";
+"settings.shortcuts.shrink-height" = "減少高度";
+"settings.shortcuts.undo" = "還原";
+"settings.shortcuts.redo" = "重做";

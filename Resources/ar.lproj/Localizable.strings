@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "تغيير الحجم";
 "menu.settings" = "الإعدادات...";
 "menu.quit" = "إنهاء Window Resize";
-"menu.loading" = "جارٍ التحميل...";
-"menu.no-windows" = "(لم يتم العثور على نوافذ)";
-"menu.untitled" = "(بدون عنوان)";
 
 /* Alerts */
 "alert.resize-failed.title" = "فشل تغيير الحجم";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "إضافة";
 "settings.remove" = "إزالة";
+"settings.label" = "الاسم";
 "settings.launch-at-login" = "التشغيل عند تسجيل الدخول";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "الحجم الحالي";
 
-/* Accessibility features */
-"settings.bring-to-front" = "إحضار النافذة للأمام بعد تغيير الحجم";
-"settings.window-position" = "الموضع بعد تغيير الحجم";
-"settings.window-position.none" = "بدون تغيير الموضع";
-"settings.move-to-main-screen" = "نقل إلى الشاشة الرئيسية";
+/* Overlay appearance */
+"settings.overlay" = "مظهر التراكب";
+"settings.overlay.resize" = "اثناء تغيير الحجم";
+"settings.overlay.snap" = "اثناء الالتقاط";
+"settings.overlay.dashed" = "متقطع";
+"settings.overlay.solid" = "متصل";
+"settings.overlay.show-resize-overlay" = "إظهار التراكب أثناء تغيير الحجم";
+"settings.overlay.show-ratio" = "إظهار نسبة العرض إلى الارتفاع";
+"settings.overlay.shift-lock-ratio" = "اضغط Shift لقفل نسبة العرض إلى الارتفاع";
+
+/* Color names */
+"settings.color.orange" = "برتقالي";
+"settings.color.blue" = "أزرق";
+"settings.color.green" = "أخضر";
+"settings.color.red" = "أحمر";
+"settings.color.purple" = "بنفسجي";
+"settings.color.white" = "أبيض";
 
 /* Language */
 "settings.language" = "اللغة";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "يجب إعادة تشغيل التطبيق لتطبيق اللغة الجديدة.";
 "settings.language.restart-button" = "إعادة التشغيل الآن";
 "settings.language.restart-later" = "لاحقاً";
+
+/* Quick Presets */
+"settings.quick-presets" = "إعدادات سريعة";
+"settings.quick-presets.usage-label" = "التسمية";
+
+/* Overlay feedback */
+"overlay.restored" = "تمت الاستعادة";
+"settings.overlay.none" = "بدون";
+
+/* Tab names */
+"settings.tab.general" = "عام";
+"settings.tab.appearance" = "المظهر";
+"settings.tab.shortcuts" = "اختصارات لوحة المفاتيح";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "تغيير الحجم";
+"settings.shortcuts.precision" = "دقة (±1px)";
+"settings.shortcuts.undo-redo" = "تراجع / إعادة";
+"settings.shortcuts.press-shortcut" = "اضغط اختصارًا...";
+"settings.shortcuts.reset" = "إعادة التعيين إلى الإعدادات الافتراضية";
+"settings.shortcuts.conflict-system" = "يتعارض مع اختصار النظام";
+"settings.shortcuts.conflict-app" = "يتعارض مع إجراء آخر في هذا التطبيق";
+"settings.shortcuts.grow-width" = "زيادة العرض";
+"settings.shortcuts.shrink-width" = "تقليل العرض";
+"settings.shortcuts.grow-height" = "زيادة الارتفاع";
+"settings.shortcuts.shrink-height" = "تقليل الارتفاع";
+"settings.shortcuts.undo" = "تراجع";
+"settings.shortcuts.redo" = "إعادة";

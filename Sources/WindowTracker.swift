@@ -1,6 +1,6 @@
 // WindowTracker.swift — Core drag tracking engine that monitors mouse events
-// globally to detect window resize and move operations. When a snap candidate
-// is detected, shows/hides the overlay preview and executes the snap on release.
+// globally to detect window resize operations. When a window is resized near
+// a preset size, shows an overlay preview and snaps to it on release.
 //
 // Architecture:
 // - NSEvent global monitors detect drag start/move/end
@@ -10,6 +10,12 @@
 // - SnapExecutor applies the snap via AXUIElement
 
 import AppKit
+
+/// The corner of the window being dragged during a resize operation.
+/// Used to position the size labels relative to the user's mouse.
+enum DragCorner {
+    case topLeft, topRight, bottomLeft, bottomRight
+}
 
 class WindowTracker {
 
@@ -33,11 +39,18 @@ class WindowTracker {
     /// The window currently being dragged (identified by frame delta).
     private var trackedWindow: WindowInfo?
 
-    /// Whether the current drag is a resize (true) or move (false).
+    /// Whether the current drag is a resize (size changed vs position only).
     private var isResizing = false
+
+    /// Which corner of the window is being dragged (resize only).
+    private var dragCorner: DragCorner = .bottomRight
 
     /// The current snap candidate, if any. Set during drag, consumed on release.
     private var currentCandidate: SnapCandidate?
+
+    /// The aspect ratio (width/height) at the start of the resize drag.
+    /// Used to constrain proportions when Shift is held.
+    private var initialAspectRatio: CGFloat = 0
 
     // MARK: - Overlay
 
@@ -109,7 +122,9 @@ class WindowTracker {
             self.isDragging = false
 
             // Execute snap if a candidate was active when the user released.
+            // Record the pre-snap frame for undo support.
             if let candidate = self.currentCandidate, let window = self.trackedWindow {
+                ResizeHistory.shared.pushState(windowID: window.windowID, frame: window.bounds)
                 _ = SnapExecutor.execute(windowInfo: window, targetFrame: candidate.targetFrame)
             }
 
@@ -123,8 +138,9 @@ class WindowTracker {
 
     // MARK: - Drag Processing
 
-    /// Core drag processing: identifies the dragged window, determines if it's
-    /// a resize or move, and checks for snap candidates.
+    /// Core drag processing: identifies the dragged window and checks for
+    /// resize snap candidates. Move drags are ignored (macOS provides native
+    /// edge/corner snapping since Sequoia).
     private func processDragEvent(_ event: NSEvent) {
         let currentWindows = WindowManager.discoverWindows()
 
@@ -133,6 +149,9 @@ class WindowTracker {
         if trackedWindow == nil {
             identifyDraggedWindow(currentWindows: currentWindows)
         }
+
+        // Only process resize drags — ignore window moves entirely.
+        guard isResizing else { return }
 
         // If we still can't identify the window, refresh the snapshot and bail.
         guard let tracked = trackedWindow else {
@@ -148,94 +167,54 @@ class WindowTracker {
         // Update the tracked window with its latest frame data.
         trackedWindow = currentInfo
 
-        // Detect snap candidate based on drag type.
-        let candidate: SnapCandidate?
-        let allPresets = SettingsStore.shared.allPresets
-
-        if isResizing {
-            // During resize: check proximity to preset sizes.
-            candidate = SnapDetector.detectResizeSnap(
+        // When Shift is held and the setting is enabled, constrain the resize
+        // to the initial aspect ratio.
+        var effectiveBounds = currentInfo.bounds
+        let shiftHeld = event.modifierFlags.contains(.shift)
+        if shiftHeld && initialAspectRatio > 0 && SettingsStore.shared.shiftToLockRatio {
+            effectiveBounds = constrainToAspectRatio(
                 currentFrame: currentInfo.bounds,
-                presets: allPresets
+                initialFrame: initialFrames[tracked.windowID] ?? currentInfo.bounds,
+                ratio: initialAspectRatio,
+                corner: dragCorner
             )
-        } else {
-            // During move: check proximity to screen edges/corners.
-            // Pass the window's current size so edge/corner snaps preserve dimensions.
-            let mouseNS = NSEvent.mouseLocation
-            let mouseCG = ScreenGeometry.nsPointToCG(mouseNS)
-            if let screen = ScreenGeometry.screenContaining(cgPoint: mouseCG) {
-                candidate = SnapDetector.detectMoveSnap(
-                    mouseInCG: mouseCG, screen: screen,
-                    windowSize: currentInfo.bounds.size
-                )
-            } else {
-                candidate = nil
-            }
+            // Apply the constrained size to the actual window.
+            _ = SnapExecutor.execute(windowInfo: currentInfo, targetFrame: effectiveBounds)
         }
+
+        // Detect snap candidate: check proximity to preset sizes.
+        let allPresets = SettingsStore.shared.allPresets
+        let candidate = SnapDetector.detectResizeSnap(
+            currentFrame: effectiveBounds,
+            presets: allPresets
+        )
 
         // Update overlay visibility based on candidate state.
         if let candidate = candidate {
             currentCandidate = candidate
 
-            // Build the primary overlay label from the snap candidate.
-            let primaryLabel: String?
-            if case .presetSize(let preset, _) = candidate {
-                var label = "\(preset.width) × \(preset.height)"
-                if let name = preset.label, !name.isEmpty { label += "  \(name)" }
-                primaryLabel = label
-            } else {
-                primaryLabel = nil
-            }
+            // Build the label from the matched preset.
+            var label = "\(candidate.preset.width) × \(candidate.preset.height)"
+            if let name = candidate.preset.label, !name.isEmpty { label += "  \(name)" }
 
-            overlay.show(at: candidate.targetFrame, label: primaryLabel)
+            overlay.show(at: candidate.targetFrame, label: label,
+                         dragCorner: dragCorner, currentSize: effectiveBounds.size)
         } else {
+            // No snap candidate — show resize overlay only if the user hasn't disabled it.
             currentCandidate = nil
-            overlay.hide()
-        }
-
-        // During resize, show dashed-border overlays for nearby presets
-        // so the user can see where to drag to reach other preset sizes.
-        if isResizing && candidate != nil {
-            let nearby = SnapDetector.detectNearbyPresets(
-                currentFrame: currentInfo.bounds,
-                presets: allPresets
-            )
-
-            // Determine which preset is the primary snap candidate.
-            let primaryPresetID: UUID? = {
-                if case .presetSize(let preset, _) = candidate {
-                    return preset.id
-                }
-                return nil
-            }()
-
-            // Build entries with target frames. For resize snaps, each preset's
-            // overlay shares the window's current origin with the preset dimensions.
-            let windowOrigin = currentInfo.bounds.origin
-            let entries: [SizeHintEntry] = nearby.map { item in
-                let targetFrame = CGRect(
-                    x: windowOrigin.x,
-                    y: windowOrigin.y,
-                    width: CGFloat(item.preset.width),
-                    height: CGFloat(item.preset.height)
-                )
-                return SizeHintEntry(
-                    preset: item.preset,
-                    distance: item.distance,
-                    isPrimary: item.preset.id == primaryPresetID,
-                    targetFrame: targetFrame
-                )
+            if SettingsStore.shared.showResizeOverlay {
+                overlay.show(at: effectiveBounds, label: nil,
+                             dragCorner: dragCorner, currentSize: effectiveBounds.size)
+            } else {
+                overlay.hide()
             }
-
-            overlay.showSecondaryOverlays(entries)
-        } else {
-            overlay.hideSecondaryOverlays()
         }
     }
 
     /// Scans all windows to find which one changed relative to the snapshot.
     /// Classifies the change as resize or move based on whether size or
-    /// position changed.
+    /// position changed. For resize, determines which corner is being dragged
+    /// by comparing which edges moved.
     private func identifyDraggedWindow(currentWindows: [WindowInfo]) {
         for window in currentWindows {
             guard let initialFrame = initialFrames[window.windowID] else { continue }
@@ -248,6 +227,27 @@ class WindowTracker {
             if sizeChanged {
                 trackedWindow = window
                 isResizing = true
+
+                // Record the initial aspect ratio for Shift-constrained resize.
+                if initialFrame.height > 0 {
+                    initialAspectRatio = initialFrame.width / initialFrame.height
+                }
+
+                // Determine which corner is being dragged by checking which
+                // edges moved relative to the initial frame.
+                let topMoved = abs(window.bounds.minY - initialFrame.minY) > 3
+                let leftMoved = abs(window.bounds.minX - initialFrame.minX) > 3
+                let bottomMoved = abs(window.bounds.maxY - initialFrame.maxY) > 3
+                let rightMoved = abs(window.bounds.maxX - initialFrame.maxX) > 3
+
+                if topMoved && leftMoved { dragCorner = .topLeft }
+                else if topMoved && rightMoved { dragCorner = .topRight }
+                else if topMoved { dragCorner = .topRight }
+                else if bottomMoved && leftMoved { dragCorner = .bottomLeft }
+                else if leftMoved { dragCorner = .bottomLeft }
+                else if bottomMoved && rightMoved { dragCorner = .bottomRight }
+                else { dragCorner = .bottomRight }
+
                 return
             } else if posChanged {
                 trackedWindow = window
@@ -255,6 +255,55 @@ class WindowTracker {
                 return
             }
         }
+    }
+
+    // MARK: - Aspect Ratio Constraint
+
+    /// Constrains a resized frame to maintain the given aspect ratio (width/height).
+    /// Determines whether to adjust width or height based on which dimension
+    /// changed more relative to the initial frame, then anchors the opposite
+    /// edges to the initial frame based on the drag corner.
+    private func constrainToAspectRatio(currentFrame: CGRect, initialFrame: CGRect,
+                                         ratio: CGFloat, corner: DragCorner) -> CGRect {
+        let dw = abs(currentFrame.width - initialFrame.width)
+        let dh = abs(currentFrame.height - initialFrame.height)
+
+        var newWidth: CGFloat
+        var newHeight: CGFloat
+
+        // Use the dimension that changed more as the driver.
+        if dw >= dh {
+            newWidth = currentFrame.width
+            newHeight = newWidth / ratio
+        } else {
+            newHeight = currentFrame.height
+            newWidth = newHeight * ratio
+        }
+
+        // Round to whole pixels.
+        newWidth = round(newWidth)
+        newHeight = round(newHeight)
+
+        // Anchor the frame based on the drag corner.
+        // The corner opposite to the drag stays fixed.
+        var origin = currentFrame.origin
+        switch corner {
+        case .bottomRight:
+            // Top-left is fixed.
+            break
+        case .bottomLeft:
+            // Top-right is fixed: adjust origin.x so right edge stays.
+            origin.x = initialFrame.maxX - newWidth
+        case .topRight:
+            // Bottom-left is fixed: adjust origin.y so bottom edge stays.
+            origin.y = initialFrame.maxY - newHeight
+        case .topLeft:
+            // Bottom-right is fixed: adjust both origin.x and origin.y.
+            origin.x = initialFrame.maxX - newWidth
+            origin.y = initialFrame.maxY - newHeight
+        }
+
+        return CGRect(x: origin.x, y: origin.y, width: newWidth, height: newHeight)
     }
 
     // MARK: - Snapshot

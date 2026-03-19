@@ -1,69 +1,70 @@
 # Window Resize — Manuel d'utilisation
 
-## Table des matières
+## Table des matieres
 
 1. [Configuration initiale](#configuration-initiale)
-2. [Redimensionner une fenêtre](#redimensionner-une-fenêtre)
-3. [Paramètres](#paramètres)
-4. [Fonctions d'accessibilité](#fonctions-daccessibilité)
-5. [Dépannage](#dépannage)
+2. [Redimensionnement par snap](#redimensionnement-par-snap)
+3. [Parametres](#parametres)
+4. [Depannage](#depannage)
 
 ---
 
 ## Configuration initiale
 
-### Accorder l'autorisation d'accessibilité
+### Accorder l'autorisation d'accessibilite
 
-Window Resize utilise l'API d'accessibilité de macOS pour redimensionner les fenêtres. Vous devez accorder l'autorisation lors du premier lancement de l'application.
+Window Resize utilise l'API d'accessibilite de macOS pour detecter et redimensionner les fenetres. Vous devez accorder l'autorisation lors du premier lancement de l'application.
 
-1. Lancez **Window Resize**. Une boîte de dialogue système apparaîtra pour vous demander d'accorder l'accès à l'accessibilité.
-2. Cliquez sur **"Ouvrir les réglages"** (ou accédez manuellement à **Réglages du système > Confidentialité et sécurité > Accessibilité**).
+1. Lancez **Window Resize**. Une boite de dialogue systeme apparaitra pour vous demander d'accorder l'acces a l'accessibilite.
+2. Cliquez sur **"Ouvrir les reglages"** (ou accedez manuellement a **Reglages du systeme > Confidentialite et securite > Accessibilite**).
 3. Recherchez **"Window Resize"** dans la liste et activez l'interrupteur.
-4. Revenez à l'application — l'icône dans la barre des menus apparaîtra et l'application sera prête à être utilisée.
+4. Revenez a l'application — l'icone dans la barre des menus apparaitra et l'application sera prete a etre utilisee.
 
-> **Remarque :** Si la boîte de dialogue n'apparaît pas, vous pouvez ouvrir les réglages d'accessibilité directement depuis la fenêtre des Paramètres de l'application (voir [État de l'accessibilité](#état-de-laccessibilité)).
-
----
-
-## Redimensionner une fenêtre
-
-### Étape par étape
-
-1. Cliquez sur l'**icône de Window Resize** dans la barre des menus.
-2. Survolez **"Redimensionner"** pour ouvrir la liste des fenêtres.
-3. Toutes les fenêtres ouvertes sont affichées avec leur **icône d'application** et leur nom sous la forme **[Nom de l'app] Titre de la fenêtre**. Les titres longs sont automatiquement tronqués pour garder le menu lisible.
-4. Lorsqu'une application possède **3 fenêtres ou plus**, elles sont automatiquement regroupées sous le nom de l'application (par exemple, **"Safari (4)"**). Survolez l'application pour afficher ses fenêtres individuelles, puis survolez une fenêtre pour voir les tailles disponibles.
-5. Survolez une fenêtre pour voir les tailles prédéfinies disponibles.
-6. Cliquez sur une taille pour redimensionner la fenêtre immédiatement.
-
-### Affichage des tailles
-
-Chaque entrée de taille dans le menu affiche :
-
-```
-1920 x 1080          Full HD
-```
-
-- **Gauche :** Largeur x Hauteur (en pixels)
-- **Droite :** Étiquette (nom de l'appareil ou nom standard), affichée en gris
-
-### Tailles dépassant l'écran
-
-Si une taille prédéfinie est plus grande que l'écran où se trouve la fenêtre, cette taille sera **grisée et non sélectionnable**. Cela vous empêche de redimensionner une fenêtre au-delà des limites de l'écran.
-
-> **Multi-écran :** L'application détecte sur quel écran se trouve chaque fenêtre et ajuste les tailles disponibles en conséquence.
+> **Remarque :** Si la boite de dialogue n'apparait pas, vous pouvez ouvrir les reglages d'accessibilite directement depuis la fenetre des Parametres de l'application (voir [Etat de l'accessibilite](#etat-de-laccessibilite)).
 
 ---
 
-## Paramètres
+## Redimensionnement par snap
 
-Ouvrez les Paramètres depuis la barre des menus : cliquez sur l'icône de Window Resize, puis sélectionnez **"Paramètres..."** (raccourci : **⌘,**).
+### Fonctionnement
 
-### Tailles intégrées
+Window Resize surveille les operations de redimensionnement des fenetres en temps reel. Lorsque vous faites glisser le bord ou le coin d'une fenetre pour la redimensionner, l'application detecte a quel point les dimensions de la fenetre sont proches d'une taille predefinie.
 
-L'application comprend 12 tailles prédéfinies intégrées :
+1. **Commencez a redimensionner** — faites glisser le bord ou le coin d'une fenetre comme vous le feriez normalement.
+2. **L'overlay apparait** — lorsque la taille de la fenetre s'approche d'une taille predefinie (a moins de 30 pixels), une bordure coloree apparait autour de la fenetre indiquant la taille predefinie cible.
+3. **Relachez pour snapper** — lachez le bouton de la souris et la fenetre s'ajuste precisement a la taille predefinie.
+4. **Annuler** — si vous eloignez la taille de la fenetre de la taille predefinie avant de relacher, l'overlay disparait et aucun snap ne se produit.
 
-| Taille | Étiquette |
+### Affichage du rapport d'aspect
+
+Pendant le redimensionnement, le rapport d'aspect actuel est affiche dans l'overlay. Lorsque le rapport correspond a une proportion connue, son nom est indique :
+
+- **Nombre d'or** (1.618:1)
+- **Nombre d'argent** (2.414:1)
+- **Nombre de platine** (1.325:1)
+- **Nombre de bronze** (3.303:1)
+
+Les autres rapports sont affiches sous forme de fractions simplifiees (par ex. "16:9", "4:3").
+
+> Cette fonction peut etre desactivee dans les Parametres (voir [Apparence de l'overlay](#apparence-de-loverlay)).
+
+### Shift pour verrouiller le rapport d'aspect
+
+Maintenez la touche **Shift** enfoncee pendant le redimensionnement pour verrouiller le rapport d'aspect. La fenetre conservera ses proportions actuelles pendant que vous faites glisser.
+
+> Cette fonction peut etre desactivee dans les Parametres (voir [Shift pour verrouiller le rapport](#apparence-de-loverlay)).
+
+---
+
+## Parametres
+
+Ouvrez les Parametres depuis la barre des menus : cliquez sur l'icone de Window Resize, puis selectionnez **"Parametres..."** (raccourci : **Cmd+,**).
+
+### Tailles integrees
+
+L'application comprend 12 tailles predefinies integrees :
+
+| Taille | Etiquette |
 |--------|-----------|
 | 2560 x 1600 | MacBook Pro 16" |
 | 2560 x 1440 | QHD / iMac |
@@ -78,116 +79,70 @@ L'application comprend 12 tailles prédéfinies intégrées :
 | 1024 x 768 | XGA |
 | 800 x 600 | SVGA |
 
-Les tailles intégrées ne peuvent être ni supprimées ni modifiées.
+Les tailles integrees ne peuvent etre ni supprimees ni modifiees.
 
-### Tailles personnalisées
+### Tailles personnalisees
 
-Vous pouvez ajouter vos propres tailles à la liste :
+Vous pouvez ajouter vos propres tailles a la liste :
 
-1. Dans la section **"Personnalisées"**, saisissez la **Largeur** et la **Hauteur** en pixels.
+1. Dans la section **"Personnalisees"**, saisissez la **Largeur** et la **Hauteur** en pixels.
 2. Cliquez sur **"Ajouter"**.
-3. La nouvelle taille apparaît dans la liste personnalisée et est immédiatement disponible dans le menu de redimensionnement.
+3. La nouvelle taille est immediatement disponible pour la detection de snap pendant le redimensionnement.
 
-Pour supprimer une taille personnalisée, cliquez sur le bouton rouge **"Supprimer"** à côté.
+Pour supprimer une taille personnalisee, cliquez sur le bouton rouge **"Supprimer"** a cote.
 
-> Les tailles personnalisées apparaissent dans le menu de redimensionnement après les tailles intégrées.
+### Apparence de l'overlay
 
-### Lancer au démarrage
+Configurez le style visuel de l'overlay de snap :
 
-Activez **"Lancer au démarrage"** pour que Window Resize se lance automatiquement lorsque vous vous connectez à macOS.
+- **Bordure de redimensionnement** — la couleur et le style de ligne (continu ou pointille) de la bordure affichee lorsque la fenetre est proche d'une taille predefinie pendant le redimensionnement. Par defaut : orange, pointille.
+- **Bordure de snap** — la couleur et le style de ligne de la bordure affichee lorsque la fenetre s'ajuste a une taille predefinie. Par defaut : orange, continu.
+- **Afficher le rapport d'aspect** — activer ou desactiver l'affichage du rapport d'aspect dans l'overlay. Par defaut : active.
+- **Shift pour verrouiller le rapport** — activer ou desactiver le verrouillage du rapport d'aspect en maintenant Shift pendant le redimensionnement. Par defaut : active.
 
----
+Couleurs de bordure disponibles : Orange, Bleu, Vert, Rouge, Violet, Blanc.
 
-## Fonctions d'accessibilité
+### Lancer au demarrage
 
-Les fonctions suivantes facilitent la gestion et le positionnement des fenêtres. Lorsque l'une de ces fonctions est activée, une option **"Taille actuelle"** apparaît en haut du menu de redimensionnement, ce qui permet de repositionner ou de mettre une fenêtre au premier plan sans modifier sa taille.
-
-### Mettre au premier plan
-
-Activez **"Mettre la fenêtre au premier plan après le redimensionnement"** pour que la fenêtre redimensionnée passe automatiquement devant toutes les autres. Cette option est utile lorsque la fenêtre cible est partiellement masquée par d'autres fenêtres.
-
-### Déplacer vers l'écran principal
-
-Activez **"Déplacer vers l'écran principal"** pour transférer la fenêtre vers l'écran principal lors du redimensionnement. Cette option est pratique dans les configurations multi-écrans lorsque vous souhaitez ramener rapidement une fenêtre depuis un écran secondaire.
-
-### Position de la fenêtre
-
-Choisissez où placer la fenêtre à l'écran après le redimensionnement. Une rangée de 9 boutons représente les positions disponibles :
-
-- **Coins :** Haut-gauche, Haut-droite, Bas-gauche, Bas-droite
-- **Bords :** Haut-centre, Gauche-centre, Droite-centre, Bas-centre
-- **Centre :** Centre de l'écran
-
-Cliquez sur un bouton pour sélectionner la position. Cliquez à nouveau sur le même bouton (ou sur **"Ne pas déplacer"**) pour désélectionner. Lorsqu'aucune position n'est sélectionnée, la fenêtre reste à son emplacement actuel après le redimensionnement.
-
-> **Remarque :** Le positionnement tient compte de la barre des menus et du Dock, de sorte que la fenêtre reste dans la zone utilisable de l'écran.
-
----
-
-### Capture d'écran
-
-Activez **"Capturer après le redimensionnement"** pour capturer automatiquement la fenêtre après le redimensionnement.
-
-Lorsque cette option est activée, les options suivantes sont disponibles :
-
-- **Enregistrer dans un fichier** — Enregistre la capture en tant que fichier PNG. Cliquez sur **"Choisir..."** pour sélectionner le dossier d'enregistrement.
-  > **Format du nom de fichier :** `MMddHHmmss_NomApp_TitreFenêtre.png` (ex. `0227193012_Safari_Apple.png`). Les symboles sont supprimés ; seuls les lettres, chiffres et tirets bas sont utilisés.
-- **Copier dans le presse-papiers** — Copie la capture dans le presse-papiers pour la coller dans d'autres applications.
-
-Les deux options peuvent être activées indépendamment. Par exemple, vous pouvez copier dans le presse-papiers sans enregistrer dans un fichier.
-
-> **Remarque :** La fonction de capture d'écran nécessite l'autorisation d'**Enregistrement d'écran**. Lorsque vous utilisez cette fonction pour la première fois, macOS vous demandera d'accorder l'autorisation dans **Réglages du système > Confidentialité et sécurité > Enregistrement d'écran**.
+Activez **"Lancer au demarrage"** pour que Window Resize se lance automatiquement lorsque vous vous connectez a macOS.
 
 ### Langue
 
-Sélectionnez la langue d'affichage de l'application dans le menu déroulant **Langue**. Vous pouvez choisir parmi 16 langues ou sélectionner **"Langue du système"** pour suivre la langue définie dans macOS. Un redémarrage de l'application est nécessaire pour appliquer le changement.
+Selectionnez la langue d'affichage de l'application dans le menu deroulant **Langue**. Vous pouvez choisir parmi 16 langues ou selectionner **"Langue du systeme"** pour suivre la langue definie dans macOS. Un redemarrage de l'application est necessaire pour appliquer le changement.
 
-### État de l'accessibilité
+### Etat de l'accessibilite
 
-En bas de la fenêtre des Paramètres, un indicateur d'état montre l'état actuel de l'autorisation d'accessibilité :
+En bas de la fenetre des Parametres, un indicateur d'etat montre l'etat actuel de l'autorisation d'accessibilite :
 
 | Indicateur | Signification |
 |------------|---------------|
-| 🟢 **Accessibilité : activée** | L'autorisation est active et fonctionne correctement. |
-| 🟠 **Accessibilité : actualisation requise** | Le système indique que l'autorisation a été accordée, mais elle n'est plus valide (voir [Corriger les autorisations obsolètes](#corriger-les-autorisations-obsolètes)). Un bouton **"Ouvrir les réglages"** est affiché. |
-| 🔴 **Accessibilité : désactivée** | L'autorisation n'a pas été accordée. Un bouton **"Ouvrir les réglages"** est affiché. |
+| Vert | L'autorisation est active et fonctionne correctement. |
+| Orange | Le systeme indique que l'autorisation a ete accordee, mais elle n'est plus valide (voir [Corriger les autorisations obsoletes](#corriger-les-autorisations-obsoletes)). Un bouton "Ouvrir les reglages" est affiche. |
+| Rouge | L'autorisation n'a pas ete accordee. Un bouton "Ouvrir les reglages" est affiche. |
 
 ---
 
-## Dépannage
+## Depannage
 
-### Corriger les autorisations obsolètes
+### Corriger les autorisations obsoletes
 
-Si vous voyez un indicateur de statut orange ou le message "Accessibilité : actualisation requise", l'autorisation est devenue obsolète. Cela peut se produire après une mise à jour ou une recompilation de l'application.
+Si vous voyez un indicateur orange ou le message "Accessibilite : actualisation requise", l'autorisation est devenue obsolete. Cela peut se produire apres une mise a jour ou une recompilation de l'application.
 
 **Pour corriger :**
 
-1. Ouvrez **Réglages du système > Confidentialité et sécurité > Accessibilité**.
+1. Ouvrez **Reglages du systeme > Confidentialite et securite > Accessibilite**.
 2. Recherchez **"Window Resize"** dans la liste.
-3. Désactivez l'interrupteur, puis **réactivez-le**.
-4. Alternativement, supprimez-le de la liste entièrement, puis relancez l'application pour le rajouter.
+3. Desactivez l'interrupteur, puis **reactivez-le**.
+4. Alternativement, supprimez-le de la liste entierement, puis relancez l'application pour le rajouter.
 
-### Échec du redimensionnement
+### Le snap ne fonctionne pas
 
-Si vous voyez une alerte « Échec du redimensionnement », les causes possibles incluent :
+Si l'overlay n'apparait pas pendant le redimensionnement :
 
-- L'application cible ne prend pas en charge le redimensionnement par accessibilité.
-- La fenêtre est en **mode plein écran** (quittez d'abord le mode plein écran).
-- L'autorisation d'accessibilité n'est pas active (vérifiez l'état dans les Paramètres).
+- Verifiez que l'autorisation d'accessibilite est active (indicateur vert dans les Parametres).
+- Assurez-vous que la fenetre que vous redimensionnez prend en charge le redimensionnement standard (certaines applications restreignent la taille des fenetres).
+- Les fenetres en plein ecran ne peuvent pas etre redimensionnees — quittez d'abord le mode plein ecran.
 
-### La fenêtre n'apparaît pas dans la liste
+### Problemes d'affichage apres un snap
 
-Le menu de redimensionnement n'affiche que les fenêtres qui :
-
-- Sont actuellement visibles à l'écran
-- Ne font pas partie du bureau (par exemple, le bureau du Finder est exclu)
-- Ne sont pas les propres fenêtres de Window Resize
-
-Si une fenêtre est minimisée dans le Dock, elle n'apparaîtra pas dans la liste.
-
-### La capture d'écran ne fonctionne pas
-
-Si les captures d'écran ne sont pas effectuées :
-
-- Accordez l'autorisation d'**Enregistrement d'écran** dans **Réglages du système > Confidentialité et sécurité > Enregistrement d'écran**.
-- Assurez-vous qu'au moins une des options **"Enregistrer dans un fichier"** ou **"Copier dans le presse-papiers"** est activée.
+Dans de rares cas, la fenetre cible peut ne pas se redessiner correctement apres un snap. L'application force automatiquement un rafraichissement, mais si des artefacts visuels persistent, essayez de minimiser puis de restaurer la fenetre.

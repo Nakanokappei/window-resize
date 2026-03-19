@@ -1,10 +1,6 @@
 /* Menu items */
-"menu.resize" = "リサイズ";
 "menu.settings" = "設定...";
 "menu.quit" = "Window Resize を終了";
-"menu.loading" = "読み込み中...";
-"menu.no-windows" = "（ウインドウが見つかりません）";
-"menu.untitled" = "（無題）";
 
 /* Alerts */
 "alert.resize-failed.title" = "リサイズに失敗しました";
@@ -25,6 +21,7 @@
 "settings.dimension-separator" = "x";
 "settings.add" = "追加";
 "settings.remove" = "削除";
+"settings.label" = "名前";
 "settings.launch-at-login" = "ログイン時に起動";
 
 /* Accessibility status */
@@ -34,14 +31,24 @@
 
 /* Accessibility icon */
 "accessibility.icon-description" = "Window Resize";
-/* Current size menu item */
-"menu.current-size" = "現在のサイズ";
 
-/* Accessibility features */
-"settings.bring-to-front" = "リサイズ後にウインドウを最前面に移動";
-"settings.window-position" = "リサイズ後の配置";
-"settings.window-position.none" = "移動しない";
-"settings.move-to-main-screen" = "メインスクリーンに移動";
+/* Overlay appearance */
+"settings.overlay" = "オーバーレイの外観";
+"settings.overlay.resize" = "リサイズ中";
+"settings.overlay.snap" = "スナップ中";
+"settings.overlay.dashed" = "破線";
+"settings.overlay.solid" = "実線";
+"settings.overlay.show-resize-overlay" = "リサイズ中にオーバーレイを表示";
+"settings.overlay.show-ratio" = "縦横比を表示";
+"settings.overlay.shift-lock-ratio" = "Shiftキーで縦横比を固定";
+
+/* Color names */
+"settings.color.orange" = "オレンジ";
+"settings.color.blue" = "ブルー";
+"settings.color.green" = "グリーン";
+"settings.color.red" = "レッド";
+"settings.color.purple" = "パープル";
+"settings.color.white" = "ホワイト";
 
 /* Language */
 "settings.language" = "言語";
@@ -50,3 +57,31 @@
 "settings.language.restart-body" = "新しい言語を適用するにはアプリの再起動が必要です。";
 "settings.language.restart-button" = "今すぐ再起動";
 "settings.language.restart-later" = "あとで";
+
+/* Quick Presets */
+"settings.quick-presets" = "クイックプリセット";
+"settings.quick-presets.usage-label" = "ラベル";
+
+/* Overlay feedback */
+"overlay.restored" = "復元しました";
+"settings.overlay.none" = "なし";
+
+/* Tab names */
+"settings.tab.general" = "一般";
+"settings.tab.appearance" = "外観";
+"settings.tab.shortcuts" = "ショートカット";
+
+/* Shortcuts settings */
+"settings.shortcuts.resize" = "リサイズ";
+"settings.shortcuts.precision" = "精密操作 (±1px)";
+"settings.shortcuts.undo-redo" = "取り消し / やり直し";
+"settings.shortcuts.press-shortcut" = "ショートカットを入力...";
+"settings.shortcuts.reset" = "デフォルトに戻す";
+"settings.shortcuts.conflict-system" = "システムのショートカットと競合しています";
+"settings.shortcuts.conflict-app" = "このアプリ内の別の操作と競合しています";
+"settings.shortcuts.grow-width" = "幅を広げる";
+"settings.shortcuts.shrink-width" = "幅を縮める";
+"settings.shortcuts.grow-height" = "高さを広げる";
+"settings.shortcuts.shrink-height" = "高さを縮める";
+"settings.shortcuts.undo" = "取り消し";
+"settings.shortcuts.redo" = "やり直し";
