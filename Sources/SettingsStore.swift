@@ -177,9 +177,9 @@ class SettingsStore: ObservableObject {
     }
 
     /// All action IDs in display order, grouped by category.
-    static let resizeActionIDs = ["growWidth", "shrinkWidth", "growHeight", "shrinkHeight"]
-    static let precisionActionIDs = ["precisionGrowWidth", "precisionShrinkWidth",
-                                     "precisionGrowHeight", "precisionShrinkHeight"]
+    static let resizeActionIDs = ["shrinkWidth", "growWidth", "shrinkHeight", "growHeight"]
+    static let precisionActionIDs = ["precisionShrinkWidth", "precisionGrowWidth",
+                                     "precisionShrinkHeight", "precisionGrowHeight"]
     static let undoRedoActionIDs = ["undo", "redo"]
     static let presetActionIDs = (1...9).map { "preset\($0)" }
 
