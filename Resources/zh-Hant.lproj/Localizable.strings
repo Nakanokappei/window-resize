@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "減少高度";
 "settings.shortcuts.undo" = "還原";
 "settings.shortcuts.redo" = "重做";
+
+/* Presets Tab */
+"settings.tab.presets" = "預設";
+"settings.presets.built-in" = "內建預設";
+"settings.presets.enabled-count" = "%d / %d 已啟用";

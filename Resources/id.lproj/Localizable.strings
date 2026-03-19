@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "Perkecil Tinggi";
 "settings.shortcuts.undo" = "Urungkan";
 "settings.shortcuts.redo" = "Ulangi";
+
+/* Presets Tab */
+"settings.tab.presets" = "Preset";
+"settings.presets.built-in" = "Preset Bawaan";
+"settings.presets.enabled-count" = "%d dari %d diaktifkan";

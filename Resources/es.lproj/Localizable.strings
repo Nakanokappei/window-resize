@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "Reducir altura";
 "settings.shortcuts.undo" = "Deshacer";
 "settings.shortcuts.redo" = "Rehacer";
+
+/* Presets Tab */
+"settings.tab.presets" = "Preajustes";
+"settings.presets.built-in" = "Preajustes integrados";
+"settings.presets.enabled-count" = "%d de %d habilitados";

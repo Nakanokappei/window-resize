@@ -22,6 +22,10 @@ struct SettingsView: View {
                 .tabItem {
                     Label(L("settings.tab.shortcuts"), systemImage: "keyboard")
                 }
+            PresetsTab()
+                .tabItem {
+                    Label(L("settings.tab.presets"), systemImage: "rectangle.3.group")
+                }
         }
         .frame(width: 540)
     }
@@ -708,6 +712,71 @@ private struct ShortcutsTab: View {
             }
         }
         return nil
+    }
+}
+
+// MARK: - Presets Tab
+
+private struct PresetsTab: View {
+    @ObservedObject private var store = SettingsStore.shared
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Section heading with enabled count.
+            HStack {
+                Text(L("settings.presets.built-in"))
+                    .font(.headline)
+                Spacer()
+                let enabledCount = SettingsStore.builtInSizes.count
+                    - store.disabledBuiltInIndices.count
+                Text(String(format: L("settings.presets.enabled-count"),
+                            enabledCount, SettingsStore.builtInSizes.count))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            GroupBox {
+                // Scrollable list with vertical scrollbar, showing ~12 rows.
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(spacing: 0) {
+                        ForEach(Array(SettingsStore.builtInSizes.enumerated()),
+                                id: \.offset) { index, preset in
+                            HStack(spacing: 10) {
+                                // Enable/disable toggle for this preset.
+                                Toggle("", isOn: Binding(
+                                    get: { store.isBuiltInEnabled(index: index) },
+                                    set: { _ in store.toggleBuiltIn(index: index) }
+                                ))
+                                .toggleStyle(.switch)
+                                .controlSize(.small)
+                                .labelsHidden()
+
+                                // Preset label (e.g. "XGA", "Full HD").
+                                Text(preset.label ?? "")
+                                    .frame(width: 150, alignment: .leading)
+
+                                // Size dimensions.
+                                Text("\(preset.width) × \(preset.height)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+
+                                Spacer()
+                            }
+                            .padding(.vertical, 3)
+                            .opacity(store.isBuiltInEnabled(index: index) ? 1.0 : 0.5)
+
+                            // Divider between rows (not after the last row).
+                            if index < SettingsStore.builtInSizes.count - 1 {
+                                Divider()
+                            }
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+                .frame(maxHeight: 12 * 28)  // ~12 rows visible at a time
+            }
+        }
+        .padding()
     }
 }
 

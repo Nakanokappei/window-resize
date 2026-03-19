@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "Höhe verkleinern";
 "settings.shortcuts.undo" = "Widerrufen";
 "settings.shortcuts.redo" = "Wiederholen";
+
+/* Presets Tab */
+"settings.tab.presets" = "Voreinstellungen";
+"settings.presets.built-in" = "Integrierte Voreinstellungen";
+"settings.presets.enabled-count" = "%d von %d aktiviert";

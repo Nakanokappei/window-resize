@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "ลดความสูง";
 "settings.shortcuts.undo" = "เลิกทำ";
 "settings.shortcuts.redo" = "ทำซ้ำ";
+
+/* Presets Tab */
+"settings.tab.presets" = "ค่าที่ตั้งไว้";
+"settings.presets.built-in" = "ค่าที่ตั้งไว้ในตัว";
+"settings.presets.enabled-count" = "%d จาก %d เปิดใช้";

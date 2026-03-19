@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "تقليل الارتفاع";
 "settings.shortcuts.undo" = "تراجع";
 "settings.shortcuts.redo" = "إعادة";
+
+/* Presets Tab */
+"settings.tab.presets" = "الإعدادات المسبقة";
+"settings.presets.built-in" = "الإعدادات المسبقة المدمجة";
+"settings.presets.enabled-count" = "%d من %d مفعّل";

@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "ऊंचाई घटाएं";
 "settings.shortcuts.undo" = "पूर्ववत करें";
 "settings.shortcuts.redo" = "फिर से करें";
+
+/* Presets Tab */
+"settings.tab.presets" = "प्रीसेट";
+"settings.presets.built-in" = "अंतर्निहित प्रीसेट";
+"settings.presets.enabled-count" = "%d / %d सक्षम";

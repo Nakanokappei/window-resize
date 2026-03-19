@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "Уменьшить высоту";
 "settings.shortcuts.undo" = "Отменить";
 "settings.shortcuts.redo" = "Повторить";
+
+/* Presets Tab */
+"settings.tab.presets" = "Пресеты";
+"settings.presets.built-in" = "Встроенные пресеты";
+"settings.presets.enabled-count" = "%d из %d включено";

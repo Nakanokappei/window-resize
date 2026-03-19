@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "高さを縮める";
 "settings.shortcuts.undo" = "取り消し";
 "settings.shortcuts.redo" = "やり直し";
+
+/* Presets Tab */
+"settings.tab.presets" = "プリセット";
+"settings.presets.built-in" = "内蔵プリセット";
+"settings.presets.enabled-count" = "%d / %d 有効";

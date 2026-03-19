@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "Shrink Height";
 "settings.shortcuts.undo" = "Undo";
 "settings.shortcuts.redo" = "Redo";
+
+/* Presets Tab */
+"settings.tab.presets" = "Presets";
+"settings.presets.built-in" = "Built-in Presets";
+"settings.presets.enabled-count" = "%d of %d enabled";

@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "높이 줄이기";
 "settings.shortcuts.undo" = "실행 취소";
 "settings.shortcuts.redo" = "다시 실행";
+
+/* Presets Tab */
+"settings.tab.presets" = "프리셋";
+"settings.presets.built-in" = "기본 프리셋";
+"settings.presets.enabled-count" = "%d / %d 활성화됨";

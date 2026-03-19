@@ -24,6 +24,7 @@ class SettingsStore: ObservableObject {
     private let shiftToLockRatioKey = "shiftToLockRatio"
     private let quickPresetsKey = "quickPresets"
     private let shortcutBindingsKey = "shortcutBindings"
+    private let disabledBuiltInIndicesKey = "disabledBuiltInIndices"
 
     // MARK: - Published Properties
 
@@ -47,7 +48,7 @@ class SettingsStore: ObservableObject {
     // MARK: - Overlay Appearance Settings
 
     /// Border color name for resize overlay (no snap candidate).
-    @Published var resizeBorderColor: String = "orange" {
+    @Published var resizeBorderColor: String = "white" {
         didSet { UserDefaults.standard.set(resizeBorderColor, forKey: resizeBorderColorKey) }
     }
 
@@ -57,7 +58,7 @@ class SettingsStore: ObservableObject {
     }
 
     /// Border color name for snap overlay (snap candidate active).
-    @Published var snapBorderColor: String = "orange" {
+    @Published var snapBorderColor: String = "white" {
         didSet { UserDefaults.standard.set(snapBorderColor, forKey: snapBorderColorKey) }
     }
 
@@ -73,7 +74,7 @@ class SettingsStore: ObservableObject {
     }
 
     /// Whether the resize overlay border uses animated dashes (marching ants).
-    @Published var resizeBorderAnimated: Bool = false {
+    @Published var resizeBorderAnimated: Bool = true {
         didSet { UserDefaults.standard.set(resizeBorderAnimated, forKey: resizeBorderAnimatedKey) }
     }
 
@@ -90,6 +91,54 @@ class SettingsStore: ObservableObject {
     /// Whether holding Shift during resize constrains the aspect ratio.
     @Published var shiftToLockRatio: Bool = true {
         didSet { UserDefaults.standard.set(shiftToLockRatio, forKey: shiftToLockRatioKey) }
+    }
+
+    // MARK: - Built-in Preset Enable/Disable
+
+    /// Indices into `builtInSizes` that the user has disabled. Disabled
+    /// presets are excluded from snap detection but remain visible in the
+    /// Presets settings tab where they can be re-enabled.
+    @Published var disabledBuiltInIndices: Set<Int> = [] {
+        didSet { persistDisabledBuiltInIndices() }
+    }
+
+    /// Returns true if the built-in preset at the given index is enabled.
+    func isBuiltInEnabled(index: Int) -> Bool {
+        !disabledBuiltInIndices.contains(index)
+    }
+
+    /// Toggles the enabled state of a built-in preset at the given index.
+    func toggleBuiltIn(index: Int) {
+        if disabledBuiltInIndices.contains(index) {
+            disabledBuiltInIndices.remove(index)
+        } else {
+            disabledBuiltInIndices.insert(index)
+        }
+    }
+
+    /// Persists disabled indices to UserDefaults as a JSON-encoded Int array.
+    private func persistDisabledBuiltInIndices() {
+        let array = Array(disabledBuiltInIndices)
+        if let data = try? JSONEncoder().encode(array) {
+            UserDefaults.standard.set(data, forKey: disabledBuiltInIndicesKey)
+        }
+    }
+
+    /// Loads disabled indices from UserDefaults. On first launch (key absent),
+    /// the first 6 built-in presets (Retina Mac resolutions) are disabled by
+    /// default — they match specific Mac display sizes and are unlikely to be
+    /// useful as general-purpose snap targets.
+    private func loadDisabledBuiltInIndices() {
+        guard let data = UserDefaults.standard.data(forKey: disabledBuiltInIndicesKey) else {
+            // First launch: disable Mac-specific presets by index.
+            // 7=MacBook Air 13", 9=MacBook Air 13" M3, 10=MacBook Air 15",
+            // 12=MacBook Pro 14", 15=QHD/iMac, 16=MacBook Pro 16"
+            disabledBuiltInIndices = [7, 9, 10, 12, 15, 16]
+            return
+        }
+        if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
+            disabledBuiltInIndices = Set(decoded)
+        }
     }
 
     // MARK: - Quick Presets (Keyboard Shortcuts ⌃⌥1–9)
@@ -411,27 +460,36 @@ class SettingsStore: ObservableObject {
     /// The 12 built-in presets covering Mac Retina logical resolutions and
     /// common standard display sizes. These are not editable by the user.
     static let builtInSizes: [PresetSize] = [
-        // Retina Mac resolutions (logical pixels)
-        PresetSize(width: 2560, height: 1600, label: "MacBook Pro 16\""),
-        PresetSize(width: 2560, height: 1440, label: "QHD / iMac"),
-        PresetSize(width: 1728, height: 1117, label: "MacBook Pro 14\""),
-        PresetSize(width: 1512, height: 982,  label: "MacBook Air 15\""),
-        PresetSize(width: 1470, height: 956,  label: "MacBook Air 13\" M3"),
-        PresetSize(width: 1440, height: 900,  label: "MacBook Air 13\""),
-        // Standard resolutions
-        PresetSize(width: 1920, height: 1080, label: "Full HD"),
-        PresetSize(width: 1680, height: 1050, label: "WSXGA+"),
-        PresetSize(width: 1280, height: 800,  label: "WXGA"),
-        PresetSize(width: 1280, height: 720,  label: "HD"),
-        PresetSize(width: 1024, height: 768,  label: "XGA"),
-        PresetSize(width: 800,  height: 600,  label: "SVGA"),
+        // Sorted by pixel area ascending (width × height).
+        PresetSize(width: 640,  height: 480,  label: "VGA"),              //   307,200
+        PresetSize(width: 800,  height: 600,  label: "SVGA"),             //   480,000
+        PresetSize(width: 1024, height: 768,  label: "XGA"),              //   786,432
+        PresetSize(width: 1280, height: 720,  label: "HD"),               //   921,600
+        PresetSize(width: 1280, height: 800,  label: "WXGA"),             // 1,024,000
+        PresetSize(width: 1080, height: 1080, label: "Instagram"),        // 1,166,400
+        PresetSize(width: 1280, height: 1024, label: "SXGA"),             // 1,310,720
+        PresetSize(width: 1440, height: 900,  label: "MacBook Air 13\""), // 1,296,000
+        PresetSize(width: 1024, height: 1366, label: "iPad"),             // 1,398,784
+        PresetSize(width: 1470, height: 956,  label: "MacBook Air 13\" M3"), // 1,405,320
+        PresetSize(width: 1512, height: 982,  label: "MacBook Air 15\""), // 1,484,784
+        PresetSize(width: 1680, height: 1050, label: "WSXGA+"),           // 1,764,000
+        PresetSize(width: 1728, height: 1117, label: "MacBook Pro 14\""), // 1,930,176
+        PresetSize(width: 1920, height: 1080, label: "Full HD"),          // 2,073,600
+        PresetSize(width: 1920, height: 1200, label: "WUXGA"),            // 2,304,000
+        PresetSize(width: 2560, height: 1440, label: "QHD / iMac"),       // 3,686,400
+        PresetSize(width: 2560, height: 1600, label: "MacBook Pro 16\""), // 4,096,000
+        PresetSize(width: 3840, height: 2160, label: "4K UHD"),           // 8,294,400
     ]
 
-    /// All available presets for drag snap detection: built-in sizes plus
-    /// quick presets. Quick presets are included so that drag-resizing near
-    /// a quick preset size also triggers a snap.
+    /// All available presets for drag snap detection: enabled built-in sizes
+    /// plus quick presets. Disabled built-in presets are excluded. Quick
+    /// presets are included so that drag-resizing near a quick preset size
+    /// also triggers a snap.
     var allPresets: [PresetSize] {
-        Self.builtInSizes + customSizes + quickPresets
+        let enabledBuiltIns = Self.builtInSizes.enumerated().compactMap { index, preset in
+            disabledBuiltInIndices.contains(index) ? nil : preset
+        }
+        return enabledBuiltIns + customSizes + quickPresets
     }
 
     // MARK: - Initialization
@@ -473,6 +531,9 @@ class SettingsStore: ObservableObject {
         if defaults.object(forKey: shiftToLockRatioKey) != nil {
             shiftToLockRatio = defaults.bool(forKey: shiftToLockRatioKey)
         }
+
+        // Load disabled built-in preset indices.
+        loadDisabledBuiltInIndices()
 
         // Load quick presets; use defaults on first launch.
         loadQuickPresets()

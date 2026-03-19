@@ -95,3 +95,8 @@
 "settings.shortcuts.shrink-height" = "Giảm chiều cao";
 "settings.shortcuts.undo" = "Hoàn tác";
 "settings.shortcuts.redo" = "Làm lại";
+
+/* Presets Tab */
+"settings.tab.presets" = "Cài đặt sẵn";
+"settings.presets.built-in" = "Cài đặt sẵn có sẵn";
+"settings.presets.enabled-count" = "%d / %d đã bật";
