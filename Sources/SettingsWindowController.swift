@@ -1,19 +1,21 @@
-// SettingsWindowController.swift — NSHostingController bridge that wraps
-// the SwiftUI SettingsView in an AppKit NSWindow. This is necessary because
-// the app uses NSStatusItem (AppKit) for its menu bar presence, and SwiftUI
-// Settings scenes are not available for LSUIElement (menu bar only) apps.
+// SettingsWindowController.swift — Wraps the SwiftUI settings tabs in an
+// AppKit NSTabViewController to get native toolbar-style tabs with icons.
+// This is necessary because SwiftUI's TabView on macOS does not reliably
+// display SF Symbol icons in tab items; NSTabViewController with
+// .toolbarStyle provides the standard macOS Settings appearance.
 //
-// The window height adjusts automatically when toggles show or hide
-// sub-options, using KVO on the hosting controller's preferredContentSize.
+// Each tab is an NSHostingController embedding one SwiftUI tab view.
+// The window height adjusts automatically via KVO on each hosting
+// controller's preferredContentSize when toggles show or hide sub-options.
 
 import AppKit
 import SwiftUI
 
 class SettingsWindowController: NSWindowController {
 
-    /// Retains the KVO observation for the hosting controller's
+    /// Retains the KVO observations for each hosting controller's
     /// preferredContentSize so the window resizes when content changes.
-    private var sizeObservation: NSKeyValueObservation?
+    private var sizeObservations: [NSKeyValueObservation] = []
 
     // UserDefaults keys for persisting the settings window position.
     // The screen resolution is saved alongside so the position is only
@@ -24,22 +26,37 @@ class SettingsWindowController: NSWindowController {
     private static let screenHeightKey = "settingsWindowScreenHeight"
 
     convenience init() {
-        let settingsView = SettingsView()
-        let hostingController = NSHostingController(rootView: settingsView)
+        // Build the NSTabViewController with toolbar-style tabs (icons + labels).
+        let tabVC = NSTabViewController()
+        tabVC.tabStyle = .toolbar
 
-        // Tell the hosting controller to keep its preferredContentSize
-        // in sync with the SwiftUI view's ideal size (macOS 13+).
-        hostingController.sizingOptions = .preferredContentSize
+        // Tab definitions: (label, SF Symbol name, SwiftUI view).
+        let tabs: [(String, String, AnyView)] = [
+            (L("settings.tab.general"),    "gearshape",          AnyView(GeneralTab())),
+            (L("settings.tab.appearance"), "paintbrush",         AnyView(AppearanceTab())),
+            (L("settings.tab.shortcuts"),  "keyboard",           AnyView(ShortcutsTab())),
+            (L("settings.tab.presets"),    "rectangle.3.group",  AnyView(PresetsTab())),
+        ]
 
-        let window = NSWindow(contentViewController: hostingController)
+        for (label, icon, view) in tabs {
+            let hostingController = NSHostingController(rootView:
+                view.frame(width: 540)
+            )
+            // Keep preferredContentSize in sync with the SwiftUI view (macOS 13+).
+            hostingController.sizingOptions = .preferredContentSize
+
+            let tabItem = NSTabViewItem(viewController: hostingController)
+            tabItem.label = label
+            tabItem.image = NSImage(systemSymbolName: icon, accessibilityDescription: label)
+
+            tabVC.addTabViewItem(tabItem)
+        }
+
+        let window = NSWindow(contentViewController: tabVC)
         window.title = L("settings.title")
 
-        // Not resizable — height is driven entirely by content.
+        // Not user-resizable — height is driven entirely by content.
         window.styleMask = [.titled, .closable, .miniaturizable]
-
-        // Set initial size from content, with fixed width.
-        let contentHeight = hostingController.preferredContentSize.height
-        window.setContentSize(NSSize(width: 540, height: max(contentHeight, 300)))
 
         // Restore saved position if the display resolution matches,
         // otherwise center the window on screen.
@@ -57,23 +74,28 @@ class SettingsWindowController: NSWindowController {
             object: window
         )
 
-        // Observe content size changes and adjust window height with animation.
-        sizeObservation = hostingController.observe(
-            \.preferredContentSize,
-            options: [.new]
-        ) { [weak self] controller, _ in
-            guard let window = self?.window else { return }
-            let newContentHeight = controller.preferredContentSize.height
-            guard newContentHeight > 0 else { return }
+        // Observe content size changes on each tab's hosting controller
+        // and adjust window height with animation.
+        for item in tabVC.tabViewItems {
+            guard let hosting = item.viewController as? NSHostingController<AnyView> else { continue }
+            let obs = hosting.observe(
+                \.preferredContentSize,
+                options: [.new]
+            ) { [weak self] controller, _ in
+                guard let window = self?.window else { return }
+                let newContentHeight = controller.preferredContentSize.height
+                guard newContentHeight > 0 else { return }
 
-            // Calculate new window frame, keeping the top edge fixed.
-            let titleBarHeight = window.frame.height - window.contentLayoutRect.height
-            let newWindowHeight = newContentHeight + titleBarHeight
-            var frame = window.frame
-            frame.origin.y += frame.height - newWindowHeight
-            frame.size.height = newWindowHeight
+                // Calculate new window frame, keeping the top edge fixed.
+                let titleBarHeight = window.frame.height - window.contentLayoutRect.height
+                let newWindowHeight = newContentHeight + titleBarHeight
+                var frame = window.frame
+                frame.origin.y += frame.height - newWindowHeight
+                frame.size.height = newWindowHeight
 
-            window.animator().setFrame(frame, display: true)
+                window.animator().setFrame(frame, display: true)
+            }
+            sizeObservations.append(obs)
         }
     }
 

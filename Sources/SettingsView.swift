@@ -5,35 +5,11 @@
 
 import SwiftUI
 
-// MARK: - Root View (TabView)
-
-struct SettingsView: View {
-    var body: some View {
-        TabView {
-            GeneralTab()
-                .tabItem {
-                    Label(L("settings.tab.general"), systemImage: "gearshape")
-                }
-            AppearanceTab()
-                .tabItem {
-                    Label(L("settings.tab.appearance"), systemImage: "paintbrush")
-                }
-            ShortcutsTab()
-                .tabItem {
-                    Label(L("settings.tab.shortcuts"), systemImage: "keyboard")
-                }
-            PresetsTab()
-                .tabItem {
-                    Label(L("settings.tab.presets"), systemImage: "rectangle.3.group")
-                }
-        }
-        .frame(width: 540)
-    }
-}
+// MARK: - Tab Views (used by SettingsWindowController's NSTabViewController)
 
 // MARK: - General Tab
 
-private struct GeneralTab: View {
+struct GeneralTab: View {
     @ObservedObject private var store = SettingsStore.shared
     @State private var showRestartAlert = false
 
@@ -307,7 +283,7 @@ private struct GeneralTab: View {
 /// dashed / animated), visibility toggle for the resize overlay, aspect
 /// ratio label, and Shift-to-lock-ratio behavior. Both resize and snap
 /// overlays are configured here side by side.
-private struct AppearanceTab: View {
+struct AppearanceTab: View {
     @ObservedObject private var store = SettingsStore.shared
 
     var body: some View {
@@ -493,7 +469,7 @@ private struct AppearanceTab: View {
 
 // MARK: - Shortcuts Tab
 
-private struct ShortcutsTab: View {
+struct ShortcutsTab: View {
     @ObservedObject private var store = SettingsStore.shared
 
     /// Tracks which action ID is currently being recorded, if any.
@@ -693,7 +669,7 @@ private struct ShortcutsTab: View {
 /// here so the user can re-enable them. Mac-specific Retina resolutions are
 /// disabled by default since they match specific display sizes and are rarely
 /// useful as general-purpose snap targets.
-private struct PresetsTab: View {
+struct PresetsTab: View {
     @ObservedObject private var store = SettingsStore.shared
 
     var body: some View {

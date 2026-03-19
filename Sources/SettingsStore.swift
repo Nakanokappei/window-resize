@@ -48,7 +48,7 @@ class SettingsStore: ObservableObject {
     // MARK: - Overlay Appearance Settings
 
     /// Border color name for resize overlay (no snap candidate).
-    @Published var resizeBorderColor: String = "white" {
+    @Published var resizeBorderColor: String = "orange" {
         didSet { UserDefaults.standard.set(resizeBorderColor, forKey: resizeBorderColorKey) }
     }
 
@@ -58,7 +58,7 @@ class SettingsStore: ObservableObject {
     }
 
     /// Border color name for snap overlay (snap candidate active).
-    @Published var snapBorderColor: String = "white" {
+    @Published var snapBorderColor: String = "orange" {
         didSet { UserDefaults.standard.set(snapBorderColor, forKey: snapBorderColorKey) }
     }
 
