@@ -472,6 +472,8 @@ private struct AppearanceTab: View {
             }
             Text(label)
                 .font(.system(size: 9))
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
                 .foregroundColor(.secondary)
         }
         .padding(.horizontal, 6)
