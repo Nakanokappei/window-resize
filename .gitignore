@@ -12,3 +12,14 @@ build-appstore/
 # Claude
 .claude/
 CLAUDE.md
+
+# App Store tooling (contains API key references)
+upload-screenshots.py
+appstore-metadata/
+
+# Pencil design files and wallpaper assets
+AppStore.pen
+iMac_Silver_*.png
+
+# Screenshots (raw captures, not distributed)
+Screenshots/
