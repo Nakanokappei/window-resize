@@ -81,9 +81,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func openSettings() {
         if settingsWindowController == nil {
             settingsWindowController = SettingsWindowController()
+            // When the settings window closes, release the controller to avoid
+            // retaining stale references. Also observe window resignation to
+            // prevent crashes when focus leaves the window in .accessory mode.
+            if let window = settingsWindowController?.window {
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(settingsWindowWillClose),
+                    name: NSWindow.willCloseNotification,
+                    object: window
+                )
+            }
         }
         settingsWindowController?.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
+    }
+
+    /// Releases the settings window controller when the window closes.
+    /// This prevents crashes in .accessory policy apps where a closed
+    /// window's hosting controllers can reference deallocated SwiftUI state.
+    @objc private func settingsWindowWillClose(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSWindow.willCloseNotification,
+            object: settingsWindowController?.window
+        )
+        settingsWindowController = nil
     }
 
     @objc private func quitApp() {

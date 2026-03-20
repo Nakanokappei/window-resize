@@ -66,6 +66,11 @@ class SettingsWindowController: NSWindowController {
 
         self.init(window: window)
 
+        // Override the NSTabViewController delegate to keep our window title
+        // constant across tab switches. By default, .toolbar style replaces
+        // the title with the selected tab's label ("Untitled" if empty).
+        tabVC.tabView.delegate = self
+
         // Save the window position whenever the user moves it.
         NotificationCenter.default.addObserver(
             self,
@@ -97,6 +102,20 @@ class SettingsWindowController: NSWindowController {
             }
             sizeObservations.append(obs)
         }
+    }
+
+    // MARK: - Window Lifecycle
+
+    override func showWindow(_ sender: Any?) {
+        super.showWindow(sender)
+        // Ensure the window title is set after showing, in case
+        // NSTabViewController overwrote it during initial layout.
+        window?.title = L("settings.title")
+
+        // For .accessory policy apps, losing key window status can cause
+        // SwiftUI hosting controllers to access deallocated state. Make
+        // the window non-deactivating so focus changes don't destabilize it.
+        window?.level = .floating
     }
 
     // MARK: - Window Position Persistence
@@ -145,5 +164,17 @@ class SettingsWindowController: NSWindowController {
         frame.origin = NSPoint(x: savedX, y: savedY)
         window.setFrame(frame, display: false)
         return true
+    }
+}
+
+// MARK: - NSTabViewDelegate
+
+/// Keeps the window title constant when the user switches between tabs.
+/// Without this, NSTabViewController's .toolbar style replaces the title
+/// with the selected tab's label, causing "Untitled" to appear for tabs
+/// that haven't been explicitly named in the title bar context.
+extension SettingsWindowController: NSTabViewDelegate {
+    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+        window?.title = L("settings.title")
     }
 }
