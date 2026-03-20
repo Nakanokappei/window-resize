@@ -173,6 +173,11 @@ class KeyRecorderNSView: NSView {
     // MARK: - Drawing
 
     override func draw(_ dirtyRect: NSRect) {
+        // Guard against drawing when the view has no valid window context.
+        // This can happen when focus returns to an .accessory policy app
+        // and AppKit triggers a redraw before the graphics state is ready.
+        guard window != nil else { return }
+
         let rect = bounds.insetBy(dx: 1, dy: 1)
         let path = NSBezierPath(roundedRect: rect, xRadius: 5, yRadius: 5)
 
@@ -207,11 +212,17 @@ class KeyRecorderNSView: NSView {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
 
+        // Use a safely obtained font — monospacedSystemFont can return a
+        // font whose internal attributes become invalid during window
+        // deactivation/reactivation in .accessory policy apps.
+        let font = NSFont.monospacedSystemFont(ofSize: 11, weight: .medium)
+        let color: NSColor = isRecording
+            ? NSColor.controlAccentColor
+            : NSColor.labelColor
+
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.monospacedSystemFont(ofSize: 11, weight: .medium),
-            .foregroundColor: isRecording
-                ? NSColor.controlAccentColor
-                : NSColor.labelColor,
+            .font: font as Any,
+            .foregroundColor: color,
             .paragraphStyle: paragraphStyle,
         ]
 

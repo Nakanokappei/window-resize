@@ -11,6 +11,30 @@
 import AppKit
 import SwiftUI
 
+/// NSWindow subclass that locks the title once set, ignoring subsequent
+/// changes from NSTabViewController's .toolbar style tab switches.
+/// This prevents the title from flickering or showing "Untitled" when
+/// the user switches tabs.
+private class TitleLockedWindow: NSWindow {
+    private var lockedTitle: String?
+
+    /// Sets the title and locks it. All subsequent title changes are ignored.
+    func lockTitle(_ title: String) {
+        lockedTitle = title
+        super.title = title
+    }
+
+    override var title: String {
+        get { super.title }
+        set {
+            // Only accept title changes before the title is locked.
+            if lockedTitle == nil {
+                super.title = newValue
+            }
+        }
+    }
+}
+
 class SettingsWindowController: NSWindowController {
 
     /// Retains the KVO observations for each hosting controller's
@@ -52,8 +76,8 @@ class SettingsWindowController: NSWindowController {
             tabVC.addTabViewItem(tabItem)
         }
 
-        let window = NSWindow(contentViewController: tabVC)
-        window.title = L("settings.title")
+        let window = TitleLockedWindow(contentViewController: tabVC)
+        window.lockTitle(L("settings.title"))
 
         // Not user-resizable — height is driven entirely by content.
         window.styleMask = [.titled, .closable, .miniaturizable]
@@ -65,11 +89,6 @@ class SettingsWindowController: NSWindowController {
         }
 
         self.init(window: window)
-
-        // Override the NSTabViewController delegate to keep our window title
-        // constant across tab switches. By default, .toolbar style replaces
-        // the title with the selected tab's label ("Untitled" if empty).
-        tabVC.tabView.delegate = self
 
         // Save the window position whenever the user moves it.
         NotificationCenter.default.addObserver(
@@ -102,20 +121,6 @@ class SettingsWindowController: NSWindowController {
             }
             sizeObservations.append(obs)
         }
-    }
-
-    // MARK: - Window Lifecycle
-
-    override func showWindow(_ sender: Any?) {
-        super.showWindow(sender)
-        // Ensure the window title is set after showing, in case
-        // NSTabViewController overwrote it during initial layout.
-        window?.title = L("settings.title")
-
-        // For .accessory policy apps, losing key window status can cause
-        // SwiftUI hosting controllers to access deallocated state. Make
-        // the window non-deactivating so focus changes don't destabilize it.
-        window?.level = .floating
     }
 
     // MARK: - Window Position Persistence
@@ -167,14 +172,3 @@ class SettingsWindowController: NSWindowController {
     }
 }
 
-// MARK: - NSTabViewDelegate
-
-/// Keeps the window title constant when the user switches between tabs.
-/// Without this, NSTabViewController's .toolbar style replaces the title
-/// with the selected tab's label, causing "Untitled" to appear for tabs
-/// that haven't been explicitly named in the title bar context.
-extension SettingsWindowController: NSTabViewDelegate {
-    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
-        window?.title = L("settings.title")
-    }
-}
