@@ -338,10 +338,12 @@ struct AppearanceTab: View {
                     isAnimated.wrappedValue = false
                 }
             } else {
-                lineStyleButton(dashed: false, color: .clear,
-                                isSelected: false, label: " ") { }
-                    .opacity(0)
-                    .accessibilityHidden(true)
+                // Invisible placeholder matching the "None" button's layout
+                // so Solid/Dashed/Animated align with the resize row above.
+                lineStyleButton(dashed: false, color: .secondary.opacity(0.3),
+                                isSelected: false,
+                                label: L("settings.overlay.none")) { }
+                    .hidden()
             }
 
             // Solid line button.
