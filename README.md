@@ -19,6 +19,7 @@ Also available for Windows: [Window Resize for Windows](https://github.com/Nakan
 - **Precision mode (Control+Option+Shift+Arrows)** — grow/shrink by 1px
 - **Undo/Redo (Control+Option+Z / Control+Option+Shift+Z)** — per-window resize history
 - **All shortcuts fully customizable** in Settings with conflict detection
+- **No system beep** — shortcuts are intercepted via CGEvent tap so the foreground app never receives them
 
 ### Centered HUD Feedback
 - Keyboard operations show a centered HUD on the target window
