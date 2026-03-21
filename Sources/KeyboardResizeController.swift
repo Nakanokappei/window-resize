@@ -47,14 +47,7 @@ class KeyboardResizeController {
     private var hideTimer: Timer?
 
     /// Duration the overlay stays visible after a keyboard resize (seconds).
-    /// When launched with `-screenshotMode YES`, extends to 10 seconds to allow
-    /// time for capturing screenshots of the HUD overlay.
-    private static let overlayDuration: TimeInterval = {
-        if UserDefaults.standard.bool(forKey: "screenshotMode") {
-            return 10.0
-        }
-        return 0.8
-    }()
+    private static let overlayDuration: TimeInterval = 0.8
 
     /// Step size for normal resize operations, in pixels.
     private static let normalStepPx: CGFloat = 10

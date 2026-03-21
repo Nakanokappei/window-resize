@@ -11,8 +11,6 @@ import SwiftUI
 
 struct GeneralTab: View {
     @ObservedObject private var store = SettingsStore.shared
-    @State private var showRestartAlert = false
-
     // Quick preset editing state.
     @State private var newQPLabel: String = ""
     @State private var newQPWidth: String = ""
@@ -27,27 +25,6 @@ struct GeneralTab: View {
     @State private var pendingPresetActionID: String?
     @State private var pendingPresetBinding: SettingsStore.ShortcutBinding?
     @State private var conflictingPresetActionID: String?
-
-    /// Supported languages shown with their native names so users can
-    /// identify them regardless of the current app language.
-    private let supportedLanguages: [(code: String, name: String)] = [
-        ("en", "English"),
-        ("ja", "日本語"),
-        ("zh-Hans", "简体中文"),
-        ("zh-Hant", "繁體中文"),
-        ("ko", "한국어"),
-        ("es", "Español"),
-        ("fr", "Français"),
-        ("de", "Deutsch"),
-        ("it", "Italiano"),
-        ("pt", "Português"),
-        ("ru", "Русский"),
-        ("ar", "العربية"),
-        ("hi", "हिन्दी"),
-        ("id", "Bahasa Indonesia"),
-        ("vi", "Tiếng Việt"),
-        ("th", "ไทย"),
-    ]
 
     var body: some View {
         ZStack {
@@ -145,25 +122,11 @@ struct GeneralTab: View {
             Toggle(L("settings.launch-at-login"), isOn: $store.launchAtLogin)
                 .toggleStyle(.switch)
 
-            Divider()
-
-            // Language picker — allows overriding the app language.
-            // Requires restart to take effect.
-            HStack {
-                Text(L("settings.language"))
-                Spacer()
-                Picker("", selection: $store.appLanguage) {
-                    Text(L("settings.language.system")).tag("system")
-                    Divider()
-                    ForEach(supportedLanguages, id: \.code) { lang in
-                        Text(lang.name).tag(lang.code)
-                    }
-                }
-                .frame(width: 180)
-                .onChange(of: store.appLanguage) { _ in
-                    showRestartAlert = true
-                }
-            }
+            // Shift to lock aspect ratio — hold Shift during drag resize to
+            // constrain the aspect ratio. Placed here (General) rather than
+            // Appearance because it affects resize behavior, not visual style.
+            Toggle(L("settings.overlay.shift-lock-ratio"), isOn: $store.shiftToLockRatio)
+                .toggleStyle(.switch)
 
             Divider()
 
@@ -208,14 +171,6 @@ struct GeneralTab: View {
                     .contentShape(Rectangle())
                     .onTapGesture { recordingPresetActionID = nil }
             }
-        }
-        .alert(L("settings.language.restart-title"), isPresented: $showRestartAlert) {
-            Button(L("settings.language.restart-button")) {
-                store.relaunchApp()
-            }
-            Button(L("settings.language.restart-later"), role: .cancel) { }
-        } message: {
-            Text(L("settings.language.restart-body"))
         }
         .alert(L("settings.shortcuts.conflict-title"), isPresented: $showPresetConflictAlert) {
             Button(L("settings.shortcuts.conflict-replace")) {
@@ -330,10 +285,6 @@ struct AppearanceTab: View {
             // Show ratio label toggle.
             Toggle(L("settings.overlay.show-ratio"), isOn: $store.showRatioLabel)
                 .toggleStyle(.switch)
-
-            // Shift to lock aspect ratio toggle.
-            Toggle(L("settings.overlay.shift-lock-ratio"), isOn: $store.shiftToLockRatio)
-                .toggleStyle(.switch)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
@@ -376,6 +327,9 @@ struct AppearanceTab: View {
 
         return HStack(spacing: 8) {
             // "None" button — only present for overlays that can be hidden.
+            // When absent (snap overlay), an invisible spacer of the same width
+            // keeps the Solid/Dashed/Animated buttons horizontally aligned with
+            // the resize row above.
             if let isVisible = isVisible {
                 lineStyleButton(dashed: false, color: .secondary.opacity(0.3),
                                 isSelected: noneSelected,
@@ -383,6 +337,11 @@ struct AppearanceTab: View {
                     isVisible.wrappedValue = false
                     isAnimated.wrappedValue = false
                 }
+            } else {
+                lineStyleButton(dashed: false, color: .clear,
+                                isSelected: false, label: " ") { }
+                    .opacity(0)
+                    .accessibilityHidden(true)
             }
 
             // Solid line button.

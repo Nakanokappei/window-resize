@@ -12,7 +12,6 @@ class SettingsStore: ObservableObject {
 
     private let defaultsKey = "customPresetSizes"
     private let launchAtLoginKey = "launchAtLogin"
-    private let appLanguageKey = "appLanguage"
     private let resizeBorderColorKey = "resizeBorderColor"
     private let resizeBorderDashedKey = "resizeBorderDashed"
     private let snapBorderColorKey = "snapBorderColor"
@@ -34,14 +33,6 @@ class SettingsStore: ObservableObject {
         didSet {
             updateLoginItem(launchAtLogin)
             UserDefaults.standard.set(launchAtLogin, forKey: launchAtLoginKey)
-        }
-    }
-
-    // Language override — "system" follows OS setting, otherwise a specific locale code.
-    @Published var appLanguage: String = "system" {
-        didSet {
-            UserDefaults.standard.set(appLanguage, forKey: appLanguageKey)
-            applyLanguage()
         }
     }
 
@@ -515,9 +506,6 @@ class SettingsStore: ObservableObject {
     init() {
         loadCustomPresets()
         launchAtLogin = UserDefaults.standard.bool(forKey: launchAtLoginKey)
-        if let lang = UserDefaults.standard.string(forKey: appLanguageKey) {
-            appLanguage = lang
-        }
 
         // Load overlay appearance settings from UserDefaults.
         //
@@ -642,27 +630,6 @@ class SettingsStore: ObservableObject {
     }
 
     // MARK: - Language
-
-    /// Sets the AppleLanguages UserDefaults key to override the app's locale.
-    /// When set to "system", removes the override so the OS default is used.
-    func applyLanguage() {
-        if appLanguage == "system" {
-            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
-        } else {
-            UserDefaults.standard.set([appLanguage], forKey: "AppleLanguages")
-        }
-    }
-
-    /// Relaunches the app by spawning a shell that waits for this process
-    /// to exit, then re-opens the bundle. Used after language changes.
-    func relaunchApp() {
-        let path = Bundle.main.bundlePath
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        process.arguments = ["-c", "sleep 0.5 && open \"\(path)\""]
-        try? process.run()
-        NSApp.terminate(nil)
-    }
 
     // MARK: - Login Item
 
