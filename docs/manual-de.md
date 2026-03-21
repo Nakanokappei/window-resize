@@ -55,13 +55,13 @@ Waehrend der Groessenaenderung wird das aktuelle Seitenverhaeltnis im Overlay an
 
 Andere Verhaeltnisse werden als vereinfachte Brueche angezeigt (z. B. "16:9", "4:3").
 
-> Diese Funktion kann in den Einstellungen deaktiviert werden (siehe [Darstellung](#tab-darstellung)).
+> Diese Funktion kann in den Einstellungen deaktiviert werden (siehe [Tab Darstellung](#tab-darstellung)).
 
 ### Shift zum Sperren des Seitenverhaeltnisses
 
 Halten Sie die **Shift**-Taste waehrend der Groessenaenderung gedrueckt, um das Seitenverhaeltnis zu sperren. Das Fenster behaelt seine aktuellen Proportionen bei, waehrend Sie ziehen.
 
-> Diese Funktion kann in den Einstellungen deaktiviert werden (siehe [Darstellung](#tab-darstellung)).
+> Diese Funktion kann in den Einstellungen deaktiviert werden (siehe [Tab Allgemein](#tab-allgemein)).
 
 ---
 
@@ -148,9 +148,9 @@ Um eine Voreinstellung hinzuzufuegen, geben Sie Name, Breite und Hoehe in die Fe
 
 Aktivieren Sie **"Beim Anmelden starten"**, damit Window Resize automatisch gestartet wird, wenn Sie sich bei macOS anmelden.
 
-#### Sprache
+#### Shift-Verhaeltnissperre
 
-Waehlen Sie die Anzeigesprache der App aus dem Dropdown-Menue. Sie koennen aus 16 Sprachen waehlen oder **"Systemstandard"** auswaehlen, um der macOS-Systemsprache zu folgen. Nach dem Aendern der Sprache ist ein Neustart der App erforderlich.
+Steuert, ob das Halten der Shift-Taste waehrend der Groessenaenderung das Seitenverhaeltnis sperrt. Standard: Ein.
 
 #### Status der Bedienungshilfen
 
@@ -169,7 +169,6 @@ Konfigurieren Sie den visuellen Stil des Snap-Overlays:
 - **Resize-Rahmen** — Rahmenfarbe und Linienstil waehrend der Groessenaenderung. Waehlen Sie aus 9 Farben (Rot, Orange, Gelb, Gruen, Cyan, Blau, Lila, Weiss, Grau) und 4 Stilen (Keiner, Durchgezogen, Gestrichelt, Animiert). Standard: Weiss, Animiert.
 - **Snap-Rahmen** — Rahmen beim Einrasten des Fensters auf eine Voreinstellung. Standard: Weiss, Durchgezogen.
 - **Seitenverhaeltnis anzeigen** — Seitenverhaeltnis-Anzeige im Overlay ein- oder ausschalten. Standard: Ein.
-- **Shift-Verhaeltnissperre** — Steuert, ob das Halten der Shift-Taste das Seitenverhaeltnis sperrt. Standard: Ein.
 
 ### Tab Kurzbefehle
 

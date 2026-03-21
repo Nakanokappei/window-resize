@@ -55,13 +55,13 @@ Trong qua trinh doi kich thuoc, ty le khung hinh hien tai duoc hien thi trong lo
 
 Cac ty le khac duoc hien thi duoi dang phan so rut gon (vi du: "16:9", "4:3").
 
-> Tinh nang nay co the tat trong Cai dat (xem [Giao dien lop phu](#tab-giao-dien)).
+> Tinh nang nay co the tat trong Cai dat (xem [Tab giao dien](#tab-giao-dien)).
 
 ### Giu Shift de khoa ty le khung hinh
 
 Giu phim **Shift** trong khi doi kich thuoc de khoa ty le khung hinh. Cua so se giu nguyen ty le hien tai khi ban keo.
 
-> Tinh nang nay co the tat trong Cai dat (xem [Giao dien lop phu](#tab-giao-dien)).
+> Tinh nang nay co the tat trong Cai dat (xem [Tab General](#tab-general)).
 
 ---
 
@@ -148,9 +148,9 @@ De them preset, dien ten, chieu rong va chieu cao vao cac truong o phia duoi va 
 
 Bat **"Launch at Login"** de Window Resize tu dong khoi dong khi ban dang nhap vao macOS.
 
-#### Ngon ngu
+#### Shift khoa ty le
 
-Chon ngon ngu hien thi cua ung dung tu menu tha xuong. Chon tu 16 ngon ngu hoac **"System Default"** de theo ngon ngu he thong macOS. Thay doi ngon ngu yeu cau khoi dong lai ung dung.
+Bat/tat tinh nang giu Shift de co dinh ty le khung hinh trong khi doi kich thuoc. Mac dinh: bat.
 
 #### Trang thai Tro nang
 
@@ -169,7 +169,6 @@ Cau hinh kieu hien thi cua lop phu snap:
 - **Duong vien doi kich thuoc** — mau duong vien va kieu duong hien thi khi doi kich thuoc. Chon tu 9 mau (do, cam, vang, xanh la, xanh lam nhat, xanh duong, tim, trang, xam) va 4 kieu (khong, lien, net dut, chuyen dong). Mac dinh: trang, chuyen dong.
 - **Duong vien snap** — duong vien hien thi khi cua so snap vao preset. Mac dinh: trang, lien.
 - **Hien thi ty le khung hinh** — bat/tat nhan ty le khung hinh trong lop phu. Mac dinh: bat.
-- **Shift khoa ty le** — bat/tat tinh nang giu Shift de co dinh ty le khung hinh trong khi doi kich thuoc. Mac dinh: bat.
 
 ### Tab phim tat
 

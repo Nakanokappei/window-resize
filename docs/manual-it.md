@@ -61,7 +61,7 @@ Gli altri rapporti vengono visualizzati come frazioni semplificate (ad esempio "
 
 Tenere premuto il tasto **Shift** durante il ridimensionamento per bloccare il rapporto d'aspetto. La finestra manterra le proporzioni correnti durante il trascinamento.
 
-> Questa funzione puo essere disattivata nelle Impostazioni (vedere [Scheda Aspetto](#scheda-aspetto)).
+> Questa funzione puo essere disattivata nelle Impostazioni (vedere [Scheda Generale](#scheda-generale)).
 
 ---
 
@@ -148,9 +148,9 @@ Per aggiungere un preset, compilare i campi nome, larghezza e altezza in basso e
 
 Attivare **"Avvia al login"** per far avviare Window Resize automaticamente quando si accede a macOS.
 
-#### Lingua
+#### Shift per bloccare il rapporto
 
-Selezionare la lingua di visualizzazione dell'app dal menu a discesa. Sono disponibili 16 lingue oppure **"Predefinita di sistema"** per utilizzare la lingua di macOS. La modifica della lingua richiede il riavvio dell'app.
+Attivare o disattivare il blocco del rapporto d'aspetto tenendo premuto Shift durante il ridimensionamento. Predefinito: attivato.
 
 #### Stato dell'accessibilita
 
@@ -169,7 +169,6 @@ Configurare lo stile visivo dell'overlay di snap:
 - **Bordo di ridimensionamento** — il colore e lo stile della linea del bordo mostrato durante il ridimensionamento. Scegliere tra 9 colori (rosso, arancione, giallo, verde, ciano, blu, viola, bianco, grigio) e 4 stili (nessuno, continua, tratteggiata, animata). Predefinito: bianco, animata.
 - **Bordo di snap** — il bordo mostrato quando la finestra si adatta a una dimensione predefinita. Predefinito: bianco, continua.
 - **Mostra rapporto d'aspetto** — attivare o disattivare l'etichetta del rapporto d'aspetto nell'overlay. Predefinito: attivato.
-- **Shift per bloccare il rapporto** — attivare o disattivare il blocco del rapporto d'aspetto tenendo premuto Shift. Predefinito: attivato.
 
 ### Scheda Scorciatoie
 

@@ -55,13 +55,13 @@ During resize, the current aspect ratio is displayed in the overlay. When the ra
 
 Other ratios are displayed as simplified fractions (e.g., "16:9", "4:3").
 
-> This feature can be turned off in Settings (see [Overlay Appearance](#overlay-appearance)).
+> This feature can be turned off in Settings (see [Appearance Tab](#appearance-tab)).
 
 ### Shift to Lock Aspect Ratio
 
 Hold the **Shift** key while resizing to lock the aspect ratio. The window will maintain its current proportions as you drag.
 
-> This feature can be turned off in Settings (see [Overlay Appearance](#overlay-appearance)).
+> This feature can be turned off in Settings (see [General Tab](#general-tab)).
 
 ---
 
@@ -148,9 +148,9 @@ To add a preset, fill in the label, width, and height fields at the bottom and c
 
 Toggle **"Launch at Login"** to have Window Resize start automatically when you log in to macOS.
 
-#### Language
+#### Shift to Lock Ratio
 
-Select the app display language from the dropdown. Choose from 16 languages or **"System Default"** to follow the macOS system language. Changing the language requires an app restart.
+Toggle whether holding the Shift key during resize constrains the aspect ratio. Default: on.
 
 #### Accessibility Status
 
@@ -169,7 +169,6 @@ Configure the visual style of the snap overlay:
 - **Resize border** — the border color and line style shown while resizing. Choose from 9 colors (red, orange, yellow, green, cyan, blue, purple, white, gray) and 4 styles (none, solid, dashed, animated). Default: white, animated.
 - **Snap border** — the border shown when the window snaps to a preset. Default: white, solid.
 - **Show aspect ratio** — toggle the aspect ratio label in the overlay. Default: on.
-- **Shift to lock ratio** — toggle whether holding Shift constrains the aspect ratio during resize. Default: on.
 
 ### Shortcuts Tab
 

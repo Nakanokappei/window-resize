@@ -61,7 +61,7 @@ Outras proporcoes sao exibidas como fracoes simplificadas (por exemplo, "16:9", 
 
 Mantenha a tecla **Shift** pressionada durante o redimensionamento para travar a proporcao. A janela mantera suas proporcoes atuais enquanto voce arrasta.
 
-> Este recurso pode ser desativado nas Configuracoes (consulte [Aba Aparencia](#aba-aparencia)).
+> Este recurso pode ser desativado nas Configuracoes (consulte [Aba Geral](#aba-geral)).
 
 ---
 
@@ -148,9 +148,9 @@ Para adicionar um preset, preencha os campos de rotulo, largura e altura na part
 
 Ative **"Iniciar ao fazer login"** para que o Window Resize inicie automaticamente quando voce fizer login no macOS.
 
-#### Idioma
+#### Shift para travar a proporcao
 
-Selecione o idioma de exibicao do aplicativo no menu suspenso. Escolha entre 16 idiomas ou **"Padrao do sistema"** para seguir o idioma do macOS. A alteracao do idioma requer reiniciar o aplicativo.
+Ativar ou desativar se manter Shift pressionado trava a proporcao durante o redimensionamento. Padrao: ativado.
 
 #### Status da acessibilidade
 
@@ -169,7 +169,6 @@ Configure o estilo visual da sobreposicao de encaixe:
 - **Borda de redimensionamento** — a cor e o estilo da linha da borda exibida ao redimensionar. Escolha entre 9 cores (vermelho, laranja, amarelo, verde, ciano, azul, roxo, branco, cinza) e 4 estilos (nenhum, solida, tracejada, animada). Padrao: branco, animada.
 - **Borda de encaixe** — a borda exibida quando a janela se encaixa em um tamanho predefinido. Padrao: branco, solida.
 - **Mostrar proporcao** — ativar ou desativar o rotulo de proporcao na sobreposicao. Padrao: ativado.
-- **Shift para travar a proporcao** — ativar ou desativar se manter Shift pressionado trava a proporcao. Padrao: ativado.
 
 ### Aba Atalhos
 

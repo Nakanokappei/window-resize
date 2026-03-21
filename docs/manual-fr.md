@@ -61,7 +61,7 @@ Les autres rapports sont affiches sous forme de fractions simplifiees (par ex. "
 
 Maintenez la touche **Shift** enfoncee pendant le redimensionnement pour verrouiller le rapport d'aspect. La fenetre conservera ses proportions actuelles pendant que vous faites glisser.
 
-> Cette fonction peut etre desactivee dans les Parametres (voir [Onglet Apparence](#onglet-apparence)).
+> Cette fonction peut etre desactivee dans les Parametres (voir [Onglet General](#onglet-general)).
 
 ---
 
@@ -148,9 +148,9 @@ Pour ajouter une preselection, remplissez les champs de nom, largeur et hauteur 
 
 Activez **"Lancer au demarrage"** pour que Window Resize se lance automatiquement lorsque vous vous connectez a macOS.
 
-#### Langue
+#### Shift pour verrouiller le rapport
 
-Selectionnez la langue d'affichage de l'application dans le menu deroulant. Vous pouvez choisir parmi 16 langues ou selectionner **"Langue du systeme"** pour suivre la langue definie dans macOS. Un redemarrage de l'application est necessaire pour appliquer le changement.
+Activer ou desactiver le verrouillage du rapport d'aspect en maintenant Shift pendant le redimensionnement. Par defaut : active.
 
 #### Etat de l'accessibilite
 
@@ -169,7 +169,6 @@ Configurez le style visuel de l'overlay de snap :
 - **Bordure de redimensionnement** — la couleur et le style de ligne de la bordure affichee pendant le redimensionnement. Choisissez parmi 9 couleurs (rouge, orange, jaune, vert, cyan, bleu, violet, blanc, gris) et 4 styles (aucun, continu, pointille, anime). Par defaut : blanc, anime.
 - **Bordure de snap** — la bordure affichee lorsque la fenetre s'ajuste a une taille predefinie. Par defaut : blanc, continu.
 - **Afficher le rapport d'aspect** — activer ou desactiver l'affichage du rapport d'aspect dans l'overlay. Par defaut : active.
-- **Shift pour verrouiller le rapport** — activer ou desactiver le verrouillage du rapport d'aspect en maintenant Shift. Par defaut : active.
 
 ### Onglet Raccourcis
 

@@ -61,7 +61,7 @@ Otras relaciones se muestran como fracciones simplificadas (por ejemplo, "16:9",
 
 Mantenga presionada la tecla **Shift** mientras redimensiona para bloquear la relacion de aspecto. La ventana mantendra sus proporciones actuales mientras arrastra.
 
-> Esta funcion se puede desactivar en Ajustes (consulte [Pestana Apariencia](#pestana-apariencia)).
+> Esta funcion se puede desactivar en Ajustes (consulte [Pestana General](#pestana-general)).
 
 ---
 
@@ -148,9 +148,9 @@ Para agregar un preset, complete los campos de nombre, ancho y alto en la parte 
 
 Active **"Iniciar sesion automaticamente"** para que Window Resize se inicie automaticamente cuando inicie sesion en macOS.
 
-#### Idioma
+#### Shift para bloquear relacion
 
-Seleccione el idioma de la aplicacion en el menu desplegable. Puede elegir entre 16 idiomas o **"Idioma del sistema"** para seguir el idioma configurado en macOS. Para que el cambio de idioma surta efecto es necesario reiniciar la aplicacion.
+Activa o desactiva la restriccion de relacion de aspecto al mantener presionada la tecla Shift durante el redimensionamiento. Predeterminado: activado.
 
 #### Estado de accesibilidad
 
@@ -169,7 +169,6 @@ Configure el estilo visual de la superposicion de ajuste:
 - **Borde de redimensionamiento** — el color y el estilo de linea del borde mostrado al redimensionar. Elija entre 9 colores (rojo, naranja, amarillo, verde, cian, azul, morado, blanco, gris) y 4 estilos (ninguno, solida, discontinua, animada). Predeterminado: blanco, animada.
 - **Borde de ajuste** — el borde mostrado cuando la ventana se ajusta a un tamano predefinido. Predeterminado: blanco, solida.
 - **Mostrar relacion de aspecto** — activa o desactiva la etiqueta de relacion de aspecto en la superposicion. Predeterminado: activado.
-- **Shift para bloquear relacion** — activa o desactiva la restriccion de relacion de aspecto al mantener presionada la tecla Shift. Predeterminado: activado.
 
 ### Pestana Atajos
 

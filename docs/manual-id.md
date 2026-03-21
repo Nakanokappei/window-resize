@@ -61,7 +61,7 @@ Rasio lainnya ditampilkan sebagai pecahan sederhana (misalnya, "16:9", "4:3").
 
 Tahan tombol **Shift** saat mengubah ukuran untuk mengunci rasio aspek. Jendela akan mempertahankan proporsinya saat Anda menarik.
 
-> Fitur ini dapat dinonaktifkan di Pengaturan (lihat [Tab Tampilan](#tab-tampilan)).
+> Fitur ini dapat dinonaktifkan di Pengaturan (lihat [Tab Umum](#tab-umum)).
 
 ---
 
@@ -148,9 +148,9 @@ Untuk menambahkan preset, isi bidang label, lebar, dan tinggi di bawah lalu klik
 
 Aktifkan **"Jalankan Saat Login"** agar Window Resize otomatis berjalan saat Anda masuk ke macOS.
 
-#### Bahasa
+#### Shift untuk Mengunci Rasio
 
-Pilih bahasa tampilan aplikasi dari dropdown. Tersedia 16 bahasa atau **"Bawaan Sistem"** untuk mengikuti bahasa sistem macOS. Perubahan bahasa memerlukan peluncuran ulang aplikasi.
+Aktifkan/nonaktifkan penguncian rasio aspek saat menahan Shift selama mengubah ukuran. Default: aktif.
 
 #### Status Aksesibilitas
 
@@ -169,7 +169,6 @@ Atur gaya visual overlay snap:
 - **Batas resize** — warna dan gaya garis batas yang ditampilkan saat mengubah ukuran. Pilih dari 9 warna (merah, oranye, kuning, hijau, sian, biru, ungu, putih, abu-abu) dan 4 gaya (tidak ada, solid, putus-putus, animasi). Default: putih, animasi.
 - **Batas snap** — batas yang ditampilkan saat jendela di-snap ke preset. Default: putih, solid.
 - **Tampilkan rasio aspek** — aktifkan/nonaktifkan label rasio aspek di overlay. Default: aktif.
-- **Shift untuk mengunci rasio** — aktifkan/nonaktifkan penguncian rasio aspek saat menahan Shift. Default: aktif.
 
 ### Tab Pintasan
 
