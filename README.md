@@ -26,7 +26,7 @@ Also available for Windows: [Window Resize for Windows](https://github.com/Nakan
 - Label-primary display with size subtitle, 0.8 second display with fade-out
 
 ### Settings (4 tabs)
-- **General** — Quick Presets (editable labels, sizes, shortcuts), Launch at Login, Language
+- **General** — Quick Presets (editable labels, sizes, shortcuts), Launch at Login, Shift-lock ratio
 - **Appearance** — overlay border color (9 choices), line style (solid/dashed/animated), aspect ratio label
 - **Shortcuts** — all keyboard bindings customizable in 2-column grid, conflict alerts
 - **Presets** — 18 built-in presets (VGA to 4K UHD) with enable/disable toggles
@@ -34,7 +34,6 @@ Also available for Windows: [Window Resize for Windows](https://github.com/Nakan
 ### Other
 - **Menu bar resident** — runs quietly in the menu bar
 - **Launch at login** — optional auto-start via SMAppService
-- **In-app language selection** — switch between 16 languages without changing system settings
 - **16 languages** — English, Japanese, Simplified Chinese, Traditional Chinese, Korean, Spanish, French, German, Italian, Portuguese, Russian, Arabic, Hindi, Indonesian, Vietnamese, Thai
 
 ## Download
