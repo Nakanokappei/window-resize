@@ -1,6 +1,16 @@
 // KeyboardResizeController.swift — Global keyboard shortcut handler for
 // precision window resizing, undo/redo, and one-tap preset application.
 //
+// Uses a CGEvent tap to intercept key-down events globally. Unlike
+// NSEvent.addGlobalMonitorForEvents (which only observes events without
+// consuming them), a CGEvent tap can suppress the event so the foreground
+// app never sees it — eliminating the system beep that occurs when an app
+// receives an unrecognized key combination.
+//
+// CGEvent taps require Accessibility permission (already granted for
+// AXUIElement usage) and are NOT available inside App Sandbox. This is
+// acceptable because the app uses Developer ID distribution only.
+//
 // Shortcut bindings are loaded from SettingsStore.shortcutBindings,
 // allowing users to customize all key combinations. Defaults:
 //
@@ -22,8 +32,13 @@ class KeyboardResizeController {
 
     // MARK: - Properties
 
-    /// Global event monitor for key-down events.
-    private var keyMonitor: Any?
+    /// The CGEvent tap that intercepts key-down events. Stored as a
+    /// CFMachPort so it can be invalidated on stop().
+    private var eventTap: CFMachPort?
+
+    /// Run loop source for the event tap. Must be removed from the run
+    /// loop when the tap is stopped.
+    private var runLoopSource: CFRunLoopSource?
 
     /// Reference to the shared overlay controller for brief size feedback.
     private let overlay = OverlayWindowController()
@@ -49,37 +64,146 @@ class KeyboardResizeController {
 
     // MARK: - Lifecycle
 
-    /// Installs a global key-down monitor. Call once from AppDelegate after
-    /// the accessibility check passes.
+    /// Installs a CGEvent tap to intercept key-down events globally.
+    /// The tap suppresses matched key events so the foreground app never
+    /// receives them, preventing the system beep. Call once from
+    /// AppDelegate after the accessibility check passes.
     func start() {
-        keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            self?.handleKeyDown(event)
+        // Store a reference to self in an Unmanaged pointer so the C
+        // callback can reach back into this Swift instance.
+        let refcon = Unmanaged.passUnretained(self).toOpaque()
+
+        // Create an event tap at the session level. We only listen for
+        // keyDown events; other event types pass through untouched.
+        guard let tap = CGEvent.tapCreate(
+            tap: .cgSessionEventTap,
+            place: .headInsertEventTap,
+            options: .defaultTap,      // active tap — can suppress events
+            eventsOfInterest: CGEventMask(1 << CGEventType.keyDown.rawValue),
+            callback: KeyboardResizeController.eventTapCallback,
+            userInfo: refcon
+        ) else {
+            // Fallback: if CGEvent tap creation fails (should not happen
+            // when Accessibility permission is granted), fall back to the
+            // observe-only NSEvent monitor. The beep will still occur but
+            // keyboard shortcuts will work.
+            let monitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) {
+                [weak self] event in
+                self?.handleKeyDown(event)
+            }
+            // Store in eventTap as nil; monitor is retained by NSEvent.
+            _ = monitor
+            return
         }
+
+        eventTap = tap
+
+        // Add the tap to the current run loop so events are delivered.
+        let source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, .commonModes)
+        runLoopSource = source
+
+        // Enable the tap (it starts enabled, but be explicit).
+        CGEvent.tapEnable(tap: tap, enable: true)
     }
 
-    /// Removes the global key-down monitor. Call from applicationWillTerminate.
+    /// Removes the CGEvent tap and cleans up run loop resources.
+    /// Call from applicationWillTerminate.
     func stop() {
-        if let monitor = keyMonitor {
-            NSEvent.removeMonitor(monitor)
-            keyMonitor = nil
+        if let tap = eventTap {
+            CGEvent.tapEnable(tap: tap, enable: false)
+            CFMachPortInvalidate(tap)
+            eventTap = nil
+        }
+        if let source = runLoopSource {
+            CFRunLoopRemoveSource(CFRunLoopGetCurrent(), source, .commonModes)
+            runLoopSource = nil
         }
         hideTimer?.invalidate()
         overlay.hideHUD()
     }
 
-    // MARK: - Event Dispatch (Dynamic Binding Lookup)
+    // MARK: - CGEvent Tap Callback
 
-    /// Routes a key-down event to the appropriate handler by looking up the
-    /// pressed key combination in the user's shortcut bindings map.
+    /// C-compatible callback invoked by the CGEvent tap for each key-down
+    /// event. If the key matches a registered shortcut binding, the event
+    /// is consumed (returns nil) to prevent the foreground app from
+    /// receiving it and playing a beep. Non-matching events pass through.
+    private static let eventTapCallback: CGEventTapCallBack = {
+        proxy, type, event, refcon in
+
+        // If the system disables the tap (e.g. due to timeout), re-enable it.
+        if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
+            if let refcon = refcon {
+                let controller = Unmanaged<KeyboardResizeController>
+                    .fromOpaque(refcon).takeUnretainedValue()
+                if let tap = controller.eventTap {
+                    CGEvent.tapEnable(tap: tap, enable: true)
+                }
+            }
+            return Unmanaged.passUnretained(event)
+        }
+
+        guard type == .keyDown, let refcon = refcon else {
+            return Unmanaged.passUnretained(event)
+        }
+
+        let controller = Unmanaged<KeyboardResizeController>
+            .fromOpaque(refcon).takeUnretainedValue()
+
+        // Check if this key-down matches any registered shortcut.
+        if controller.handleCGEvent(event) {
+            // Matched — suppress the event so the foreground app never
+            // sees it (no beep).
+            return nil
+        }
+
+        // Not our shortcut — pass through to the foreground app.
+        return Unmanaged.passUnretained(event)
+    }
+
+    // MARK: - Event Dispatch
+
+    /// Checks a CGEvent against registered shortcut bindings. If a match
+    /// is found, executes the action and returns true (caller should
+    /// suppress the event). Returns false if no binding matches.
+    private func handleCGEvent(_ event: CGEvent) -> Bool {
+        let keyCode = UInt16(event.getIntegerValueField(.keyboardEventKeycode))
+        let cgFlags = event.flags
+
+        // Convert CGEventFlags to NSEvent.ModifierFlags for comparison.
+        // Only keep device-independent modifier bits matching what
+        // ShortcutRecorderView records.
+        var mods = NSEvent.ModifierFlags()
+        if cgFlags.contains(.maskControl)   { mods.insert(.control) }
+        if cgFlags.contains(.maskAlternate) { mods.insert(.option) }
+        if cgFlags.contains(.maskShift)     { mods.insert(.shift) }
+        if cgFlags.contains(.maskCommand)   { mods.insert(.command) }
+
+        let bindings = SettingsStore.shared.shortcutBindings
+
+        for (actionID, binding) in bindings {
+            let bindingMods = NSEvent.ModifierFlags(rawValue: binding.modifiers)
+            if mods == bindingMods && keyCode == binding.keyCode {
+                // Dispatch to the main thread since CGEvent callbacks may
+                // arrive on an arbitrary thread.
+                DispatchQueue.main.async { [weak self] in
+                    self?.executeAction(actionID)
+                }
+                return true
+            }
+        }
+        return false
+    }
+
+    /// Legacy NSEvent handler — used only as fallback if CGEvent tap
+    /// creation fails.
     private func handleKeyDown(_ event: NSEvent) {
-        // Strip device-dependent, caps-lock, numericPad, and function flags
-        // so that comparisons match the user-configured modifier set exactly.
         let mods = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
             .subtracting([.capsLock, .numericPad, .function])
         let keyCode = event.keyCode
         let bindings = SettingsStore.shared.shortcutBindings
 
-        // Walk all registered bindings and find the first exact match.
         for (actionID, binding) in bindings {
             let bindingMods = NSEvent.ModifierFlags(rawValue: binding.modifiers)
             if mods == bindingMods && keyCode == binding.keyCode {
