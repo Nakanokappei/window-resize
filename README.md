@@ -2,7 +2,7 @@
 
 A menu bar application that snaps windows to preset sizes as you resize them, with full keyboard control.
 
-Also available for Windows: [Window Resize for Windows](https://github.com/Nakanokappei/window-resize-windows)
+Also available for Windows: [Window Resize and Capture](https://github.com/Nakanokappei/window-resize-and-capture)
 
 ## Features
 
