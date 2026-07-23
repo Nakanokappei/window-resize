@@ -21,7 +21,7 @@ struct SnapDetector {
     /// Maximum distance in points that a window dimension may differ from a
     /// preset dimension and still trigger a snap. Both width and height must
     /// independently satisfy this threshold for a candidate to be considered.
-    static let presetProximityThresholdPt: CGFloat = 30.0
+    static let presetProximityThresholdPt: CGFloat = 50.0
 
     /// Detects the best snap candidate during a resize operation.
     ///
