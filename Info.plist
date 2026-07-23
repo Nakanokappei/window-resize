@@ -2,50 +2,50 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleName</key>
-    <string>Window Resize</string>
-    <key>CFBundleIdentifier</key>
-    <string>com.windowresize.app</string>
-    <key>CFBundleVersion</key>
-    <string>8</string>
-    <key>CFBundleShortVersionString</key>
-    <string>2.0</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleExecutable</key>
-    <string>WindowResize</string>
-    <key>CFBundleIconFile</key>
-    <string>AppIcon</string>
-    <key>CFBundleIconName</key>
-    <string>AppIcon</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>13.0</string>
-    <key>LSUIElement</key>
-    <true/>
-    <key>CFBundleDevelopmentRegion</key>
-    <string>en</string>
-    <key>CFBundleLocalizations</key>
-    <array>
-        <string>en</string>
-        <string>zh-Hans</string>
-        <string>es</string>
-        <string>hi</string>
-        <string>ar</string>
-        <string>id</string>
-        <string>pt</string>
-        <string>fr</string>
-        <string>ja</string>
-        <string>ru</string>
-        <string>de</string>
-        <string>vi</string>
-        <string>th</string>
-        <string>ko</string>
-        <string>it</string>
-        <string>zh-Hant</string>
-    </array>
-    <key>NSAccessibilityUsageDescription</key>
-    <string>Window Resize uses accessibility features to help users who have difficulty with precise mouse operations resize windows easily through simple menu selections.</string>
-    <key>LSApplicationCategoryType</key>
-    <string>public.app-category.utilities</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>WindowResize</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.windowresize.app</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>zh-Hans</string>
+		<string>es</string>
+		<string>hi</string>
+		<string>ar</string>
+		<string>id</string>
+		<string>pt</string>
+		<string>fr</string>
+		<string>ja</string>
+		<string>ru</string>
+		<string>de</string>
+		<string>vi</string>
+		<string>th</string>
+		<string>ko</string>
+		<string>it</string>
+		<string>zh-Hant</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>Window Resize</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0.1</string>
+	<key>CFBundleVersion</key>
+	<string>9</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAccessibilityUsageDescription</key>
+	<string>Window Resize uses accessibility features to help users who have difficulty with precise mouse operations resize windows easily through simple menu selections.</string>
 </dict>
 </plist>
