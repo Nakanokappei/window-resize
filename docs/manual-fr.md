@@ -32,25 +32,18 @@ Window Resize utilise l'API d'accessibilite de macOS pour detecter et redimensio
 Window Resize surveille les operations de redimensionnement des fenetres en temps reel. Lorsque vous faites glisser le bord ou le coin d'une fenetre pour la redimensionner, l'application detecte a quel point les dimensions de la fenetre sont proches d'une taille predefinie.
 
 1. **Commencez a redimensionner** — faites glisser le bord ou le coin d'une fenetre comme vous le feriez normalement.
-2. **L'overlay apparait** — lorsque la taille de la fenetre s'approche d'une taille predefinie (a moins de 30 pixels), une bordure coloree apparait autour de la fenetre indiquant la taille predefinie cible.
+2. **L'overlay apparait** — lorsque la taille de la fenetre s'approche d'une taille predefinie (a moins de 50 pixels), une bordure coloree apparait autour de la fenetre indiquant la taille predefinie cible.
 3. **Relachez pour snapper** — lachez le bouton de la souris et la fenetre s'ajuste precisement a la taille predefinie.
 4. **Annuler** — si vous eloignez la taille de la fenetre de la taille predefinie avant de relacher, l'overlay disparait et aucun snap ne se produit.
-
-### Snap par deplacement
-
-Faites glisser une fenetre vers un bord ou un coin de l'ecran pour la positionner automatiquement :
-
-- **Snap de bord** (gauche/droite) — remplit la hauteur, conserve la largeur
-- **Snap de bord** (haut/bas) — remplit la largeur, conserve la hauteur
-- **Snap de coin** — positionne la fenetre dans le coin, conserve les deux dimensions
 
 ### Affichage du rapport d'aspect
 
 Pendant le redimensionnement, le rapport d'aspect actuel est affiche dans l'overlay. Lorsque le rapport correspond a une proportion connue, son nom est indique :
 
+- **√2** (1.414:1)
 - **Nombre d'or** (1.618:1)
 - **Nombre d'argent** (2.414:1)
-- **Nombre de platine** (1.325:1)
+- **Nombre plastique** (1.325:1)
 - **Nombre de bronze** (3.303:1)
 
 Les autres rapports sont affiches sous forme de fractions simplifiees (par ex. "16:9", "4:3").
@@ -166,8 +159,8 @@ Un indicateur d'etat montre l'etat actuel de l'autorisation d'accessibilite :
 
 Configurez le style visuel de l'overlay de snap :
 
-- **Bordure de redimensionnement** — la couleur et le style de ligne de la bordure affichee pendant le redimensionnement. Choisissez parmi 9 couleurs (rouge, orange, jaune, vert, cyan, bleu, violet, blanc, gris) et 4 styles (aucun, continu, pointille, anime). Par defaut : blanc, anime.
-- **Bordure de snap** — la bordure affichee lorsque la fenetre s'ajuste a une taille predefinie. Par defaut : blanc, continu.
+- **Bordure de redimensionnement** — la couleur et le style de ligne de la bordure affichee pendant le redimensionnement. Choisissez parmi 9 couleurs (rouge, orange, jaune, vert, cyan, bleu, violet, blanc, gris) et 4 styles (aucun, continu, pointille, anime). Par defaut : orange, anime.
+- **Bordure de snap** — la bordure affichee lorsque la fenetre s'ajuste a une taille predefinie. Par defaut : orange, continu.
 - **Afficher le rapport d'aspect** — activer ou desactiver l'affichage du rapport d'aspect dans l'overlay. Par defaut : active.
 
 ### Onglet Raccourcis

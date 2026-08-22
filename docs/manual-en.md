@@ -32,25 +32,18 @@ Window Resize uses the macOS Accessibility API to detect and resize windows. You
 Window Resize monitors window resize operations in real time. When you drag a window edge or corner to resize it, the app detects how close the window dimensions are to any preset size.
 
 1. **Start resizing** — drag any window's edge or corner as you normally would.
-2. **Overlay appears** — when the window size approaches a preset (within 30 pixels), a colored border overlay appears around the window showing the target preset size.
+2. **Overlay appears** — when the window size approaches a preset (within 50 pixels), a colored border overlay appears around the window showing the target preset size.
 3. **Release to snap** — let go of the mouse and the window snaps precisely to the preset size.
 4. **Cancel** — if you move the window size away from the preset before releasing, the overlay disappears and no snap occurs.
-
-### Move Snap
-
-Drag a window towards a screen edge or corner to snap it into position:
-
-- **Edge snap** (left/right) — fills the height, preserves width
-- **Edge snap** (top/bottom) — fills the width, preserves height
-- **Corner snap** — positions the window in the corner, preserves both dimensions
 
 ### Aspect Ratio Display
 
 During resize, the current aspect ratio is displayed in the overlay. When the ratio matches a well-known proportion, its name is shown:
 
+- **√2** (1.414:1)
 - **Golden Ratio** (1.618:1)
 - **Silver Ratio** (2.414:1)
-- **Platinum Ratio** (1.325:1)
+- **Plastic Ratio** (1.325:1)
 - **Bronze Ratio** (3.303:1)
 
 Other ratios are displayed as simplified fractions (e.g., "16:9", "4:3").
@@ -166,8 +159,8 @@ A status indicator shows the current state of the Accessibility permission:
 
 Configure the visual style of the snap overlay:
 
-- **Resize border** — the border color and line style shown while resizing. Choose from 9 colors (red, orange, yellow, green, cyan, blue, purple, white, gray) and 4 styles (none, solid, dashed, animated). Default: white, animated.
-- **Snap border** — the border shown when the window snaps to a preset. Default: white, solid.
+- **Resize border** — the border color and line style shown while resizing. Choose from 9 colors (red, orange, yellow, green, cyan, blue, purple, white, gray) and 4 styles (none, solid, dashed, animated). Default: orange, animated.
+- **Snap border** — the border shown when the window snaps to a preset. Default: orange, solid.
 - **Show aspect ratio** — toggle the aspect ratio label in the overlay. Default: on.
 
 ### Shortcuts Tab

@@ -32,26 +32,19 @@ Window Resize verwendet die Bedienungshilfen-API von macOS, um Fenster zu erkenn
 Window Resize ueberwacht Fenstergroessenaenderungen in Echtzeit. Wenn Sie eine Fensterkante oder -ecke ziehen, um die Groesse zu aendern, erkennt die App, wie nah die Fensterabmessungen an einer voreingestellten Groesse sind.
 
 1. **Groessenaenderung starten** — ziehen Sie wie gewohnt an einer beliebigen Fensterkante oder -ecke.
-2. **Overlay erscheint** — wenn die Fenstergroesse sich einer Voreinstellung naehert (innerhalb von 30 Pixeln), erscheint ein farbiger Rahmen um das Fenster, der die voreingestellte Zielgroesse anzeigt.
+2. **Overlay erscheint** — wenn die Fenstergroesse sich einer Voreinstellung naehert (innerhalb von 50 Pixeln), erscheint ein farbiger Rahmen um das Fenster, der die voreingestellte Zielgroesse anzeigt.
 3. **Loslassen zum Einrasten** — lassen Sie die Maustaste los und das Fenster rastet praezise auf die voreingestellte Groesse ein.
 4. **Abbrechen** — wenn Sie die Fenstergroesse vor dem Loslassen wieder von der Voreinstellung wegbewegen, verschwindet das Overlay und es wird nicht eingerastet.
-
-### Verschieben und Einrasten
-
-Ziehen Sie ein Fenster an eine Bildschirmkante oder -ecke, um es dort einzurasten:
-
-- **Kanteneinrastung** (links/rechts) — fuellt die Hoehe, behaelt die Breite bei
-- **Kanteneinrastung** (oben/unten) — fuellt die Breite, behaelt die Hoehe bei
-- **Eckeneinrastung** — positioniert das Fenster in der Ecke, behaelt beide Dimensionen bei
 
 ### Seitenverhaeltnis-Anzeige
 
 Waehrend der Groessenaenderung wird das aktuelle Seitenverhaeltnis im Overlay angezeigt. Wenn das Verhaeltnis einer bekannten Proportion entspricht, wird dessen Name angezeigt:
 
+- **√2** (1.414:1)
 - **Goldener Schnitt** (1.618:1)
 - **Silberner Schnitt** (2.414:1)
-- **Platin-Verhaeltnis** (1.325:1)
-- **Bronze-Verhaeltnis** (3.303:1)
+- **Plastische Zahl** (1.325:1)
+- **Bronzener Schnitt** (3.303:1)
 
 Andere Verhaeltnisse werden als vereinfachte Brueche angezeigt (z. B. "16:9", "4:3").
 
@@ -166,8 +159,8 @@ Ein Statusindikator zeigt den aktuellen Zustand der Berechtigung fuer Bedienungs
 
 Konfigurieren Sie den visuellen Stil des Snap-Overlays:
 
-- **Resize-Rahmen** — Rahmenfarbe und Linienstil waehrend der Groessenaenderung. Waehlen Sie aus 9 Farben (Rot, Orange, Gelb, Gruen, Cyan, Blau, Lila, Weiss, Grau) und 4 Stilen (Keiner, Durchgezogen, Gestrichelt, Animiert). Standard: Weiss, Animiert.
-- **Snap-Rahmen** — Rahmen beim Einrasten des Fensters auf eine Voreinstellung. Standard: Weiss, Durchgezogen.
+- **Resize-Rahmen** — Rahmenfarbe und Linienstil waehrend der Groessenaenderung. Waehlen Sie aus 9 Farben (Rot, Orange, Gelb, Gruen, Cyan, Blau, Lila, Weiss, Grau) und 4 Stilen (Keiner, Durchgezogen, Gestrichelt, Animiert). Standard: Orange, Animiert.
+- **Snap-Rahmen** — Rahmen beim Einrasten des Fensters auf eine Voreinstellung. Standard: Orange, Durchgezogen.
 - **Seitenverhaeltnis anzeigen** — Seitenverhaeltnis-Anzeige im Overlay ein- oder ausschalten. Standard: Ein.
 
 ### Tab Kurzbefehle

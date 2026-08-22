@@ -32,26 +32,19 @@ Window Resize utilizza l'API di accessibilita di macOS per rilevare e ridimensio
 Window Resize monitora le operazioni di ridimensionamento delle finestre in tempo reale. Quando si trascina il bordo o l'angolo di una finestra per ridimensionarla, l'app rileva quanto le dimensioni della finestra siano vicine a una dimensione predefinita.
 
 1. **Iniziare a ridimensionare** — trascinare un bordo o un angolo di qualsiasi finestra come di consueto.
-2. **Appare l'overlay** — quando le dimensioni della finestra si avvicinano a una dimensione predefinita (entro 30 pixel), un bordo colorato appare intorno alla finestra mostrando la dimensione predefinita di destinazione.
+2. **Appare l'overlay** — quando le dimensioni della finestra si avvicinano a una dimensione predefinita (entro 50 pixel), un bordo colorato appare intorno alla finestra mostrando la dimensione predefinita di destinazione.
 3. **Rilasciare per eseguire lo snap** — rilasciare il mouse e la finestra si adattera precisamente alla dimensione predefinita.
 4. **Annullare** — se si allontanano le dimensioni della finestra dalla dimensione predefinita prima di rilasciare, l'overlay scompare e lo snap non viene eseguito.
-
-### Snap per spostamento
-
-Trascinare una finestra verso un bordo o un angolo dello schermo per posizionarla automaticamente:
-
-- **Snap bordo** (sinistra/destra) — riempie l'altezza, mantiene la larghezza
-- **Snap bordo** (alto/basso) — riempie la larghezza, mantiene l'altezza
-- **Snap angolo** — posiziona la finestra nell'angolo, mantiene entrambe le dimensioni
 
 ### Visualizzazione del rapporto d'aspetto
 
 Durante il ridimensionamento, il rapporto d'aspetto corrente viene visualizzato nell'overlay. Quando il rapporto corrisponde a una proporzione nota, ne viene mostrato il nome:
 
+- **√2** (1.414:1)
 - **Sezione aurea** (1.618:1)
-- **Rapporto d'argento** (2.414:1)
-- **Rapporto di platino** (1.325:1)
-- **Rapporto di bronzo** (3.303:1)
+- **Rapporto argenteo** (2.414:1)
+- **Numero plastico** (1.325:1)
+- **Rapporto bronzeo** (3.303:1)
 
 Gli altri rapporti vengono visualizzati come frazioni semplificate (ad esempio "16:9", "4:3").
 
@@ -166,8 +159,8 @@ Un indicatore di stato mostra lo stato attuale del permesso di accessibilita:
 
 Configurare lo stile visivo dell'overlay di snap:
 
-- **Bordo di ridimensionamento** — il colore e lo stile della linea del bordo mostrato durante il ridimensionamento. Scegliere tra 9 colori (rosso, arancione, giallo, verde, ciano, blu, viola, bianco, grigio) e 4 stili (nessuno, continua, tratteggiata, animata). Predefinito: bianco, animata.
-- **Bordo di snap** — il bordo mostrato quando la finestra si adatta a una dimensione predefinita. Predefinito: bianco, continua.
+- **Bordo di ridimensionamento** — il colore e lo stile della linea del bordo mostrato durante il ridimensionamento. Scegliere tra 9 colori (rosso, arancione, giallo, verde, ciano, blu, viola, bianco, grigio) e 4 stili (nessuno, continua, tratteggiata, animata). Predefinito: arancione, animata.
+- **Bordo di snap** — il bordo mostrato quando la finestra si adatta a una dimensione predefinita. Predefinito: arancione, continua.
 - **Mostra rapporto d'aspetto** — attivare o disattivare l'etichetta del rapporto d'aspetto nell'overlay. Predefinito: attivato.
 
 ### Scheda Scorciatoie

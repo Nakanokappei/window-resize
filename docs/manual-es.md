@@ -32,26 +32,19 @@ Window Resize utiliza la API de accesibilidad de macOS para detectar y redimensi
 Window Resize monitoriza las operaciones de redimensionamiento de ventanas en tiempo real. Cuando arrastra el borde o la esquina de una ventana para redimensionarla, la aplicacion detecta la proximidad de las dimensiones de la ventana a cualquier tamano predefinido.
 
 1. **Comience a redimensionar** — arrastre el borde o la esquina de cualquier ventana como lo haria normalmente.
-2. **Aparece la superposicion** — cuando el tamano de la ventana se aproxima a un tamano predefinido (a menos de 30 pixeles de distancia), aparece una superposicion con un borde de color alrededor de la ventana que muestra el tamano de destino.
+2. **Aparece la superposicion** — cuando el tamano de la ventana se aproxima a un tamano predefinido (a menos de 50 pixeles de distancia), aparece una superposicion con un borde de color alrededor de la ventana que muestra el tamano de destino.
 3. **Suelte para ajustar** — suelte el raton y la ventana se ajustara con precision al tamano predefinido.
 4. **Cancelar** — si aleja el tamano de la ventana del valor predefinido antes de soltar, la superposicion desaparece y no se realiza ningun ajuste.
-
-### Ajuste por movimiento
-
-Arrastre una ventana hacia un borde o esquina de la pantalla para ajustarla en su posicion:
-
-- **Ajuste de borde** (izquierda/derecha) — llena la altura, conserva el ancho
-- **Ajuste de borde** (arriba/abajo) — llena el ancho, conserva la altura
-- **Ajuste de esquina** — posiciona la ventana en la esquina, conserva ambas dimensiones
 
 ### Visualizacion de la relacion de aspecto
 
 Durante el redimensionamiento, la relacion de aspecto actual se muestra en la superposicion. Cuando la relacion coincide con una proporcion conocida, se muestra su nombre:
 
-- **Proporcion aurea** (1.618:1)
-- **Proporcion de plata** (2.414:1)
-- **Proporcion de platino** (1.325:1)
-- **Proporcion de bronce** (3.303:1)
+- **√2** (1.414:1)
+- **Proporción áurea** (1.618:1)
+- **Proporción de plata** (2.414:1)
+- **Número plástico** (1.325:1)
+- **Proporción de bronce** (3.303:1)
 
 Otras relaciones se muestran como fracciones simplificadas (por ejemplo, "16:9", "4:3").
 
@@ -166,8 +159,8 @@ Un indicador de estado muestra el estado actual del permiso de accesibilidad:
 
 Configure el estilo visual de la superposicion de ajuste:
 
-- **Borde de redimensionamiento** — el color y el estilo de linea del borde mostrado al redimensionar. Elija entre 9 colores (rojo, naranja, amarillo, verde, cian, azul, morado, blanco, gris) y 4 estilos (ninguno, solida, discontinua, animada). Predeterminado: blanco, animada.
-- **Borde de ajuste** — el borde mostrado cuando la ventana se ajusta a un tamano predefinido. Predeterminado: blanco, solida.
+- **Borde de redimensionamiento** — el color y el estilo de linea del borde mostrado al redimensionar. Elija entre 9 colores (rojo, naranja, amarillo, verde, cian, azul, morado, blanco, gris) y 4 estilos (ninguno, solida, discontinua, animada). Predeterminado: naranja, animada.
+- **Borde de ajuste** — el borde mostrado cuando la ventana se ajusta a un tamano predefinido. Predeterminado: naranja, solida.
 - **Mostrar relacion de aspecto** — activa o desactiva la etiqueta de relacion de aspecto en la superposicion. Predeterminado: activado.
 
 ### Pestana Atajos

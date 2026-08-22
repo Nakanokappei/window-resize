@@ -32,26 +32,19 @@ Window Resize utiliza a API de acessibilidade do macOS para detetar e redimensio
 O Window Resize monitora operacoes de redimensionamento de janelas em tempo real. Quando voce arrasta a borda ou o canto de uma janela para redimensiona-la, o aplicativo deteta a proximidade das dimensoes da janela a qualquer tamanho predefinido.
 
 1. **Comece a redimensionar** — arraste a borda ou o canto de qualquer janela normalmente.
-2. **A sobreposicao aparece** — quando o tamanho da janela se aproxima de um tamanho predefinido (dentro de 30 pixels), uma borda colorida aparece ao redor da janela indicando o tamanho predefinido de destino.
+2. **A sobreposicao aparece** — quando o tamanho da janela se aproxima de um tamanho predefinido (dentro de 50 pixels), uma borda colorida aparece ao redor da janela indicando o tamanho predefinido de destino.
 3. **Solte para encaixar** — solte o mouse e a janela se ajusta automaticamente ao tamanho predefinido com precisao.
 4. **Cancelar** — se voce afastar o tamanho da janela do tamanho predefinido antes de soltar, a sobreposicao desaparece e nenhum encaixe ocorre.
-
-### Encaixe por movimento
-
-Arraste uma janela em direcao a uma borda ou canto da tela para encaixa-la na posicao:
-
-- **Encaixe de borda** (esquerda/direita) — preenche a altura, preserva a largura
-- **Encaixe de borda** (cima/baixo) — preenche a largura, preserva a altura
-- **Encaixe de canto** — posiciona a janela no canto, preserva ambas as dimensoes
 
 ### Exibicao da proporcao
 
 Durante o redimensionamento, a proporcao atual e exibida na sobreposicao. Quando a proporcao corresponde a uma proporcao conhecida, seu nome e mostrado:
 
-- **Proporcao aurea** (1.618:1)
-- **Proporcao de prata** (2.414:1)
-- **Proporcao de platina** (1.325:1)
-- **Proporcao de bronze** (3.303:1)
+- **√2** (1.414:1)
+- **Proporção áurea** (1.618:1)
+- **Proporção de prata** (2.414:1)
+- **Número plástico** (1.325:1)
+- **Proporção de bronze** (3.303:1)
 
 Outras proporcoes sao exibidas como fracoes simplificadas (por exemplo, "16:9", "4:3").
 
@@ -166,8 +159,8 @@ Um indicador de status mostra o estado atual da permissao de acessibilidade:
 
 Configure o estilo visual da sobreposicao de encaixe:
 
-- **Borda de redimensionamento** — a cor e o estilo da linha da borda exibida ao redimensionar. Escolha entre 9 cores (vermelho, laranja, amarelo, verde, ciano, azul, roxo, branco, cinza) e 4 estilos (nenhum, solida, tracejada, animada). Padrao: branco, animada.
-- **Borda de encaixe** — a borda exibida quando a janela se encaixa em um tamanho predefinido. Padrao: branco, solida.
+- **Borda de redimensionamento** — a cor e o estilo da linha da borda exibida ao redimensionar. Escolha entre 9 cores (vermelho, laranja, amarelo, verde, ciano, azul, roxo, branco, cinza) e 4 estilos (nenhum, solida, tracejada, animada). Padrao: laranja, animada.
+- **Borda de encaixe** — a borda exibida quando a janela se encaixa em um tamanho predefinido. Padrao: laranja, solida.
 - **Mostrar proporcao** — ativar ou desativar o rotulo de proporcao na sobreposicao. Padrao: ativado.
 
 ### Aba Atalhos

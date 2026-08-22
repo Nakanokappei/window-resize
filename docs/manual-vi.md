@@ -32,26 +32,19 @@ Window Resize su dung API Tro nang cua macOS de phat hien va doi kich thuoc cua 
 Window Resize theo doi thao tac doi kich thuoc cua so theo thoi gian thuc. Khi ban keo canh hoac goc cua so de doi kich thuoc, ung dung phat hien muc do gan cua kich thuoc cua so voi bat ky kich thuoc dat san nao.
 
 1. **Bat dau doi kich thuoc** — keo canh hoac goc cua bat ky cua so nao nhu binh thuong.
-2. **Lop phu xuat hien** — khi kich thuoc cua so gan voi mot kich thuoc dat san (trong pham vi 30 pixel), duong vien mau se xuat hien xung quanh cua so, hien thi kich thuoc dat san muc tieu.
+2. **Lop phu xuat hien** — khi kich thuoc cua so gan voi mot kich thuoc dat san (trong pham vi 50 pixel), duong vien mau se xuat hien xung quanh cua so, hien thi kich thuoc dat san muc tieu.
 3. **Tha de snap** — tha chuot va cua so se tu dong khop chinh xac voi kich thuoc dat san.
 4. **Huy bo** — neu ban di chuyen kich thuoc cua so ra xa khoi kich thuoc dat san truoc khi tha, lop phu se bien mat va khong co snap nao xay ra.
-
-### Snap khi di chuyen cua so
-
-Keo cua so ve phia canh hoac goc man hinh de snap vao vi tri:
-
-- **Snap canh** (trai/phai) — lap day chieu cao, giu nguyen chieu rong
-- **Snap canh** (tren/duoi) — lap day chieu rong, giu nguyen chieu cao
-- **Snap goc** — dat cua so vao goc, giu nguyen ca hai chieu
 
 ### Hien thi ty le khung hinh
 
 Trong qua trinh doi kich thuoc, ty le khung hinh hien tai duoc hien thi trong lop phu. Khi ty le khop voi mot ty le noi tieng, ten cua no se duoc hien thi:
 
-- **Golden Ratio** (1.618:1)
-- **Silver Ratio** (2.414:1)
-- **Platinum Ratio** (1.325:1)
-- **Bronze Ratio** (3.303:1)
+- **√2** (1.414:1)
+- **Tỷ lệ vàng** (1.618:1)
+- **Tỷ lệ bạc** (2.414:1)
+- **Số dẻo** (1.325:1)
+- **Tỷ lệ đồng** (3.303:1)
 
 Cac ty le khac duoc hien thi duoi dang phan so rut gon (vi du: "16:9", "4:3").
 
@@ -166,8 +159,8 @@ Chi bao trang thai hien thi tinh trang hien tai cua quyen Tro nang:
 
 Cau hinh kieu hien thi cua lop phu snap:
 
-- **Duong vien doi kich thuoc** — mau duong vien va kieu duong hien thi khi doi kich thuoc. Chon tu 9 mau (do, cam, vang, xanh la, xanh lam nhat, xanh duong, tim, trang, xam) va 4 kieu (khong, lien, net dut, chuyen dong). Mac dinh: trang, chuyen dong.
-- **Duong vien snap** — duong vien hien thi khi cua so snap vao preset. Mac dinh: trang, lien.
+- **Duong vien doi kich thuoc** — mau duong vien va kieu duong hien thi khi doi kich thuoc. Chon tu 9 mau (do, cam, vang, xanh la, xanh lam nhat, xanh duong, tim, trang, xam) va 4 kieu (khong, lien, net dut, chuyen dong). Mac dinh: cam, chuyen dong.
+- **Duong vien snap** — duong vien hien thi khi cua so snap vao preset. Mac dinh: cam, lien.
 - **Hien thi ty le khung hinh** — bat/tat nhan ty le khung hinh trong lop phu. Mac dinh: bat.
 
 ### Tab phim tat

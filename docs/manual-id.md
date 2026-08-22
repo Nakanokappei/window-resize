@@ -32,25 +32,18 @@ Window Resize menggunakan API Aksesibilitas macOS untuk mendeteksi dan mengubah 
 Window Resize memantau operasi pengubahan ukuran jendela secara waktu nyata. Saat Anda menarik tepi atau sudut jendela untuk mengubah ukurannya, aplikasi mendeteksi seberapa dekat dimensi jendela dengan ukuran preset yang tersedia.
 
 1. **Mulai mengubah ukuran** — tarik tepi atau sudut jendela mana pun seperti biasa.
-2. **Overlay muncul** — saat ukuran jendela mendekati sebuah preset (dalam jarak 30 piksel), overlay berbatas berwarna akan muncul di sekeliling jendela yang menunjukkan ukuran preset target.
+2. **Overlay muncul** — saat ukuran jendela mendekati sebuah preset (dalam jarak 50 piksel), overlay berbatas berwarna akan muncul di sekeliling jendela yang menunjukkan ukuran preset target.
 3. **Lepaskan untuk snap** — lepaskan mouse dan jendela akan langsung menyesuaikan ke ukuran preset tersebut secara presisi.
 4. **Batalkan** — jika Anda menggerakkan ukuran jendela menjauhi preset sebelum melepaskan, overlay menghilang dan tidak ada snap yang terjadi.
-
-### Move Snap
-
-Seret jendela ke arah tepi atau sudut layar untuk menempatkannya secara otomatis:
-
-- **Snap tepi** (kiri/kanan) — mengisi tinggi, mempertahankan lebar
-- **Snap tepi** (atas/bawah) — mengisi lebar, mempertahankan tinggi
-- **Snap sudut** — menempatkan jendela di sudut, mempertahankan kedua dimensi
 
 ### Tampilan Rasio Aspek
 
 Selama mengubah ukuran, rasio aspek saat ini ditampilkan di overlay. Jika rasio tersebut sesuai dengan proporsi yang dikenal, namanya akan ditampilkan:
 
+- **√2** (1.414:1)
 - **Rasio Emas** (1.618:1)
 - **Rasio Perak** (2.414:1)
-- **Rasio Platinum** (1.325:1)
+- **Bilangan Plastik** (1.325:1)
 - **Rasio Perunggu** (3.303:1)
 
 Rasio lainnya ditampilkan sebagai pecahan sederhana (misalnya, "16:9", "4:3").
@@ -166,8 +159,8 @@ Indikator status menunjukkan kondisi terkini izin Aksesibilitas:
 
 Atur gaya visual overlay snap:
 
-- **Batas resize** — warna dan gaya garis batas yang ditampilkan saat mengubah ukuran. Pilih dari 9 warna (merah, oranye, kuning, hijau, sian, biru, ungu, putih, abu-abu) dan 4 gaya (tidak ada, solid, putus-putus, animasi). Default: putih, animasi.
-- **Batas snap** — batas yang ditampilkan saat jendela di-snap ke preset. Default: putih, solid.
+- **Batas resize** — warna dan gaya garis batas yang ditampilkan saat mengubah ukuran. Pilih dari 9 warna (merah, oranye, kuning, hijau, sian, biru, ungu, putih, abu-abu) dan 4 gaya (tidak ada, solid, putus-putus, animasi). Default: oranye, animasi.
+- **Batas snap** — batas yang ditampilkan saat jendela di-snap ke preset. Default: oranye, solid.
 - **Tampilkan rasio aspek** — aktifkan/nonaktifkan label rasio aspek di overlay. Default: aktif.
 
 ### Tab Pintasan
