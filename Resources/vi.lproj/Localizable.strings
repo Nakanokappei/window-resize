@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "Đã khôi phục";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "Tỷ lệ vàng";
+"overlay.ratio.silver" = "Tỷ lệ bạc";
+"overlay.ratio.plastic" = "Số dẻo";
+"overlay.ratio.bronze" = "Tỷ lệ đồng";
 "settings.overlay.none" = "Không";
 
 /* Tab names */

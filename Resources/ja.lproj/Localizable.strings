@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "復元しました";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "黄金比";
+"overlay.ratio.silver" = "白銀比";
+"overlay.ratio.plastic" = "白金比";
+"overlay.ratio.bronze" = "青銅比";
 "settings.overlay.none" = "なし";
 
 /* Tab names */

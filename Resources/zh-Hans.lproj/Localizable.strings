@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "已恢复";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "黄金比例";
+"overlay.ratio.silver" = "白银比例";
+"overlay.ratio.plastic" = "塑性比例";
+"overlay.ratio.bronze" = "青铜比例";
 "settings.overlay.none" = "无";
 
 /* Tab names */

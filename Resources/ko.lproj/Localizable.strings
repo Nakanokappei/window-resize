@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "복원됨";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "황금비";
+"overlay.ratio.silver" = "백은비";
+"overlay.ratio.plastic" = "플라스틱비";
+"overlay.ratio.bronze" = "청동비";
 "settings.overlay.none" = "없음";
 
 /* Tab names */

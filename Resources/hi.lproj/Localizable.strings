@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "पुनर्स्थापित";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "स्वर्ण अनुपात";
+"overlay.ratio.silver" = "रजत अनुपात";
+"overlay.ratio.plastic" = "प्लास्टिक संख्या";
+"overlay.ratio.bronze" = "कांस्य अनुपात";
 "settings.overlay.none" = "कोई नहीं";
 
 /* Tab names */

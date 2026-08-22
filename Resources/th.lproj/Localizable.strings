@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "กู้คืนแล้ว";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "อัตราส่วนทองคำ";
+"overlay.ratio.silver" = "อัตราส่วนเงิน";
+"overlay.ratio.plastic" = "จำนวนพลาสติก";
+"overlay.ratio.bronze" = "อัตราส่วนทองแดง";
 "settings.overlay.none" = "ไม่มี";
 
 /* Tab names */

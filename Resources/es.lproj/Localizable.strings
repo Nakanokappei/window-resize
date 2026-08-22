@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "Restaurado";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "Proporción áurea";
+"overlay.ratio.silver" = "Proporción de plata";
+"overlay.ratio.plastic" = "Número plástico";
+"overlay.ratio.bronze" = "Proporción de bronce";
 "settings.overlay.none" = "Ninguno";
 
 /* Tab names */

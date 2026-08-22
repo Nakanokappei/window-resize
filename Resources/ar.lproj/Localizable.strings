@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "تمت الاستعادة";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "النسبة الذهبية";
+"overlay.ratio.silver" = "النسبة الفضية";
+"overlay.ratio.plastic" = "العدد البلاستيكي";
+"overlay.ratio.bronze" = "النسبة البرونزية";
 "settings.overlay.none" = "بدون";
 
 /* Tab names */

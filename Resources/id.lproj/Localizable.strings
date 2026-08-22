@@ -69,6 +69,11 @@
 
 /* Overlay feedback */
 "overlay.restored" = "Dipulihkan";
+"overlay.ratio.sqrt2" = "√2";
+"overlay.ratio.golden" = "Rasio Emas";
+"overlay.ratio.silver" = "Rasio Perak";
+"overlay.ratio.plastic" = "Bilangan Plastik";
+"overlay.ratio.bronze" = "Rasio Perunggu";
 "settings.overlay.none" = "Tidak ada";
 
 /* Tab names */

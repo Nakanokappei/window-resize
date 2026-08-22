@@ -292,8 +292,9 @@ class OverlayWindowController {
 private struct AspectRatioFormatter {
 
     /// Well-known aspect ratios, checked in order.
-    /// Integer ratios use (w, h, nil, value); named ratios use (0, 0, label, value).
-    private static let knownRatios: [(w: Int, h: Int, label: String?, value: CGFloat)] = [
+    /// Integer ratios use (w, h, nil, value) and render as "16 : 9"; named ratios
+    /// use (0, 0, labelKey, value) and render the localized name for that key.
+    private static let knownRatios: [(w: Int, h: Int, labelKey: String?, value: CGFloat)] = [
         // Common screen/window ratios (integer)
         (1, 1, nil, 1.0),
         (4, 3, nil, 4.0 / 3.0),
@@ -304,11 +305,11 @@ private struct AspectRatioFormatter {
         (21, 9, nil, 21.0 / 9.0),
         (32, 9, nil, 32.0 / 9.0),
         // Named mathematical ratios (metallic means and related)
-        (0, 0, "√2",      1.4142135624),  // √2 ≈ 1.414 (A-series paper / Yamato ratio)
-        (0, 0, "黄金比",   1.6180339887),  // Golden ratio φ = (1+√5)/2
-        (0, 0, "白銀比",   2.4142135624),  // Silver ratio δ_S = 1+√2
-        (0, 0, "白金比",   1.3247179572),  // Plastic ratio ρ (real root of x³=x+1)
-        (0, 0, "青銅比",   3.3027756377),  // Bronze ratio β = (3+√13)/2
+        (0, 0, "overlay.ratio.sqrt2",   1.4142135624),  // √2 ≈ 1.414 (A-series paper / Yamato ratio)
+        (0, 0, "overlay.ratio.golden",  1.6180339887),  // Golden ratio φ = (1+√5)/2
+        (0, 0, "overlay.ratio.silver",  2.4142135624),  // Silver ratio δ_S = 1+√2
+        (0, 0, "overlay.ratio.plastic", 1.3247179572),  // Plastic ratio ρ (real root of x³=x+1)
+        (0, 0, "overlay.ratio.bronze",  3.3027756377),  // Bronze ratio β = (3+√13)/2
     ]
 
     /// Maximum relative error for matching a known ratio (1.5%).
@@ -326,7 +327,7 @@ private struct AspectRatioFormatter {
             // Landscape check (width >= height).
             let relError = abs(ratio - known.value) / known.value
             if relError < tolerance {
-                if let label = known.label { return label }
+                if let labelKey = known.labelKey { return L(labelKey) }
                 return "\(known.w) : \(known.h)"
             }
 
@@ -334,7 +335,7 @@ private struct AspectRatioFormatter {
             if known.value != 1.0 {
                 let relErrorInv = abs(inverseRatio - known.value) / known.value
                 if relErrorInv < tolerance {
-                    if let label = known.label { return "1/\(label)" }
+                    if let labelKey = known.labelKey { return "1/\(L(labelKey))" }
                     return "\(known.h) : \(known.w)"
                 }
             }
