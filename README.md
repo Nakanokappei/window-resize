@@ -8,7 +8,6 @@ Also available for Windows: [Window Resize and Capture](https://github.com/Nakan
 
 ### Snap Resize
 - **Snap-to-preset resize** — drag to resize any window and it snaps to the nearest preset size automatically
-- **Move snap** — drag a window to a screen edge or corner to snap it into position
 - **Overlay preview** — configurable border (9 colors, solid/dashed/animated) shows the target preset
 - **Aspect ratio display** — current ratio shown during resize (Golden Ratio, Silver Ratio, etc.)
 - **Shift to lock aspect ratio** — hold Shift while resizing to constrain proportions
